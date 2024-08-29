@@ -14,7 +14,84 @@
    <string>GUI4OpenCV</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout"/>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="2">
+     <layout class="QHBoxLayout" name="imagesRow">
+      <item>
+       <widget class="QGraphicsView" name="srcImageView"/>
+      </item>
+      <item>
+       <spacer name="imagesSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Preferred</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QGraphicsView" name="outImageView"/>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="2">
+     <layout class="QHBoxLayout" name="chartsRow">
+      <item>
+       <layout class="QGridLayout" name="chartsGrid">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item row="1" column="0">
+         <widget class="QGraphicsView" name="srcHistView"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QGraphicsView" name="transformFuncView"/>
+        </item>
+        <item row="1" column="2">
+         <widget class="QGraphicsView" name="outHistView"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="srcHistTitle">
+          <property name="text">
+           <string>Histogram wejsciowy</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="transformFuncTitle">
+          <property name="text">
+           <string>Funkcja transformujaca</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="outHistTitle">
+          <property name="text">
+           <string>Histogram wyjsciowy</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
