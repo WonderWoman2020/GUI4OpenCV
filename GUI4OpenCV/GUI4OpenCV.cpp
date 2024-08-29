@@ -30,9 +30,20 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     QPixmap pm2("mewaGrey.jpg");
     ui->label_2->setPixmap(pm2);
 
+    const QString debugMessagePattern = "Qt at [%{time h:mm:ss.zzz}], %{type}: %{message}";
+
+    qSetMessagePattern(debugMessagePattern);
+    qDebug() << "Debug info";
+    qInfo() << "Info only";
+    qCritical() << "Critical info";
 }
 
 GUI4OpenCV::~GUI4OpenCV()
 {
     delete ui;
+}
+
+void GUI4OpenCV::on_pushButton_clicked()
+{
+    ui->label_3->setText("Nacisnieto");
 }
