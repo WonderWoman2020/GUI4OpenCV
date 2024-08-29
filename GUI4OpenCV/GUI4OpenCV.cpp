@@ -14,13 +14,14 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     cv::Mat img;
     img = cv::imread("mewa.jpg");
     if (!img.data)
-    {
         cv::namedWindow("No image data");
+    else
+    {
+        cv::namedWindow("Test window");
+        cv::imshow("Test window", img);
     }
-    cv::namedWindow("Test window");
-    cv::imshow("Test window", img);
 
-    QPixmap pm("mewa.jpg");
+    /*QPixmap pm("mewa.jpg");
     ui->label->setPixmap(pm);
     
     cv::Mat greyImg;
@@ -28,7 +29,7 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     cv::imwrite("mewaGrey.jpg", greyImg);
 
     QPixmap pm2("mewaGrey.jpg");
-    ui->label_2->setPixmap(pm2);
+    ui->label_2->setPixmap(pm2);*/
 
     const QString debugMessagePattern = "Qt at [%{time h:mm:ss.zzz}], %{type}: %{message}";
 
@@ -43,7 +44,7 @@ GUI4OpenCV::~GUI4OpenCV()
     delete ui;
 }
 
-void GUI4OpenCV::on_pushButton_clicked()
+/*void GUI4OpenCV::on_pushButton_clicked()
 {
     ui->label_3->setText("Nacisnieto");
-}
+}*/

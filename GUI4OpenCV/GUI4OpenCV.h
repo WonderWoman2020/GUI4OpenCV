@@ -15,8 +15,8 @@ public:
     GUI4OpenCV(QWidget *parent = nullptr);
     ~GUI4OpenCV();
 
-public slots:
-    void on_pushButton_clicked();
+/*public slots:
+    void on_pushButton_clicked();*/
 
 private:
     Ui::GUI4OpenCVClass *ui;
