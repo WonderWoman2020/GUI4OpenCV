@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QtWidgets/QMainWindow>
+//#include <QtWidgets/QMainWindow>
+#include <QtWidgets>
 #include "ui_GUI4OpenCV.h"
 
 QT_BEGIN_NAMESPACE

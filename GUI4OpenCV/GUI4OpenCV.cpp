@@ -51,7 +51,17 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     outScene->addPixmap(outImage);
     qDebug() << outScene->items().count();
 
+    // Connecting horizontal scroll bars to be in sync, when using either one of them
+    connect(ui->srcImageView->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+        ui->outImageView->horizontalScrollBar(), SLOT(setValue(int)));
+    connect(ui->outImageView->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+        ui->srcImageView->horizontalScrollBar(), SLOT(setValue(int)));
 
+    // Same thing for vertical scroll bars
+    connect(ui->srcImageView->verticalScrollBar(), SIGNAL(valueChanged(int)),
+        ui->outImageView->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->outImageView->verticalScrollBar(), SIGNAL(valueChanged(int)),
+        ui->srcImageView->verticalScrollBar(), SLOT(setValue(int)));
 }
 
 GUI4OpenCV::~GUI4OpenCV()
