@@ -19,6 +19,9 @@ public:
 /*public slots:
     void on_pushButton_clicked();*/
 
+public slots:
+    void on_actionWczytaj_triggered();
+
 private:
     Ui::GUI4OpenCVClass *ui;
 };

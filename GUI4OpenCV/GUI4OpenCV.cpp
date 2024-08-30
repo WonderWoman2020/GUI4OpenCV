@@ -39,12 +39,6 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     QPixmap pm2("mewaGrey.jpg");
     ui->label_2->setPixmap(pm2);*/
 
-    QGraphicsScene* srcScene = new QGraphicsScene(this);
-    ui->srcImageView->setScene(srcScene);
-    QPixmap srcImage("mewa.jpg");
-    srcScene->addPixmap(srcImage);
-    qDebug() << srcScene->items().count();
-
     QGraphicsScene* outScene = new QGraphicsScene(this);
     ui->outImageView->setScene(outScene);
     QPixmap outImage("mewaGrey.jpg");
@@ -73,3 +67,18 @@ GUI4OpenCV::~GUI4OpenCV()
 {
     ui->label_3->setText("Nacisnieto");
 }*/
+
+void GUI4OpenCV::on_actionWczytaj_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+        "/home",
+        tr("Images (*.png *.xpm *.jpg)"));
+
+    qInfo() << fileName;
+
+    QGraphicsScene* srcScene = new QGraphicsScene(this);
+    ui->srcImageView->setScene(srcScene);
+    QPixmap srcImage(fileName);
+    srcScene->addPixmap(srcImage);
+    qDebug() << srcScene->items().count();
+}
