@@ -53,9 +53,9 @@ void GUI4OpenCV::syncImagesScrollBars()
 
 void GUI4OpenCV::on_actionOpen_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Wybierz obraz"),
         "/home",
-        tr("Images (*.png *.xpm *.jpg)"));
+        tr("Images (*.png *.jpg *.jpeg *.bmp)"));
 
     qInfo() << fileName;
 
@@ -68,9 +68,9 @@ void GUI4OpenCV::on_actionOpen_triggered()
 
 void GUI4OpenCV::on_actionSave_triggered()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-        "/home/jana/untitled.png",
-        tr("Images (*.png *.xpm *.jpg)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Zapisz obraz"),
+        "/home/untitled.png",
+        tr("Images (*.png *.jpg *.jpeg *.bmp)"));
 
     qInfo() << fileName;
 
