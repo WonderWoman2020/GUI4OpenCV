@@ -45,6 +45,12 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     srcScene->addPixmap(srcImage);
     qDebug() << srcScene->items().count();
 
+    QGraphicsScene* outScene = new QGraphicsScene(this);
+    ui->outImageView->setScene(outScene);
+    QPixmap outImage("mewaGrey.jpg");
+    outScene->addPixmap(outImage);
+    qDebug() << outScene->items().count();
+
 
 }
 
