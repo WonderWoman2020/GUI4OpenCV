@@ -159,34 +159,34 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuObraz">
+   <widget class="QMenu" name="menuImage">
     <property name="title">
      <string>Obraz</string>
     </property>
-    <addaction name="actionWczytaj"/>
-    <addaction name="actionZapisz"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
    </widget>
-   <widget class="QMenu" name="menuAlgorytmy">
+   <widget class="QMenu" name="menuAlgorithms">
     <property name="title">
      <string>Algorytmy</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuWyjscie">
+   <widget class="QMenu" name="menuExit">
     <property name="title">
      <string>Wyjscie</string>
     </property>
    </widget>
-   <addaction name="menuObraz"/>
-   <addaction name="menuAlgorytmy"/>
-   <addaction name="menuWyjscie"/>
+   <addaction name="menuImage"/>
+   <addaction name="menuAlgorithms"/>
+   <addaction name="menuExit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionWczytaj">
+  <action name="actionOpen">
    <property name="text">
     <string>Wczytaj</string>
    </property>
   </action>
-  <action name="actionZapisz">
+  <action name="actionSave">
    <property name="text">
     <string>Zachowaj</string>
    </property>

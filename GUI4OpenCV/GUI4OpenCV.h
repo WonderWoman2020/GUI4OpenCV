@@ -28,8 +28,8 @@ public:
     void syncImagesScrollBars();
 
 public slots:
-    void on_actionWczytaj_triggered();
-    void on_actionZapisz_triggered();
+    void on_actionOpen_triggered();
+    void on_actionSave_triggered();
 
 private:
     Ui::GUI4OpenCVClass *ui;

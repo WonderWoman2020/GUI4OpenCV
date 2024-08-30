@@ -51,7 +51,7 @@ void GUI4OpenCV::syncImagesScrollBars()
     connect(outVScroll, SIGNAL(valueChanged(int)), srcVScroll, SLOT(setValue(int)));
 }
 
-void GUI4OpenCV::on_actionWczytaj_triggered()
+void GUI4OpenCV::on_actionOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
         "/home",
@@ -66,7 +66,7 @@ void GUI4OpenCV::on_actionWczytaj_triggered()
     qInfo() << srcScene->items().count();
 }
 
-void GUI4OpenCV::on_actionZapisz_triggered()
+void GUI4OpenCV::on_actionSave_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
         "/home/jana/untitled.png",
