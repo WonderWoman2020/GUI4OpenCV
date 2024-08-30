@@ -82,3 +82,12 @@ void GUI4OpenCV::on_actionWczytaj_triggered()
     srcScene->addPixmap(srcImage);
     qDebug() << srcScene->items().count();
 }
+
+void GUI4OpenCV::on_actionZapisz_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+        "/home/jana/untitled.png",
+        tr("Images (*.png *.xpm *.jpg)"));
+
+    qInfo() << fileName;
+}

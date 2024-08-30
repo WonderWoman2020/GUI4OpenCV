@@ -21,6 +21,7 @@ public:
 
 public slots:
     void on_actionWczytaj_triggered();
+    void on_actionZapisz_triggered();
 
 private:
     Ui::GUI4OpenCVClass *ui;
