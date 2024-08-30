@@ -11,6 +11,14 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
 {
     ui->setupUi(this);
 
+    const QString debugMessagePattern = "Qt at [%{time h:mm:ss.zzz}], %{type}: %{message}";
+
+    qSetMessagePattern(debugMessagePattern);
+    qDebug() << "Debug info";
+    qInfo() << "Info only";
+    qCritical() << "Critical info";
+
+
     cv::Mat img;
     img = cv::imread("mewa.jpg");
     if (!img.data)
@@ -23,7 +31,7 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
 
     /*QPixmap pm("mewa.jpg");
     ui->label->setPixmap(pm);
-    
+
     cv::Mat greyImg;
     cv::cvtColor(img, greyImg, cv::COLOR_BGR2GRAY);
     cv::imwrite("mewaGrey.jpg", greyImg);
@@ -31,12 +39,13 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     QPixmap pm2("mewaGrey.jpg");
     ui->label_2->setPixmap(pm2);*/
 
-    const QString debugMessagePattern = "Qt at [%{time h:mm:ss.zzz}], %{type}: %{message}";
+    QGraphicsScene* srcScene = new QGraphicsScene(this);
+    ui->srcImageView->setScene(srcScene);
+    QPixmap srcImage("mewa.jpg");
+    srcScene->addPixmap(srcImage);
+    qDebug() << srcScene->items().count();
 
-    qSetMessagePattern(debugMessagePattern);
-    qDebug() << "Debug info";
-    qInfo() << "Info only";
-    qCritical() << "Critical info";
+
 }
 
 GUI4OpenCV::~GUI4OpenCV()
