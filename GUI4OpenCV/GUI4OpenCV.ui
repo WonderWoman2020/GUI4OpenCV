@@ -14,7 +14,7 @@
    <string>GUI4OpenCV</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0,1,0,0">
     <item row="1" column="2">
      <layout class="QHBoxLayout" name="imagesRow">
       <item>
