@@ -51,6 +51,8 @@ void GUI4OpenCV::on_actionOpen_triggered()
 
     qInfo() << fileName;
 
+    this->srcImage.release();
+    this->outImage.release();
     this->srcImage = cv::imread(fileName.toStdString());
     this->srcImage.copyTo(this->outImage);
 
