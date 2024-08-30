@@ -7,6 +7,9 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->srcImageView->setScene(&this->srcScene);
+    ui->outImageView->setScene(&this->outScene);
+
     this->setDebugPrintingPatterns();
     this->syncImagesScrollBars();
 }
@@ -62,8 +65,8 @@ void GUI4OpenCV::on_actionOpen_triggered()
     this->srcImage = cv::imread(fileName.toStdString());
     QPixmap srcImagePix = ImageConverter::convertMatToQPixmap(this->srcImage);
 
-    QGraphicsScene* srcScene = new QGraphicsScene(this);
-    ui->srcImageView->setScene(srcScene);
+    QGraphicsScene* srcScene = ui->srcImageView->scene();
+    srcScene->clear();
     srcScene->addPixmap(srcImagePix);
 
     qInfo() << srcScene->items().count();

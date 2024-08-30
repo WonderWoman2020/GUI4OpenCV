@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <QFileDialog>
 #include <QScrollBar>
+#include <QGraphicsScene>
 
 #include "ui_GUI4OpenCV.h"
 
@@ -38,4 +39,7 @@ private:
 
     cv::Mat srcImage;
     cv::Mat outImage;
+
+    QGraphicsScene srcScene;
+    QGraphicsScene outScene;
 };
