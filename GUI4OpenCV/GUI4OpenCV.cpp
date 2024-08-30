@@ -59,10 +59,13 @@ void GUI4OpenCV::on_actionOpen_triggered()
 
     qInfo() << fileName;
 
+    this->srcImage = cv::imread(fileName.toStdString());
+    QPixmap srcImagePix = ImageConverter::convertMatToQPixmap(this->srcImage);
+
     QGraphicsScene* srcScene = new QGraphicsScene(this);
     ui->srcImageView->setScene(srcScene);
-    QPixmap srcImage(fileName);
-    srcScene->addPixmap(srcImage);
+    srcScene->addPixmap(srcImagePix);
+
     qInfo() << srcScene->items().count();
 }
 

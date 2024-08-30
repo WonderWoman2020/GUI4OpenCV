@@ -12,6 +12,8 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 
+#include "ImagesConverter.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE
@@ -33,4 +35,7 @@ public slots:
 
 private:
     Ui::GUI4OpenCVClass *ui;
+
+    cv::Mat srcImage;
+    cv::Mat outImage;
 };

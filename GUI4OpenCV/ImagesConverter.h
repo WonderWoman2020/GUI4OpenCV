@@ -10,7 +10,7 @@
 class ImageConverter
 {
 public:
-	static cv::Mat& convertQPixmapToMat(QPixmap& image);
-	static QPixmap& convertMatToQPixmap(cv::Mat& image);
+	static cv::Mat convertQPixmapToMat(QPixmap& image);
+	static QPixmap convertMatToQPixmap(cv::Mat& image);
 
 };
