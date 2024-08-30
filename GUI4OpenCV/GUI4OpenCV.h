@@ -1,11 +1,9 @@
 #pragma once
 
-//#include <QtWidgets>
 #include <QtWidgets/QMainWindow>
 #include <QPixmap>
 #include <QFileDialog>
 #include <QScrollBar>
-
 
 #include "ui_GUI4OpenCV.h"
 
@@ -26,8 +24,8 @@ public:
     GUI4OpenCV(QWidget *parent = nullptr);
     ~GUI4OpenCV();
 
-/*public slots:
-    void on_pushButton_clicked();*/
+    void setDebugPrintingPatterns();
+    void syncImagesScrollBars();
 
 public slots:
     void on_actionWczytaj_triggered();
