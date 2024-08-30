@@ -105,7 +105,11 @@
     <QtUic Include="GUI4OpenCV.ui" />
     <QtMoc Include="GUI4OpenCV.h" />
     <ClCompile Include="GUI4OpenCV.cpp" />
+    <ClCompile Include="ImagesConverter.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImagesConverter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -1,8 +1,18 @@
 #pragma once
 
-//#include <QtWidgets/QMainWindow>
-#include <QtWidgets>
+//#include <QtWidgets>
+#include <QtWidgets/QMainWindow>
+#include <QPixmap>
+#include <QFileDialog>
+#include <QScrollBar>
+
+
 #include "ui_GUI4OpenCV.h"
+
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };

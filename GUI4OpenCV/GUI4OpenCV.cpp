@@ -1,9 +1,5 @@
 #include "GUI4OpenCV.h"
 
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgcodecs.hpp>
-#include <opencv2/imgproc.hpp>
 
 GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     : QMainWindow(parent)
