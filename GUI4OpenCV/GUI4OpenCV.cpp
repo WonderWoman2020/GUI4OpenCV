@@ -26,17 +26,6 @@ void GUI4OpenCV::setDebugPrintingPatterns()
     qDebug() << "Debug info";
     qInfo() << "Info only";
     qCritical() << "Critical info";
-
-    // TODO delete later, openCV testing
-    cv::Mat img;
-    img = cv::imread("mewa.jpg");
-    if (!img.data)
-        cv::namedWindow("No image data");
-    else
-    {
-        cv::namedWindow("Test window");
-        cv::imshow("Test window", img);
-    }
 }
 
 void GUI4OpenCV::syncImagesScrollBars()
@@ -63,13 +52,19 @@ void GUI4OpenCV::on_actionOpen_triggered()
     qInfo() << fileName;
 
     this->srcImage = cv::imread(fileName.toStdString());
-    QPixmap srcImagePix = ImageConverter::convertMatToQPixmap(this->srcImage);
+    this->srcImage.copyTo(this->outImage);
 
+    QPixmap srcImagePix = ImageConverter::convertMatToQPixmap(this->srcImage);
     QGraphicsScene* srcScene = ui->srcImageView->scene();
     srcScene->clear();
     srcScene->addPixmap(srcImagePix);
 
     qInfo() << srcScene->items().count();
+
+    QPixmap outImagePix = ImageConverter::convertMatToQPixmap(this->outImage);
+    QGraphicsScene* outScene = ui->outImageView->scene();
+    outScene->clear();
+    outScene->addPixmap(outImagePix);
 }
 
 void GUI4OpenCV::on_actionSave_triggered()
@@ -80,10 +75,6 @@ void GUI4OpenCV::on_actionSave_triggered()
 
     qInfo() << fileName;
 
-    // TODO change for actual picture, add saving etc.
-    QGraphicsScene* outScene = new QGraphicsScene(this);
-    ui->outImageView->setScene(outScene);
-    QPixmap outImage("mewaGrey.jpg");
-    outScene->addPixmap(outImage);
-    qInfo() << outScene->items().count();
+    QPixmap outImagePix = ImageConverter::convertMatToQPixmap(this->outImage);
+    outImagePix.save(fileName);
 }
