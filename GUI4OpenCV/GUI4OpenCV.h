@@ -31,6 +31,7 @@ public:
     void setDebugPrintingPatterns();
     void syncImagesScrollBars();
     void desyncImagesScrollBars();
+    void setImageInView(QGraphicsView* graphicsView, QPixmap image);
 
 public slots:
     void on_actionSync_triggered();

@@ -26,6 +26,10 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
 GUI4OpenCV::~GUI4OpenCV()
 {
     delete ui;
+
+    // Frees memory of loaded images if any
+    this->srcImage.release();
+    this->outImage.release();
 }
 
 /*
@@ -82,6 +86,16 @@ void GUI4OpenCV::desyncImagesScrollBars()
     disconnect(outVScroll, SIGNAL(valueChanged(int)), srcVScroll, SLOT(setValue(int)));
 }
 
+
+void GUI4OpenCV::setImageInView(QGraphicsView* graphicsView, QPixmap image)
+{
+    QGraphicsScene* scene = graphicsView->scene();
+    scene->clear();    // removes previous image, so images won't stack one on another
+    scene->addPixmap(image);
+
+    qInfo() << scene->items().count();
+}
+
 /*
     Handles syncing images scrolls action.
 */
@@ -98,34 +112,42 @@ void GUI4OpenCV::on_actionSync_triggered()
 */
 void GUI4OpenCV::on_actionOpen_triggered()
 {
-    // Opens a file explorer and gets a path of the image chosen
+    // Opens a file explorer and gets a path of the chosen image
     QString fileName = QFileDialog::getOpenFileName(this, tr("Wybierz obraz"),
         "/home",
         tr("Images (*.png *.jpg *.jpeg *.bmp)"));
 
     qInfo() << fileName;
 
+    // Cancels open action, if user clicked "cancel" and the path is null
+    if (fileName.isNull() || fileName.isEmpty())
+    {
+        QMessageBox::information(this, "Nie wybrano obrazu do otworzenia",
+            "Nie wybrano obrazu wejsciowego do otworzenia. Musisz wybrac jakis obraz wejsciowy, aby go wyswietlic.");
+        return;
+    }
+
+    // Tries to read the chosen file
+    cv::Mat temp = cv::imread(fileName.toStdString());
+    if (temp.empty())
+    {
+        QMessageBox::information(this, "Nie pozyskano danych obrazu",
+            "Nie mozna bylo pozyskac danych obrazu. Upewnij sie, ze podany plik zawiera dane obrazu i ze masz do niego odpowiednie pozwolenia.");
+        temp.release();
+        return;
+    }
+
     // Frees memory of previous loaded images if any
     this->srcImage.release();
     this->outImage.release();
 
     // Stores in memory both source image and a copy of it in out image
-    this->srcImage = cv::imread(fileName.toStdString());
+    this->srcImage = temp;
     this->srcImage.copyTo(this->outImage);
 
-    // Adds source image as QPixmap to the source image view 
-    QPixmap srcImagePix = ImageConverter::convertMatToQPixmap(this->srcImage);
-    QGraphicsScene* srcScene = ui->srcImageView->scene();
-    srcScene->clear();    // removes previous image, so images won't stack one on another
-    srcScene->addPixmap(srcImagePix);
-
-    qInfo() << srcScene->items().count();
-
-    // Adds out image as QPixmap to the out image view 
-    QPixmap outImagePix = ImageConverter::convertMatToQPixmap(this->outImage);
-    QGraphicsScene* outScene = ui->outImageView->scene();
-    outScene->clear();    // removes previous image, so images won't stack one on another
-    outScene->addPixmap(outImagePix);
+    // Adds images to the source and processed image views 
+    this->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
+    this->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
 }
 
 /*
@@ -133,6 +155,7 @@ void GUI4OpenCV::on_actionOpen_triggered()
 */
 void GUI4OpenCV::on_actionSave_triggered()
 {
+    // Checks if there is any out image data to save
     if (this->outImage.empty())
     {
         QMessageBox::information(this, "Brak obrazu do zapisania",
@@ -147,7 +170,27 @@ void GUI4OpenCV::on_actionSave_triggered()
 
     qInfo() << fileName;
 
+    // Cancels save action, if user clicked "cancel" and the path is null
+    if (fileName.isNull() || fileName.isEmpty())
+    {
+        QMessageBox::information(this, "Nie wybrano sciezki do zapisania",
+            "Nie wybrano sciezki do zapisania obrazu. Musisz podac sciezke wraz z nazwa pliku obrazu, aby go zapisac.");
+        return;
+    }
+
     // Stores out image at the chosen path
-    QPixmap outImagePix = ImageConverter::convertMatToQPixmap(this->outImage);
-    outImagePix.save(fileName);
+    bool saved = false;
+    try {
+        saved = cv::imwrite(fileName.toStdString(), this->outImage);
+    }
+    catch (cv::Exception& ex) {
+        QMessageBox::critical(this, "Zapisywanie sie nie powiodlo",
+            "Zapisywanie obrazu sie nie powiodlo. Wyjatek OpenCV: "+QString(ex.what())+QString("."));
+        return;
+    }
+    if (!saved)
+    {
+        QMessageBox::critical(this, "Zapisywanie sie nie powiodlo",
+            "Zapisywanie obrazu sie nie powiodlo. Sprobuj zapisac obraz w innym formacie.");
+    }
 }
