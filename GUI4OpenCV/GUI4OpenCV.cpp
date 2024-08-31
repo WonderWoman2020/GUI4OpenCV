@@ -12,10 +12,6 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     // so it can be processed further by C++ compiler.
     ui->setupUi(this);
 
-    // Sets QGraphicsScenes in both QGraphicsViews - GUI elements for image viewing
-    ui->srcImageView->setScene(&this->srcScene);
-    ui->outImageView->setScene(&this->outScene);
-
     // Sets debug format for this window
     this->setDebugPrintingPatterns();
 
@@ -86,10 +82,26 @@ void GUI4OpenCV::desyncImagesScrollBars()
     disconnect(outVScroll, SIGNAL(valueChanged(int)), srcVScroll, SLOT(setValue(int)));
 }
 
-
+/*
+    Sets image in the QGraphicsView's scene 
+*/
 void GUI4OpenCV::setImageInView(QGraphicsView* graphicsView, QPixmap image)
 {
+    if (graphicsView == nullptr)
+    {
+        QMessageBox::critical(this, "Pokazywanie obrazu sie nie powiodlo",
+            "Pokazywanie obrazu w widoku sie nie powiodlo. Podany widok obrazu QGraphicsView byl nullptr.");
+        return;
+    }
+
     QGraphicsScene* scene = graphicsView->scene();
+    if (scene == nullptr)
+    {
+        scene = new QGraphicsScene(graphicsView);    // Sets the view to be parent object for the scene
+        graphicsView->setScene(scene);
+        qInfo() << "New scene was created. It's parent is "+scene->parent()->objectName();
+    }
+
     scene->clear();    // removes previous image, so images won't stack one on another
     scene->addPixmap(image);
 

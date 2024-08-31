@@ -43,7 +43,4 @@ private:
 
     cv::Mat srcImage;
     cv::Mat outImage;
-
-    QGraphicsScene srcScene;
-    QGraphicsScene outScene;
 };
