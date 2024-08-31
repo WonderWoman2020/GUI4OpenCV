@@ -28,11 +28,6 @@ public:
     GUI4OpenCV(QWidget *parent = nullptr);
     ~GUI4OpenCV();
 
-    void setDebugPrintingPatterns();
-    void syncImagesScrollBars();
-    void desyncImagesScrollBars();
-    void setImageInView(QGraphicsView* graphicsView, QPixmap image);
-
 public slots:
     void on_actionSync_triggered();
     void on_actionOpen_triggered();
@@ -43,4 +38,9 @@ private:
 
     cv::Mat srcImage;
     cv::Mat outImage;
+
+    void setDebugPrintingPatterns();
+    void syncImagesScrollBars();
+    void desyncImagesScrollBars();
+    void setImageInView(QGraphicsView* graphicsView, QPixmap image);
 };
