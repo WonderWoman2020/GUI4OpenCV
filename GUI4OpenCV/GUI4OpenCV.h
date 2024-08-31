@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QScrollBar>
 #include <QGraphicsScene>
+#include <QMessageBox>
 
 #include "ui_GUI4OpenCV.h"
 

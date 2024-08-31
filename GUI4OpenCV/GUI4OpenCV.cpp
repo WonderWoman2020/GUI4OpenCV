@@ -103,6 +103,13 @@ void GUI4OpenCV::on_actionOpen_triggered()
 */
 void GUI4OpenCV::on_actionSave_triggered()
 {
+    if (this->outImage.empty())
+    {
+        QMessageBox::information(this, "Brak obrazu do zapisania",
+            "Nie ma obrazu wyjsciowego do zapisania. Musisz zaladowac najpierw obraz wejsciowy.");
+        return;
+    }
+
     // Opens a file explorer and gets a path of the location chosen to store out image (with a filename)
     QString fileName = QFileDialog::getSaveFileName(this, tr("Zapisz obraz"),
         "/home/untitled.png",
