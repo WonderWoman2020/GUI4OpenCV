@@ -40,12 +40,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ImagesConverter.cpp">
+    <ClCompile Include="ImageConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImagesConverter.h">
+    <ClInclude Include="ImageConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

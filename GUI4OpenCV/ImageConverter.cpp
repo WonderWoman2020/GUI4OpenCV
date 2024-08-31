@@ -1,4 +1,4 @@
-#include "ImagesConverter.h"
+#include "ImageConverter.h"
 
 
 cv::Mat ImageConverter::convertQPixmapToMat(QPixmap& image)

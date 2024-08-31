@@ -13,7 +13,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 
-#include "ImagesConverter.h"
+#include "ImageConverter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
