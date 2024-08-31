@@ -83,21 +83,17 @@ void GUI4OpenCV::desyncImagesScrollBars()
 }
 
 /*
-    Sets image in the QGraphicsView's scene 
+    Sets image in the QGraphicsView's scene.
 */
 void GUI4OpenCV::setImageInView(QGraphicsView* graphicsView, QPixmap image)
 {
     if (graphicsView == nullptr)
-    {
-        QMessageBox::critical(this, "Pokazywanie obrazu sie nie powiodlo",
-            "Pokazywanie obrazu w widoku sie nie powiodlo. Podany widok obrazu QGraphicsView byl nullptr.");
-        return;
-    }
+        throw std::invalid_argument("Parameter 'QGraphicsView* graphicsView' was nullptr.");
 
     QGraphicsScene* scene = graphicsView->scene();
     if (scene == nullptr)
     {
-        scene = new QGraphicsScene(graphicsView);    // Sets the view to be parent object for the scene
+        scene = new QGraphicsScene(graphicsView);    // Sets the view to be parent object for the scene, so memory of the scene object will be managed by parent
         graphicsView->setScene(scene);
         qInfo() << "New scene was created. It's parent is "+scene->parent()->objectName();
     }
@@ -158,8 +154,15 @@ void GUI4OpenCV::on_actionOpen_triggered()
     this->srcImage.copyTo(this->outImage);
 
     // Adds images to the source and processed image views 
-    this->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
-    this->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
+    try {
+        this->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
+        this->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
+    }
+    catch (std::exception& ex)
+    {
+        QMessageBox::critical(this, "Blad interfejsu",
+            "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
+    }
 }
 
 /*
