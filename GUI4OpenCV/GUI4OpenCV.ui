@@ -165,6 +165,7 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="actionSync"/>
    </widget>
    <widget class="QMenu" name="menuAlgorithms">
     <property name="title">
@@ -189,6 +190,14 @@
   <action name="actionSave">
    <property name="text">
     <string>Zachowaj</string>
+   </property>
+  </action>
+  <action name="actionSync">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Synchronizuj przewijanie widokow</string>
    </property>
   </action>
  </widget>

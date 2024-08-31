@@ -63,6 +63,36 @@ void GUI4OpenCV::syncImagesScrollBars()
     connect(outVScroll, SIGNAL(valueChanged(int)), srcVScroll, SLOT(setValue(int)));
 }
 
+
+/*
+    Disables moving corresponding scroll bars of the source and out image views in sync.
+*/
+void GUI4OpenCV::desyncImagesScrollBars()
+{
+    // Disconnecting horizontal scroll bars
+    QScrollBar* srcHScroll = ui->srcImageView->horizontalScrollBar();
+    QScrollBar* outHScroll = ui->outImageView->horizontalScrollBar();
+    disconnect(srcHScroll, SIGNAL(valueChanged(int)), outHScroll, SLOT(setValue(int)));
+    disconnect(outHScroll, SIGNAL(valueChanged(int)), srcHScroll, SLOT(setValue(int)));
+
+    // Same thing for vertical scroll bars
+    QScrollBar* srcVScroll = ui->srcImageView->verticalScrollBar();
+    QScrollBar* outVScroll = ui->outImageView->verticalScrollBar();
+    disconnect(srcVScroll, SIGNAL(valueChanged(int)), outVScroll, SLOT(setValue(int)));
+    disconnect(outVScroll, SIGNAL(valueChanged(int)), srcVScroll, SLOT(setValue(int)));
+}
+
+/*
+    Handles syncing images scrolls action.
+*/
+void GUI4OpenCV::on_actionSync_triggered()
+{
+    if (ui->actionSync->isChecked())
+        this->syncImagesScrollBars();
+    else
+        this->desyncImagesScrollBars();
+}
+
 /*
     Handles opening source image action.
 */

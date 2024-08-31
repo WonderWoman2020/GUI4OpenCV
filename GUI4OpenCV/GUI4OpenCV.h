@@ -30,8 +30,10 @@ public:
 
     void setDebugPrintingPatterns();
     void syncImagesScrollBars();
+    void desyncImagesScrollBars();
 
 public slots:
+    void on_actionSync_triggered();
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
 
