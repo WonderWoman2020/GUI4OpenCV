@@ -100,6 +100,7 @@ void GUI4OpenCV::setImageInView(QGraphicsView* graphicsView, QPixmap image)
 
     scene->clear();    // removes previous image, so images won't stack one on another
     scene->addPixmap(image);
+    scene->setSceneRect(scene->itemsBoundingRect());    // resizes scene, so it is not larger than items (image in this case) it contains
 
     qInfo() << scene->items().count();
 }
