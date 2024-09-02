@@ -105,6 +105,39 @@ void GUI4OpenCV::setImageInView(QGraphicsView* graphicsView, QPixmap image)
     qInfo() << scene->items().count();
 }
 
+void calculateHistogram(cv::Mat& image)
+{
+    std::vector<cv::Mat> bgrPlanes;
+    cv::split(image, bgrPlanes);
+    cv::Mat bHist;
+    int histSize = 256;
+    float range[] = {0, 256};
+    const float* histRange[] = {range};
+    cv::calcHist(&bgrPlanes.at(0), 1, 0, cv::Mat(), bHist, 1, &histSize, histRange);
+
+    int hist_w = 256, hist_h = 200;
+    int bin_w = cvRound((double)hist_w / histSize);
+
+    cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));
+    cv::normalize(bHist, bHist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+    for (int i = 1; i < histSize; i++)
+    {
+        line(histImage, cv::Point(bin_w * (i - 1), hist_h - cvRound(bHist.at<float>(i - 1))),
+            cv::Point(bin_w * (i), hist_h - cvRound(bHist.at<float>(i))),
+            cv::Scalar(255, 0, 0), 2, 8, 0);
+    }
+    cv::imshow("Source image", image);
+    cv::imshow("calcHist Demo", histImage);
+    cv::waitKey();
+
+}
+
+/*void GUI4OpenCV::setHistogramChartInView(QWidget* chartView, std::vector<short>& histogramValues)
+{
+    
+}*/
+
+
 /*
     Handles syncing images scrolls action.
 */
@@ -158,6 +191,7 @@ void GUI4OpenCV::on_actionOpen_triggered()
     try {
         this->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
         this->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
+        calculateHistogram(this->srcImage);
     }
     catch (std::exception& ex)
     {

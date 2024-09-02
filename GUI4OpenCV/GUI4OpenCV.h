@@ -43,4 +43,5 @@ private:
     void syncImagesScrollBars();
     void desyncImagesScrollBars();
     void setImageInView(QGraphicsView* graphicsView, QPixmap image);
+    //void setHistogramChartInView(QWidget* chartView, std::vector<short>& histogramValues);
 };
