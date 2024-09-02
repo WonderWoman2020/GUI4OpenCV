@@ -48,10 +48,58 @@
         <property name="leftMargin">
          <number>0</number>
         </property>
-        <item row="0" column="1">
-         <widget class="QLabel" name="transformFuncTitle">
+        <item row="0" column="2">
+         <widget class="QLabel" name="outHistTitle">
           <property name="text">
-           <string>Funkcja transformujaca</string>
+           <string>Histogram wyjsciowy</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QGraphicsView" name="srcHistView">
+          <property name="minimumSize">
+           <size>
+            <width>258</width>
+            <height>202</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>258</width>
+            <height>202</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QGraphicsView" name="transformFuncView">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>258</width>
+            <height>202</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>258</width>
+            <height>202</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="srcHistTitle">
+          <property name="text">
+           <string>Histogram wejsciowy</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -68,73 +116,25 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>256</width>
-            <height>200</height>
+            <width>258</width>
+            <height>202</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>256</width>
-            <height>200</height>
+            <width>258</width>
+            <height>202</height>
            </size>
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
-         <widget class="QLabel" name="outHistTitle">
+        <item row="0" column="1">
+         <widget class="QLabel" name="transformFuncTitle">
           <property name="text">
-           <string>Histogram wyjsciowy</string>
+           <string>Funkcja transformujaca</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QGraphicsView" name="transformFuncView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>256</width>
-            <height>200</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>256</width>
-            <height>200</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="srcHistTitle">
-          <property name="text">
-           <string>Histogram wejsciowy</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QWidget" name="srcHistView" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>256</width>
-            <height>200</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>256</width>
-            <height>200</height>
-           </size>
           </property>
          </widget>
         </item>

@@ -40,6 +40,7 @@ private:
     cv::Mat outImage;
 
     std::vector<cv::Mat> srcHistograms;
+    cv::Mat srcCurrentHistogram;
     std::vector<cv::Mat> outHistograms;
 
     void setDebugPrintingPatterns();
@@ -47,5 +48,6 @@ private:
     void desyncImagesScrollBars();
     void setImageInView(QGraphicsView* graphicsView, QPixmap image);
     cv::Mat calculateHistogram(cv::Mat& imagePlane, cv::Scalar histColor);
+    void drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor);
     std::vector<cv::Mat> createHistograms(cv::Mat& image);
 };

@@ -118,20 +118,26 @@ cv::Mat GUI4OpenCV::calculateHistogram(cv::Mat& imagePlane, cv::Scalar histColor
     cv::calcHist(&imagePlane, 1, 0, cv::Mat(), planeHist, 1, &histSize, histRange);
 
     // Normalizes histogram data to be 256x200
-    int hist_w = 256, hist_h = 200;
-    int bin_w = cvRound((double)hist_w / histSize);
-    cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));    // Creates 'cv::Mat' image on which histogram chart will be drawn
-    cv::normalize(planeHist, planeHist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+    int histH = 200;
+    cv::normalize(planeHist, planeHist, 0, histH, cv::NORM_MINMAX, -1, cv::Mat());
+
+    return planeHist;
+}
+
+void GUI4OpenCV::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor)
+{
+    int histSize = 256;
+    int bin_w = cvRound((double)histW / histSize);
 
     // Draws histogram chart as an 'cv::Mat' image
     for (int i = 1; i < histSize; i++)
     {
-        cv::line(histImage, cv::Point(bin_w * (i - 1), hist_h - cvRound(planeHist.at<float>(i - 1))),
-            cv::Point(bin_w * (i), hist_h - cvRound(planeHist.at<float>(i))),
+        cv::line(histImage, cv::Point(bin_w * (i - 1), histH - cvRound(histogram.at<float>(i - 1))),
+            cv::Point(bin_w * (i), histH - cvRound(histogram.at<float>(i))),
             histColor, 2, 8, 0);
     }
 
-    return histImage;
+    //return histImage;
 }
 
 /*
@@ -150,7 +156,7 @@ std::vector<cv::Mat> GUI4OpenCV::createHistograms(cv::Mat& image)
     if (bgrPlanes.size() > 3)
         bgrPlanes.erase(bgrPlanes.begin() + 3, bgrPlanes.end());
 
-    // Just hardcoded color values, in which histograms will be drwan
+    // Just hardcoded color values, in which histograms will be drawn
     std::vector<cv::Scalar> colorSpaceColors = { 
         cv::Scalar(255, 0, 0),    // B
         cv::Scalar(0, 255, 0),    // G
@@ -166,12 +172,6 @@ std::vector<cv::Mat> GUI4OpenCV::createHistograms(cv::Mat& image)
         histogramColor = bgrPlanes.size() == 1 ? colorSpaceColors.back() : colorSpaceColors.at(i);    // Sets histogram color to gray or one of BGR colors
         histograms.push_back(this->calculateHistogram(bgrPlanes.at(i), histogramColor));
     }
-
-    cv::imshow("Source image", image);
-    for (int i = 0; i < histograms.size(); i++)
-        cv::imshow("calcHist "+std::to_string(i), histograms.at(i));
-
-    cv::waitKey();
 
     return histograms;
 }
@@ -230,6 +230,14 @@ void GUI4OpenCV::on_actionOpen_triggered()
         this->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
         this->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
         this->srcHistograms = this->createHistograms(this->srcImage);
+
+        cv::Mat histImage(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));    // Creates 'cv::Mat' image on which histogram chart will be drawn
+        this->drawHistogram(this->srcHistograms.at(0), histImage, 256, 200, cv::Scalar(255, 0, 0));
+        this->drawHistogram(this->srcHistograms.at(1), histImage, 256, 200, cv::Scalar(0, 255, 0));
+        this->drawHistogram(this->srcHistograms.at(2), histImage, 256, 200, cv::Scalar(0, 0, 255));
+        this->srcCurrentHistogram = histImage;
+
+        this->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcCurrentHistogram));
     }
     catch (std::exception& ex)
     {
