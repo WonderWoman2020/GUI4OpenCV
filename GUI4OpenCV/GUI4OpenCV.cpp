@@ -105,38 +105,76 @@ void GUI4OpenCV::setImageInView(QGraphicsView* graphicsView, QPixmap image)
     qInfo() << scene->items().count();
 }
 
-void calculateHistogram(cv::Mat& image)
+/*
+    Calculates histogram of one color space provided and draws histogram chart as 'cv::Mat' image.
+*/
+cv::Mat GUI4OpenCV::calculateHistogram(cv::Mat& imagePlane, cv::Scalar histColor)
 {
-    std::vector<cv::Mat> bgrPlanes;
-    cv::split(image, bgrPlanes);
-    cv::Mat bHist;
+    // Calculates histogram of one color space of the image
+    cv::Mat planeHist;
     int histSize = 256;
     float range[] = {0, 256};
     const float* histRange[] = {range};
-    cv::calcHist(&bgrPlanes.at(0), 1, 0, cv::Mat(), bHist, 1, &histSize, histRange);
+    cv::calcHist(&imagePlane, 1, 0, cv::Mat(), planeHist, 1, &histSize, histRange);
 
+    // Normalizes histogram data to be 256x200
     int hist_w = 256, hist_h = 200;
     int bin_w = cvRound((double)hist_w / histSize);
+    cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));    // Creates 'cv::Mat' image on which histogram chart will be drawn
+    cv::normalize(planeHist, planeHist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
 
-    cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));
-    cv::normalize(bHist, bHist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+    // Draws histogram chart as an 'cv::Mat' image
     for (int i = 1; i < histSize; i++)
     {
-        line(histImage, cv::Point(bin_w * (i - 1), hist_h - cvRound(bHist.at<float>(i - 1))),
-            cv::Point(bin_w * (i), hist_h - cvRound(bHist.at<float>(i))),
-            cv::Scalar(255, 0, 0), 2, 8, 0);
+        cv::line(histImage, cv::Point(bin_w * (i - 1), hist_h - cvRound(planeHist.at<float>(i - 1))),
+            cv::Point(bin_w * (i), hist_h - cvRound(planeHist.at<float>(i))),
+            histColor, 2, 8, 0);
     }
-    cv::imshow("Source image", image);
-    cv::imshow("calcHist Demo", histImage);
-    cv::waitKey();
 
+    return histImage;
 }
 
-/*void GUI4OpenCV::setHistogramChartInView(QWidget* chartView, std::vector<short>& histogramValues)
+/*
+    Creates histogram charts as 'cv::Mat' images, of each BGR color spaces of the provided image, or of grayscale image.
+    Histograms stored as 'cv::Mat' images are returned in 'std::vector', and their order is as follows:
+    0 - B, 1 - G, 2 - R, or if image was in grayscale, then the vector contains just one histogram, so:
+    0 - grayscale histogram.
+*/
+std::vector<cv::Mat> GUI4OpenCV::createHistograms(cv::Mat& image)
 {
-    
-}*/
+    // Splits image to planes with just one color space, B, G or R (or grayscale, if provided image has just one color space)
+    std::vector<cv::Mat> bgrPlanes;
+    cv::split(image, bgrPlanes);
 
+    // Deletes alfa channel if present (not from orignal image, just from this copy), so it won't have histogram calculated
+    if (bgrPlanes.size() > 3)
+        bgrPlanes.erase(bgrPlanes.begin() + 3, bgrPlanes.end());
+
+    // Just hardcoded color values, in which histograms will be drwan
+    std::vector<cv::Scalar> colorSpaceColors = { 
+        cv::Scalar(255, 0, 0),    // B
+        cv::Scalar(0, 255, 0),    // G
+        cv::Scalar(0, 0, 255),    // R
+        cv::Scalar(127, 127, 127)    // gray
+    };
+
+    // Calculates histograms of each color space
+    std::vector<cv::Mat> histograms;
+    cv::Scalar histogramColor;
+    for (int i = 0; i < bgrPlanes.size(); i++)
+    {
+        histogramColor = bgrPlanes.size() == 1 ? colorSpaceColors.back() : colorSpaceColors.at(i);    // Sets histogram color to gray or one of BGR colors
+        histograms.push_back(this->calculateHistogram(bgrPlanes.at(i), histogramColor));
+    }
+
+    cv::imshow("Source image", image);
+    for (int i = 0; i < histograms.size(); i++)
+        cv::imshow("calcHist "+std::to_string(i), histograms.at(i));
+
+    cv::waitKey();
+
+    return histograms;
+}
 
 /*
     Handles syncing images scrolls action.
@@ -191,7 +229,7 @@ void GUI4OpenCV::on_actionOpen_triggered()
     try {
         this->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
         this->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
-        calculateHistogram(this->srcImage);
+        this->srcHistograms = this->createHistograms(this->srcImage);
     }
     catch (std::exception& ex)
     {

@@ -39,9 +39,13 @@ private:
     cv::Mat srcImage;
     cv::Mat outImage;
 
+    std::vector<cv::Mat> srcHistograms;
+    std::vector<cv::Mat> outHistograms;
+
     void setDebugPrintingPatterns();
     void syncImagesScrollBars();
     void desyncImagesScrollBars();
     void setImageInView(QGraphicsView* graphicsView, QPixmap image);
-    //void setHistogramChartInView(QWidget* chartView, std::vector<short>& histogramValues);
+    cv::Mat calculateHistogram(cv::Mat& imagePlane, cv::Scalar histColor);
+    std::vector<cv::Mat> createHistograms(cv::Mat& image);
 };
