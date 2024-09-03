@@ -21,8 +21,6 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     this->syncImagesScrollBars();
 
     connect(this, &GUI4OpenCV::srcImageChanged, this, &GUI4OpenCV::onImageChanged);
-    //connect(this, &GUI4OpenCV::outImageChanged, this, &GUI4OpenCV::drawChosenHistograms);
-
 }
 
 GUI4OpenCV::~GUI4OpenCV()

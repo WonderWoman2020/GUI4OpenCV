@@ -32,8 +32,6 @@ void HistogramHandler::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int
             cv::Point(bin_w * (i), histH - cvRound(histogram.at<float>(i))),
             histColor, 2, 8, 0);
     }
-
-    //return histImage;
 }
 
 /*
