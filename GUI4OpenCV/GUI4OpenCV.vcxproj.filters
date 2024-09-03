@@ -57,8 +57,10 @@
     <ClInclude Include="HistogramHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ImageViewHandler.h">
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ImageViewHandler.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </QtMoc>
   </ItemGroup>
 </Project>

@@ -7,10 +7,17 @@
 
 #include <QPixmap>
 #include <QGraphicsView>
+#include <QtCore>
+#include <QScrollBar>
 
 
-class ImageViewHandler
+class ImageViewHandler : public QObject
 {
+	Q_OBJECT
+
 public:
 	void setImageInView(QGraphicsView* graphicsView, QPixmap image);
+
+	void syncImagesScrollBars(QScrollBar* srcHScroll, QScrollBar* outHScroll);
+	void desyncImagesScrollBars(QScrollBar* srcHScroll, QScrollBar* outHScroll);
 };

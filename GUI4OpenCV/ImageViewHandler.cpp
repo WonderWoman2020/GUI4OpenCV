@@ -23,3 +23,22 @@ void ImageViewHandler::setImageInView(QGraphicsView* graphicsView, QPixmap image
 
     qInfo() << scene->items().count();
 }
+
+/*
+    Makes corresponding scroll bars of the source and out image views to move in sync.
+*/
+void ImageViewHandler::syncImagesScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll)
+{
+    connect(firstScroll, SIGNAL(valueChanged(int)), secondScroll, SLOT(setValue(int)));
+    connect(secondScroll, SIGNAL(valueChanged(int)), firstScroll, SLOT(setValue(int)));
+}
+
+
+/*
+    Disables moving corresponding scroll bars of the source and out image views in sync.
+*/
+void ImageViewHandler::desyncImagesScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll)
+{
+    disconnect(firstScroll, SIGNAL(valueChanged(int)), secondScroll, SLOT(setValue(int)));
+    disconnect(secondScroll, SIGNAL(valueChanged(int)), firstScroll, SLOT(setValue(int)));
+}

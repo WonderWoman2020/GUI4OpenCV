@@ -53,25 +53,6 @@ void GUI4OpenCV::setDebugPrintingPatterns()
     qCritical() << "Critical info";
 }
 
-/*
-    Makes corresponding scroll bars of the source and out image views to move in sync.
-*/
-void GUI4OpenCV::syncImagesScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll)
-{
-    connect(firstScroll, SIGNAL(valueChanged(int)), secondScroll, SLOT(setValue(int)));
-    connect(secondScroll, SIGNAL(valueChanged(int)), firstScroll, SLOT(setValue(int)));
-}
-
-
-/*
-    Disables moving corresponding scroll bars of the source and out image views in sync.
-*/
-void GUI4OpenCV::desyncImagesScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll)
-{
-    disconnect(firstScroll, SIGNAL(valueChanged(int)), secondScroll, SLOT(setValue(int)));
-    disconnect(secondScroll, SIGNAL(valueChanged(int)), firstScroll, SLOT(setValue(int)));
-}
-
 
 /*
     Handles syncing images scrolls action.
@@ -88,13 +69,13 @@ void GUI4OpenCV::on_actionSync_triggered()
 
     if (ui->actionSync->isChecked())
     {
-        this->syncImagesScrollBars(srcHScroll, outHScroll);
-        this->syncImagesScrollBars(srcVScroll, outVScroll);
+        this->imageViewHandler->syncImagesScrollBars(srcHScroll, outHScroll);
+        this->imageViewHandler->syncImagesScrollBars(srcVScroll, outVScroll);
     }
     else
     {
-        this->desyncImagesScrollBars(srcHScroll, outHScroll);
-        this->desyncImagesScrollBars(srcVScroll, outVScroll);
+        this->imageViewHandler->desyncImagesScrollBars(srcHScroll, outHScroll);
+        this->imageViewHandler->desyncImagesScrollBars(srcVScroll, outVScroll);
     }
 }
 

@@ -113,7 +113,7 @@
   <ItemGroup>
     <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
-    <ClInclude Include="ImageViewHandler.h" />
+    <QtMoc Include="ImageViewHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
