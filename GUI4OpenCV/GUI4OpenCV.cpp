@@ -180,7 +180,7 @@ void GUI4OpenCV::on_actionSave_triggered()
 /*
     Draws histograms and sets them in the histogram views.
 */
-void GUI4OpenCV::drawChosenHistograms()
+cv::Mat GUI4OpenCV::drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale)
 {
     // Just hardcoded color values, in which histograms will be drawn
     std::vector<cv::Scalar> colorSpaceColors = {
@@ -191,37 +191,27 @@ void GUI4OpenCV::drawChosenHistograms()
     };
 
     // Prepares empty white 'cv::Mat' image, which is a canvas for the histogram chart
-    this->srcHistogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
-    this->outHistogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
+    cv::Mat histogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
 
-    // Draws histograms of both source and out image
-    for (int i = 0; i < 2; i++)
+    // Draws grayscale histogram
+    if (histograms.size() == 1)
     {
-        // Chooses which histogram to set to draw (source image histogram is created in the first for-loop iteration, then out image histogram)
-        cv::Mat histogramImage = (i == 0 ? this->srcHistogramImage : this->outHistogramImage);
-        std::vector<cv::Mat> histograms = (i == 0 ? this->srcHistograms : this->outHistograms);
-        QGraphicsView* histView = (i == 0 ? ui->srcHistView : ui->outHistView);
-
-        // Draws grayscale histogram
-        if (histograms.size() == 1)
-        {
+        if(grayscale)
             this->histogramHandler->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.back());
-            this->imageViewHandler->setImageInView(histView, ImageConverter::convertMatToQPixmap(histogramImage));
-            return;
-        }
-
-        // Draws BGR histograms, according to which color spaces have been chosen
-        if (ui->actionHistB->isChecked() && histograms.size() > 0)
-            this->histogramHandler->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.at(0));
-
-        if (ui->actionHistG->isChecked() && histograms.size() > 1)
-            this->histogramHandler->drawHistogram(histograms.at(1), histogramImage, 256, 200, colorSpaceColors.at(1));
-
-        if (ui->actionHistR->isChecked() && histograms.size() > 2)
-            this->histogramHandler->drawHistogram(histograms.at(2), histogramImage, 256, 200, colorSpaceColors.at(2));
-
-        this->imageViewHandler->setImageInView(histView, ImageConverter::convertMatToQPixmap(histogramImage));
+        return histogramImage;
     }
+
+    // Draws BGR histograms, according to which color spaces have been chosen
+    if (b && histograms.size() > 0)
+        this->histogramHandler->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.at(0));
+
+    if (g && histograms.size() > 1)
+        this->histogramHandler->drawHistogram(histograms.at(1), histogramImage, 256, 200, colorSpaceColors.at(1));
+
+    if (r && histograms.size() > 2)
+        this->histogramHandler->drawHistogram(histograms.at(2), histogramImage, 256, 200, colorSpaceColors.at(2));
+
+    return histogramImage;
 }
 
 void GUI4OpenCV::onImageChanged()
@@ -229,26 +219,38 @@ void GUI4OpenCV::onImageChanged()
     // Calculates all histograms
     this->srcHistograms = this->histogramHandler->calculateHistograms(this->srcImage);
     this->outHistograms = this->histogramHandler->calculateHistograms(this->outImage);
+
+    this->onHistogramChanged();
+}
+
+void GUI4OpenCV::onHistogramChanged()
+{
     // Draws histograms and sets them in the histogram views
-    this->drawChosenHistograms();
+    this->srcHistogramImage = this->drawChosenHistograms(this->srcHistograms,
+        ui->actionHistB->isChecked(), ui->actionHistG->isChecked(), ui->actionHistR->isChecked(), ui->actionHistGrayscale->isChecked());
+    this->imageViewHandler->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
+
+    this->outHistogramImage = this->drawChosenHistograms(this->outHistograms,
+        ui->actionHistB->isChecked(), ui->actionHistG->isChecked(), ui->actionHistR->isChecked(), ui->actionHistGrayscale->isChecked());
+    this->imageViewHandler->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
 }
 
 void GUI4OpenCV::on_actionHistB_triggered()
 {
-    this->drawChosenHistograms();
+    this->onHistogramChanged();
 }
 
 void GUI4OpenCV::on_actionHistG_triggered()
 {
-    this->drawChosenHistograms();
+    this->onHistogramChanged();
 }
 
 void GUI4OpenCV::on_actionHistR_triggered()
 {
-    this->drawChosenHistograms();
+    this->onHistogramChanged();
 }
 
 void GUI4OpenCV::on_actionHistGrayscale_triggered()
 {
-    this->drawChosenHistograms();
+    this->onHistogramChanged();
 }
