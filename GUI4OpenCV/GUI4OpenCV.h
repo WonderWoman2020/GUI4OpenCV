@@ -15,6 +15,7 @@
 #include <opencv2/imgproc.hpp>
 
 #include "ImageConverter.h"
+#include "HistogramHandler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
@@ -45,6 +46,8 @@ signals:
 private:
     Ui::GUI4OpenCVClass *ui;
 
+    HistogramHandler* histogramHandler;
+
     cv::Mat srcImage;
     cv::Mat outImage;
 
@@ -58,10 +61,6 @@ private:
     void syncImagesScrollBars();
     void desyncImagesScrollBars();
     void setImageInView(QGraphicsView* graphicsView, QPixmap image);
-
-    cv::Mat calculateHistogram(cv::Mat& imagePlane, cv::Scalar histColor);
-    std::vector<cv::Mat> calculateHistograms(cv::Mat& image);
-    void drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor);
 
     void drawChosenHistograms();
 

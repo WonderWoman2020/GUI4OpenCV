@@ -43,9 +43,15 @@
     <ClCompile Include="ImageConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HistogramHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HistogramHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

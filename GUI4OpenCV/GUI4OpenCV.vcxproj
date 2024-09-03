@@ -105,10 +105,12 @@
     <QtUic Include="GUI4OpenCV.ui" />
     <QtMoc Include="GUI4OpenCV.h" />
     <ClCompile Include="GUI4OpenCV.cpp" />
+    <ClCompile Include="HistogramHandler.cpp" />
     <ClCompile Include="ImageConverter.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
