@@ -16,6 +16,7 @@
 
 #include "ImageConverter.h"
 #include "HistogramHandler.h"
+#include "ImageViewHandler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
@@ -47,6 +48,7 @@ private:
     Ui::GUI4OpenCVClass *ui;
 
     HistogramHandler* histogramHandler;
+    ImageViewHandler* imageViewHandler;
 
     cv::Mat srcImage;
     cv::Mat outImage;
@@ -60,7 +62,6 @@ private:
     void setDebugPrintingPatterns();
     void syncImagesScrollBars();
     void desyncImagesScrollBars();
-    void setImageInView(QGraphicsView* graphicsView, QPixmap image);
 
     void drawChosenHistograms();
 

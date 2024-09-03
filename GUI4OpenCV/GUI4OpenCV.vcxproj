@@ -107,11 +107,13 @@
     <ClCompile Include="GUI4OpenCV.cpp" />
     <ClCompile Include="HistogramHandler.cpp" />
     <ClCompile Include="ImageConverter.cpp" />
+    <ClCompile Include="ImageViewHandler.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
+    <ClInclude Include="ImageViewHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

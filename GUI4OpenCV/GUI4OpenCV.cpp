@@ -13,6 +13,7 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     ui->setupUi(this);
 
     this->histogramHandler = new HistogramHandler();
+    this->imageViewHandler = new ImageViewHandler();
 
     // Sets debug format for this window
     this->setDebugPrintingPatterns();
@@ -28,6 +29,7 @@ GUI4OpenCV::~GUI4OpenCV()
     delete ui;
 
     delete this->histogramHandler;
+    delete this->imageViewHandler;
 
     // Frees memory of loaded images if any
     this->srcImage.release();
@@ -88,28 +90,6 @@ void GUI4OpenCV::desyncImagesScrollBars()
     disconnect(outVScroll, SIGNAL(valueChanged(int)), srcVScroll, SLOT(setValue(int)));
 }
 
-/*
-    Sets image in the QGraphicsView's scene.
-*/
-void GUI4OpenCV::setImageInView(QGraphicsView* graphicsView, QPixmap image)
-{
-    if (graphicsView == nullptr)
-        throw std::invalid_argument("Parameter 'QGraphicsView* graphicsView' was nullptr.");
-
-    QGraphicsScene* scene = graphicsView->scene();
-    if (scene == nullptr)
-    {
-        scene = new QGraphicsScene(graphicsView);    // Sets the view to be parent object for the scene, so memory of the scene object will be managed by parent
-        graphicsView->setScene(scene);
-        qInfo() << "New scene was created. It's parent is "+scene->parent()->objectName();
-    }
-
-    scene->clear();    // removes previous image, so images won't stack one on another
-    scene->addPixmap(image);
-    scene->setSceneRect(scene->itemsBoundingRect());    // resizes scene, so it is not larger than items (image in this case) it contains
-
-    qInfo() << scene->items().count();
-}
 
 /*
     Handles syncing images scrolls action.
@@ -162,8 +142,8 @@ void GUI4OpenCV::on_actionOpen_triggered()
 
     // Adds images to the source and processed image views 
     try {
-        this->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
-        this->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
+        this->imageViewHandler->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
+        this->imageViewHandler->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
     }
     catch (std::exception& ex)
     {
@@ -239,7 +219,7 @@ void GUI4OpenCV::drawChosenHistograms()
     if (this->srcHistograms.size() == 1)
     {
         this->histogramHandler->drawHistogram(this->srcHistograms.at(0), this->srcHistogramImage, 256, 200, colorSpaceColors.back());
-        this->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
+        this->imageViewHandler->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
     }
     else
     {
@@ -252,14 +232,14 @@ void GUI4OpenCV::drawChosenHistograms()
         if (ui->actionHistR->isChecked() && this->srcHistograms.size() > 2)
             this->histogramHandler->drawHistogram(this->srcHistograms.at(2), this->srcHistogramImage, 256, 200, colorSpaceColors.at(2));
 
-        this->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
+        this->imageViewHandler->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
     }
 
     // Draws out image histogram
     if (this->outHistograms.size() == 1)
     {
         this->histogramHandler->drawHistogram(this->outHistograms.at(0), this->outHistogramImage, 256, 200, colorSpaceColors.back());
-        this->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
+        this->imageViewHandler->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
     }
     else
     {
@@ -272,7 +252,7 @@ void GUI4OpenCV::drawChosenHistograms()
         if (ui->actionHistR->isChecked() && this->outHistograms.size() > 2)
             this->histogramHandler->drawHistogram(this->outHistograms.at(2), this->outHistogramImage, 256, 200, colorSpaceColors.at(2));
 
-        this->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
+        this->imageViewHandler->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
     }
 }
 
