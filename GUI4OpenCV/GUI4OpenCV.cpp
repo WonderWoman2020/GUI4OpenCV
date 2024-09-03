@@ -177,43 +177,6 @@ void GUI4OpenCV::on_actionSave_triggered()
     }
 }
 
-/*
-    Draws histograms and sets them in the histogram views.
-*/
-cv::Mat GUI4OpenCV::drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale)
-{
-    // Just hardcoded color values, in which histograms will be drawn
-    std::vector<cv::Scalar> colorSpaceColors = {
-        cv::Scalar(255, 0, 0),    // B
-        cv::Scalar(0, 255, 0),    // G
-        cv::Scalar(0, 0, 255),    // R
-        cv::Scalar(127, 127, 127)    // gray
-    };
-
-    // Prepares empty white 'cv::Mat' image, which is a canvas for the histogram chart
-    cv::Mat histogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
-
-    // Draws grayscale histogram
-    if (histograms.size() == 1)
-    {
-        if(grayscale)
-            this->histogramHandler->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.back());
-        return histogramImage;
-    }
-
-    // Draws BGR histograms, according to which color spaces have been chosen
-    if (b && histograms.size() > 0)
-        this->histogramHandler->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.at(0));
-
-    if (g && histograms.size() > 1)
-        this->histogramHandler->drawHistogram(histograms.at(1), histogramImage, 256, 200, colorSpaceColors.at(1));
-
-    if (r && histograms.size() > 2)
-        this->histogramHandler->drawHistogram(histograms.at(2), histogramImage, 256, 200, colorSpaceColors.at(2));
-
-    return histogramImage;
-}
-
 void GUI4OpenCV::onImageChanged()
 {
     // Calculates all histograms
@@ -226,11 +189,11 @@ void GUI4OpenCV::onImageChanged()
 void GUI4OpenCV::onHistogramChanged()
 {
     // Draws histograms and sets them in the histogram views
-    this->srcHistogramImage = this->drawChosenHistograms(this->srcHistograms,
+    this->srcHistogramImage = this->histogramHandler->drawChosenHistograms(this->srcHistograms,
         ui->actionHistB->isChecked(), ui->actionHistG->isChecked(), ui->actionHistR->isChecked(), ui->actionHistGrayscale->isChecked());
     this->imageViewHandler->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
 
-    this->outHistogramImage = this->drawChosenHistograms(this->outHistograms,
+    this->outHistogramImage = this->histogramHandler->drawChosenHistograms(this->outHistograms,
         ui->actionHistB->isChecked(), ui->actionHistG->isChecked(), ui->actionHistR->isChecked(), ui->actionHistGrayscale->isChecked());
     this->imageViewHandler->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
 }

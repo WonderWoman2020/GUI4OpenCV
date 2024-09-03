@@ -12,4 +12,5 @@ public:
     cv::Mat calculateHistogram(cv::Mat& imagePlane, cv::Scalar histColor);
     std::vector<cv::Mat> calculateHistograms(cv::Mat& image);
     void drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor);
+    cv::Mat drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale);
 };

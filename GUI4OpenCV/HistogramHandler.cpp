@@ -20,20 +20,6 @@ cv::Mat HistogramHandler::calculateHistogram(cv::Mat& imagePlane, cv::Scalar his
     return planeHist;
 }
 
-void HistogramHandler::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor)
-{
-    int histSize = 256;
-    int bin_w = cvRound((double)histW / histSize);
-
-    // Draws histogram chart as an 'cv::Mat' image
-    for (int i = 1; i < histSize; i++)
-    {
-        cv::line(histImage, cv::Point(bin_w * (i - 1), histH - cvRound(histogram.at<float>(i - 1))),
-            cv::Point(bin_w * (i), histH - cvRound(histogram.at<float>(i))),
-            histColor, 2, 8, 0);
-    }
-}
-
 /*
     Creates histogram charts as 'cv::Mat' images, of each BGR color spaces of the provided image, or of grayscale image.
     Histograms stored as 'cv::Mat' images are returned in 'std::vector', and their order is as follows:
@@ -68,4 +54,55 @@ std::vector<cv::Mat> HistogramHandler::calculateHistograms(cv::Mat& image)
     }
 
     return histograms;
+}
+
+void HistogramHandler::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor)
+{
+    int histSize = 256;
+    int bin_w = cvRound((double)histW / histSize);
+
+    // Draws histogram chart as an 'cv::Mat' image
+    for (int i = 1; i < histSize; i++)
+    {
+        cv::line(histImage, cv::Point(bin_w * (i - 1), histH - cvRound(histogram.at<float>(i - 1))),
+            cv::Point(bin_w * (i), histH - cvRound(histogram.at<float>(i))),
+            histColor, 2, 8, 0);
+    }
+}
+
+/*
+    Draws histograms according to which color spaces have been chosen.
+*/
+cv::Mat HistogramHandler::drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale)
+{
+    // Just hardcoded color values, in which histograms will be drawn
+    std::vector<cv::Scalar> colorSpaceColors = {
+        cv::Scalar(255, 0, 0),    // B
+        cv::Scalar(0, 255, 0),    // G
+        cv::Scalar(0, 0, 255),    // R
+        cv::Scalar(127, 127, 127)    // gray
+    };
+
+    // Prepares empty white 'cv::Mat' image, which is a canvas for the histogram chart
+    cv::Mat histogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
+
+    // Draws grayscale histogram
+    if (histograms.size() == 1)
+    {
+        if (grayscale)
+            this->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.back());
+        return histogramImage;
+    }
+
+    // Draws BGR histograms, according to which color spaces have been chosen
+    if (b && histograms.size() > 0)
+        this->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.at(0));
+
+    if (g && histograms.size() > 1)
+        this->drawHistogram(histograms.at(1), histogramImage, 256, 200, colorSpaceColors.at(1));
+
+    if (r && histograms.size() > 2)
+        this->drawHistogram(histograms.at(2), histogramImage, 256, 200, colorSpaceColors.at(2));
+
+    return histogramImage;
 }

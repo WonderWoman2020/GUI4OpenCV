@@ -60,7 +60,6 @@ private:
     cv::Mat outHistogramImage;
 
     void setDebugPrintingPatterns();
-    cv::Mat drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale);
     void onImageChanged();
     void onHistogramChanged();
 };
