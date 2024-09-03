@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ParametersWindow.cpp" />
     <QtRcc Include="GUI4OpenCV.qrc" />
     <QtUic Include="GUI4OpenCV.ui" />
     <QtMoc Include="GUI4OpenCV.h" />
@@ -109,10 +110,12 @@
     <ClCompile Include="ImageConverter.cpp" />
     <ClCompile Include="ImageViewHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="ParametersWindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
+    <QtMoc Include="ParametersWindow.h" />
     <QtMoc Include="ImageViewHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
