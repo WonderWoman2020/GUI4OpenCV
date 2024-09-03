@@ -166,14 +166,18 @@
      <string>Algorytmy</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuExit">
+   <widget class="QMenu" name="menuOutput">
     <property name="title">
      <string>Wyjscie</string>
     </property>
+    <addaction name="actionHistB"/>
+    <addaction name="actionHistG"/>
+    <addaction name="actionHistR"/>
+    <addaction name="actionHistGrayscale"/>
    </widget>
    <addaction name="menuImage"/>
    <addaction name="menuAlgorithms"/>
-   <addaction name="menuExit"/>
+   <addaction name="menuOutput"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -192,6 +196,47 @@
    </property>
    <property name="text">
     <string>Synchronizuj przewijanie widokow</string>
+   </property>
+  </action>
+  <action name="actionHistR">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Histogram skladowej R</string>
+   </property>
+  </action>
+  <action name="actionHistB">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Histogram skladowej B</string>
+   </property>
+  </action>
+  <action name="actionHistG">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Histogram skladowej G</string>
+   </property>
+  </action>
+  <action name="actionHistGrayscale">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Histogram skali szarosci</string>
    </property>
   </action>
  </widget>

@@ -33,6 +33,15 @@ public slots:
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
 
+    void on_actionHistB_triggered();
+    void on_actionHistG_triggered();
+    void on_actionHistR_triggered();
+    void on_actionHistGrayscale_triggered();
+
+signals:
+    void srcImageChanged();
+    void outImageChanged();
+
 private:
     Ui::GUI4OpenCVClass *ui;
 
@@ -40,14 +49,21 @@ private:
     cv::Mat outImage;
 
     std::vector<cv::Mat> srcHistograms;
-    cv::Mat srcCurrentHistogram;
     std::vector<cv::Mat> outHistograms;
+
+    cv::Mat srcHistogramImage;
+    cv::Mat outHistogramImage;
 
     void setDebugPrintingPatterns();
     void syncImagesScrollBars();
     void desyncImagesScrollBars();
     void setImageInView(QGraphicsView* graphicsView, QPixmap image);
+
     cv::Mat calculateHistogram(cv::Mat& imagePlane, cv::Scalar histColor);
+    std::vector<cv::Mat> calculateHistograms(cv::Mat& image);
     void drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor);
-    std::vector<cv::Mat> createHistograms(cv::Mat& image);
+
+    void drawChosenHistograms();
+
+    void onImageChanged();
 };

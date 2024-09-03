@@ -17,6 +17,10 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
 
     // Sets scrolls to be in sync by default
     this->syncImagesScrollBars();
+
+    connect(this, &GUI4OpenCV::srcImageChanged, this, &GUI4OpenCV::onImageChanged);
+    //connect(this, &GUI4OpenCV::outImageChanged, this, &GUI4OpenCV::drawChosenHistograms);
+
 }
 
 GUI4OpenCV::~GUI4OpenCV()
@@ -146,7 +150,7 @@ void GUI4OpenCV::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW
     0 - B, 1 - G, 2 - R, or if image was in grayscale, then the vector contains just one histogram, so:
     0 - grayscale histogram.
 */
-std::vector<cv::Mat> GUI4OpenCV::createHistograms(cv::Mat& image)
+std::vector<cv::Mat> GUI4OpenCV::calculateHistograms(cv::Mat& image)
 {
     // Splits image to planes with just one color space, B, G or R (or grayscale, if provided image has just one color space)
     std::vector<cv::Mat> bgrPlanes;
@@ -229,21 +233,15 @@ void GUI4OpenCV::on_actionOpen_triggered()
     try {
         this->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
         this->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
-        this->srcHistograms = this->createHistograms(this->srcImage);
-
-        cv::Mat histImage(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));    // Creates 'cv::Mat' image on which histogram chart will be drawn
-        this->drawHistogram(this->srcHistograms.at(0), histImage, 256, 200, cv::Scalar(255, 0, 0));
-        this->drawHistogram(this->srcHistograms.at(1), histImage, 256, 200, cv::Scalar(0, 255, 0));
-        this->drawHistogram(this->srcHistograms.at(2), histImage, 256, 200, cv::Scalar(0, 0, 255));
-        this->srcCurrentHistogram = histImage;
-
-        this->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcCurrentHistogram));
     }
     catch (std::exception& ex)
     {
         QMessageBox::critical(this, "Blad interfejsu",
             "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
+        return;
     }
+
+    emit this->srcImageChanged();
 }
 
 /*
@@ -289,4 +287,88 @@ void GUI4OpenCV::on_actionSave_triggered()
         QMessageBox::critical(this, "Zapisywanie sie nie powiodlo",
             "Zapisywanie obrazu sie nie powiodlo. Sprobuj zapisac obraz w innym formacie.");
     }
+}
+
+void GUI4OpenCV::drawChosenHistograms()
+{
+    // Just hardcoded color values, in which histograms will be drawn
+    std::vector<cv::Scalar> colorSpaceColors = {
+        cv::Scalar(255, 0, 0),    // B
+        cv::Scalar(0, 255, 0),    // G
+        cv::Scalar(0, 0, 255),    // R
+        cv::Scalar(127, 127, 127)    // gray
+    };
+
+    this->srcHistogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
+    this->outHistogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
+
+    //std::vector<cv::Mat> histogramsImages;
+
+    // Draws source image histogram
+    if (this->srcHistograms.size() == 1)
+    {
+        this->drawHistogram(this->srcHistograms.at(0), this->srcHistogramImage, 256, 200, colorSpaceColors.back());
+        this->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
+    }
+    else
+    {
+        if (ui->actionHistB->isChecked() && this->srcHistograms.size() > 0)
+            this->drawHistogram(this->srcHistograms.at(0), this->srcHistogramImage, 256, 200, colorSpaceColors.at(0));
+
+        if (ui->actionHistG->isChecked() && this->srcHistograms.size() > 1)
+            this->drawHistogram(this->srcHistograms.at(1), this->srcHistogramImage, 256, 200, colorSpaceColors.at(1));
+
+        if (ui->actionHistR->isChecked() && this->srcHistograms.size() > 2)
+            this->drawHistogram(this->srcHistograms.at(2), this->srcHistogramImage, 256, 200, colorSpaceColors.at(2));
+
+        this->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
+    }
+
+    // Draws out image histogram
+    if (this->outHistograms.size() == 1)
+    {
+        this->drawHistogram(this->outHistograms.at(0), this->outHistogramImage, 256, 200, colorSpaceColors.back());
+        this->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
+    }
+    else
+    {
+        if (ui->actionHistB->isChecked() && this->outHistograms.size() > 0)
+            this->drawHistogram(this->outHistograms.at(0), this->outHistogramImage, 256, 200, colorSpaceColors.at(0));
+
+        if (ui->actionHistG->isChecked() && this->outHistograms.size() > 1)
+            this->drawHistogram(this->outHistograms.at(1), this->outHistogramImage, 256, 200, colorSpaceColors.at(1));
+
+        if (ui->actionHistR->isChecked() && this->outHistograms.size() > 2)
+            this->drawHistogram(this->outHistograms.at(2), this->outHistogramImage, 256, 200, colorSpaceColors.at(2));
+
+        this->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
+    }
+}
+
+void GUI4OpenCV::onImageChanged()
+{
+    // Calculates all histograms
+    this->srcHistograms = this->calculateHistograms(this->srcImage);
+    this->outHistograms = this->calculateHistograms(this->outImage);
+    this->drawChosenHistograms();
+}
+
+void GUI4OpenCV::on_actionHistB_triggered()
+{
+    this->drawChosenHistograms();
+}
+
+void GUI4OpenCV::on_actionHistG_triggered()
+{
+    this->drawChosenHistograms();
+}
+
+void GUI4OpenCV::on_actionHistR_triggered()
+{
+    this->drawChosenHistograms();
+}
+
+void GUI4OpenCV::on_actionHistGrayscale_triggered()
+{
+    this->drawChosenHistograms();
 }
