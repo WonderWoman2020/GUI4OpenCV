@@ -60,8 +60,8 @@ private:
     cv::Mat outHistogramImage;
 
     void setDebugPrintingPatterns();
-    void syncImagesScrollBars();
-    void desyncImagesScrollBars();
+    void syncImagesScrollBars(QScrollBar* srcHScroll, QScrollBar* outHScroll);
+    void desyncImagesScrollBars(QScrollBar* srcHScroll, QScrollBar* outHScroll);
 
     void drawChosenHistograms();
 

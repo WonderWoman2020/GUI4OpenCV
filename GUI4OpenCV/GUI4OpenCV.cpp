@@ -19,7 +19,7 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     this->setDebugPrintingPatterns();
 
     // Sets scrolls to be in sync by default
-    this->syncImagesScrollBars();
+    this->on_actionSync_triggered();
 
     connect(this, &GUI4OpenCV::srcImageChanged, this, &GUI4OpenCV::onImageChanged);
 }
@@ -56,38 +56,20 @@ void GUI4OpenCV::setDebugPrintingPatterns()
 /*
     Makes corresponding scroll bars of the source and out image views to move in sync.
 */
-void GUI4OpenCV::syncImagesScrollBars()
+void GUI4OpenCV::syncImagesScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll)
 {
-    // Connecting horizontal scroll bars to be in sync, when using either one of them
-    QScrollBar* srcHScroll = ui->srcImageView->horizontalScrollBar();
-    QScrollBar* outHScroll = ui->outImageView->horizontalScrollBar();
-    connect(srcHScroll, SIGNAL(valueChanged(int)), outHScroll, SLOT(setValue(int)));
-    connect(outHScroll, SIGNAL(valueChanged(int)), srcHScroll, SLOT(setValue(int)));
-
-    // Same thing for vertical scroll bars
-    QScrollBar* srcVScroll = ui->srcImageView->verticalScrollBar();
-    QScrollBar* outVScroll = ui->outImageView->verticalScrollBar();
-    connect(srcVScroll, SIGNAL(valueChanged(int)), outVScroll, SLOT(setValue(int)));
-    connect(outVScroll, SIGNAL(valueChanged(int)), srcVScroll, SLOT(setValue(int)));
+    connect(firstScroll, SIGNAL(valueChanged(int)), secondScroll, SLOT(setValue(int)));
+    connect(secondScroll, SIGNAL(valueChanged(int)), firstScroll, SLOT(setValue(int)));
 }
 
 
 /*
     Disables moving corresponding scroll bars of the source and out image views in sync.
 */
-void GUI4OpenCV::desyncImagesScrollBars()
+void GUI4OpenCV::desyncImagesScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll)
 {
-    // Disconnecting horizontal scroll bars
-    QScrollBar* srcHScroll = ui->srcImageView->horizontalScrollBar();
-    QScrollBar* outHScroll = ui->outImageView->horizontalScrollBar();
-    disconnect(srcHScroll, SIGNAL(valueChanged(int)), outHScroll, SLOT(setValue(int)));
-    disconnect(outHScroll, SIGNAL(valueChanged(int)), srcHScroll, SLOT(setValue(int)));
-
-    // Same thing for vertical scroll bars
-    QScrollBar* srcVScroll = ui->srcImageView->verticalScrollBar();
-    QScrollBar* outVScroll = ui->outImageView->verticalScrollBar();
-    disconnect(srcVScroll, SIGNAL(valueChanged(int)), outVScroll, SLOT(setValue(int)));
-    disconnect(outVScroll, SIGNAL(valueChanged(int)), srcVScroll, SLOT(setValue(int)));
+    disconnect(firstScroll, SIGNAL(valueChanged(int)), secondScroll, SLOT(setValue(int)));
+    disconnect(secondScroll, SIGNAL(valueChanged(int)), firstScroll, SLOT(setValue(int)));
 }
 
 
@@ -96,10 +78,24 @@ void GUI4OpenCV::desyncImagesScrollBars()
 */
 void GUI4OpenCV::on_actionSync_triggered()
 {
+    // Connecting horizontal scroll bars to be in sync, when using either one of them
+    QScrollBar* srcHScroll = ui->srcImageView->horizontalScrollBar();
+    QScrollBar* outHScroll = ui->outImageView->horizontalScrollBar();
+
+    // Same thing for vertical scroll bars
+    QScrollBar* srcVScroll = ui->srcImageView->verticalScrollBar();
+    QScrollBar* outVScroll = ui->outImageView->verticalScrollBar();
+
     if (ui->actionSync->isChecked())
-        this->syncImagesScrollBars();
+    {
+        this->syncImagesScrollBars(srcHScroll, outHScroll);
+        this->syncImagesScrollBars(srcVScroll, outVScroll);
+    }
     else
-        this->desyncImagesScrollBars();
+    {
+        this->desyncImagesScrollBars(srcHScroll, outHScroll);
+        this->desyncImagesScrollBars(srcVScroll, outVScroll);
+    }
 }
 
 /*
