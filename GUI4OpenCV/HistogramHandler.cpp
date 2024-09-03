@@ -4,7 +4,7 @@
 /*
     Calculates histogram of one color space provided and draws histogram chart as 'cv::Mat' image.
 */
-cv::Mat HistogramHandler::calculateHistogram(cv::Mat& imagePlane, cv::Scalar histColor)
+cv::Mat HistogramHandler::calculateHistogram(cv::Mat& imagePlane)
 {
     // Calculates histogram of one color space of the image
     cv::Mat planeHist;
@@ -36,22 +36,10 @@ std::vector<cv::Mat> HistogramHandler::calculateHistograms(cv::Mat& image)
     if (bgrPlanes.size() > 3)
         bgrPlanes.erase(bgrPlanes.begin() + 3, bgrPlanes.end());
 
-    // Just hardcoded color values, in which histograms will be drawn
-    std::vector<cv::Scalar> colorSpaceColors = {
-        cv::Scalar(255, 0, 0),    // B
-        cv::Scalar(0, 255, 0),    // G
-        cv::Scalar(0, 0, 255),    // R
-        cv::Scalar(127, 127, 127)    // gray
-    };
-
     // Calculates histograms of each color space
     std::vector<cv::Mat> histograms;
-    cv::Scalar histogramColor;
     for (int i = 0; i < bgrPlanes.size(); i++)
-    {
-        histogramColor = bgrPlanes.size() == 1 ? colorSpaceColors.back() : colorSpaceColors.at(i);    // Sets histogram color to gray or one of BGR colors
-        histograms.push_back(this->calculateHistogram(bgrPlanes.at(i), histogramColor));
-    }
+        histograms.push_back(this->calculateHistogram(bgrPlanes.at(i)));
 
     return histograms;
 }
@@ -75,14 +63,6 @@ void HistogramHandler::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int
 */
 cv::Mat HistogramHandler::drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale)
 {
-    // Just hardcoded color values, in which histograms will be drawn
-    std::vector<cv::Scalar> colorSpaceColors = {
-        cv::Scalar(255, 0, 0),    // B
-        cv::Scalar(0, 255, 0),    // G
-        cv::Scalar(0, 0, 255),    // R
-        cv::Scalar(127, 127, 127)    // gray
-    };
-
     // Prepares empty white 'cv::Mat' image, which is a canvas for the histogram chart
     cv::Mat histogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
 
@@ -90,19 +70,19 @@ cv::Mat HistogramHandler::drawChosenHistograms(std::vector<cv::Mat>& histograms,
     if (histograms.size() == 1)
     {
         if (grayscale)
-            this->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.back());
+            this->drawHistogram(histograms.at(0), histogramImage, 256, 200, this->colorSpaceColors.back());
         return histogramImage;
     }
 
     // Draws BGR histograms, according to which color spaces have been chosen
     if (b && histograms.size() > 0)
-        this->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.at(0));
+        this->drawHistogram(histograms.at(0), histogramImage, 256, 200, this->colorSpaceColors.at(0));
 
     if (g && histograms.size() > 1)
-        this->drawHistogram(histograms.at(1), histogramImage, 256, 200, colorSpaceColors.at(1));
+        this->drawHistogram(histograms.at(1), histogramImage, 256, 200, this->colorSpaceColors.at(1));
 
     if (r && histograms.size() > 2)
-        this->drawHistogram(histograms.at(2), histogramImage, 256, 200, colorSpaceColors.at(2));
+        this->drawHistogram(histograms.at(2), histogramImage, 256, 200, this->colorSpaceColors.at(2));
 
     return histogramImage;
 }
