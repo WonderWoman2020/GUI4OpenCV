@@ -177,6 +177,9 @@ void GUI4OpenCV::on_actionSave_triggered()
     }
 }
 
+/*
+    Draws histograms and sets them in the histogram views.
+*/
 void GUI4OpenCV::drawChosenHistograms()
 {
     // Just hardcoded color values, in which histograms will be drawn
@@ -187,49 +190,37 @@ void GUI4OpenCV::drawChosenHistograms()
         cv::Scalar(127, 127, 127)    // gray
     };
 
+    // Prepares empty white 'cv::Mat' image, which is a canvas for the histogram chart
     this->srcHistogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
     this->outHistogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));
 
-    //std::vector<cv::Mat> histogramsImages;
-
-    // Draws source image histogram
-    if (this->srcHistograms.size() == 1)
+    // Draws histograms of both source and out image
+    for (int i = 0; i < 2; i++)
     {
-        this->histogramHandler->drawHistogram(this->srcHistograms.at(0), this->srcHistogramImage, 256, 200, colorSpaceColors.back());
-        this->imageViewHandler->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
-    }
-    else
-    {
-        if (ui->actionHistB->isChecked() && this->srcHistograms.size() > 0)
-            this->histogramHandler->drawHistogram(this->srcHistograms.at(0), this->srcHistogramImage, 256, 200, colorSpaceColors.at(0));
+        // Chooses which histogram to set to draw (source image histogram is created in the first for-loop iteration, then out image histogram)
+        cv::Mat histogramImage = (i == 0 ? this->srcHistogramImage : this->outHistogramImage);
+        std::vector<cv::Mat> histograms = (i == 0 ? this->srcHistograms : this->outHistograms);
+        QGraphicsView* histView = (i == 0 ? ui->srcHistView : ui->outHistView);
 
-        if (ui->actionHistG->isChecked() && this->srcHistograms.size() > 1)
-            this->histogramHandler->drawHistogram(this->srcHistograms.at(1), this->srcHistogramImage, 256, 200, colorSpaceColors.at(1));
+        // Draws grayscale histogram
+        if (histograms.size() == 1)
+        {
+            this->histogramHandler->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.back());
+            this->imageViewHandler->setImageInView(histView, ImageConverter::convertMatToQPixmap(histogramImage));
+            return;
+        }
 
-        if (ui->actionHistR->isChecked() && this->srcHistograms.size() > 2)
-            this->histogramHandler->drawHistogram(this->srcHistograms.at(2), this->srcHistogramImage, 256, 200, colorSpaceColors.at(2));
+        // Draws BGR histograms, according to which color spaces have been chosen
+        if (ui->actionHistB->isChecked() && histograms.size() > 0)
+            this->histogramHandler->drawHistogram(histograms.at(0), histogramImage, 256, 200, colorSpaceColors.at(0));
 
-        this->imageViewHandler->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
-    }
+        if (ui->actionHistG->isChecked() && histograms.size() > 1)
+            this->histogramHandler->drawHistogram(histograms.at(1), histogramImage, 256, 200, colorSpaceColors.at(1));
 
-    // Draws out image histogram
-    if (this->outHistograms.size() == 1)
-    {
-        this->histogramHandler->drawHistogram(this->outHistograms.at(0), this->outHistogramImage, 256, 200, colorSpaceColors.back());
-        this->imageViewHandler->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
-    }
-    else
-    {
-        if (ui->actionHistB->isChecked() && this->outHistograms.size() > 0)
-            this->histogramHandler->drawHistogram(this->outHistograms.at(0), this->outHistogramImage, 256, 200, colorSpaceColors.at(0));
+        if (ui->actionHistR->isChecked() && histograms.size() > 2)
+            this->histogramHandler->drawHistogram(histograms.at(2), histogramImage, 256, 200, colorSpaceColors.at(2));
 
-        if (ui->actionHistG->isChecked() && this->outHistograms.size() > 1)
-            this->histogramHandler->drawHistogram(this->outHistograms.at(1), this->outHistogramImage, 256, 200, colorSpaceColors.at(1));
-
-        if (ui->actionHistR->isChecked() && this->outHistograms.size() > 2)
-            this->histogramHandler->drawHistogram(this->outHistograms.at(2), this->outHistogramImage, 256, 200, colorSpaceColors.at(2));
-
-        this->imageViewHandler->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
+        this->imageViewHandler->setImageInView(histView, ImageConverter::convertMatToQPixmap(histogramImage));
     }
 }
 
@@ -238,6 +229,7 @@ void GUI4OpenCV::onImageChanged()
     // Calculates all histograms
     this->srcHistograms = this->histogramHandler->calculateHistograms(this->srcImage);
     this->outHistograms = this->histogramHandler->calculateHistograms(this->outImage);
+    // Draws histograms and sets them in the histogram views
     this->drawChosenHistograms();
 }
 
