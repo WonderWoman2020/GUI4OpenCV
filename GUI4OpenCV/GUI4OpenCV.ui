@@ -159,6 +159,7 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="separator"/>
     <addaction name="actionSync"/>
    </widget>
    <widget class="QMenu" name="menuAlgorithms">
@@ -246,6 +247,11 @@
   <action name="actionAlfaChanging">
    <property name="text">
     <string>Mieszanie obrazow</string>
+   </property>
+  </action>
+  <action name="actionOpenSecond">
+   <property name="text">
+    <string>Wczytaj dodatkowy obraz</string>
    </property>
   </action>
  </widget>
