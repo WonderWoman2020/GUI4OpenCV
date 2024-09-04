@@ -26,6 +26,7 @@ public:
 
 public slots:
 	void on_secondImageButton_clicked();
+	void on_confirmButton_clicked();
 
 private:
 	Ui::ParametersWindowClass *ui;

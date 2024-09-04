@@ -45,3 +45,8 @@ void ParametersWindow::on_secondImageButton_clicked()
     cv::namedWindow("Second image");
     cv::imshow("Second image", this->srcSecondImage);
 }
+
+void ParametersWindow::on_confirmButton_clicked()
+{
+    this->close();
+}
