@@ -217,3 +217,10 @@ void GUI4OpenCV::on_actionHistGrayscale_triggered()
 {
     this->onHistogramChanged();
 }
+
+void GUI4OpenCV::on_actionAlfaChanging_triggered()
+{
+    ParametersWindow parametersWindow;
+    parametersWindow.setModal(true);
+    parametersWindow.exec();
+}

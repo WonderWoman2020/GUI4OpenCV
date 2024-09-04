@@ -165,6 +165,7 @@
     <property name="title">
      <string>Algorytmy</string>
     </property>
+    <addaction name="actionAlfaChanging"/>
    </widget>
    <widget class="QMenu" name="menuOutput">
     <property name="title">
@@ -240,6 +241,11 @@
    </property>
    <property name="text">
     <string>Histogram skali szarosci</string>
+   </property>
+  </action>
+  <action name="actionAlfaChanging">
+   <property name="text">
+    <string>Mieszanie obrazow</string>
    </property>
   </action>
  </widget>

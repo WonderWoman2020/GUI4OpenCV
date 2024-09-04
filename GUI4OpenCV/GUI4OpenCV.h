@@ -18,6 +18,8 @@
 #include "HistogramHandler.h"
 #include "ImageViewHandler.h"
 
+#include "ParametersWindow.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE
@@ -39,6 +41,7 @@ public slots:
     void on_actionHistG_triggered();
     void on_actionHistR_triggered();
     void on_actionHistGrayscale_triggered();
+    void on_actionAlfaChanging_triggered();
 
 signals:
     void srcImageChanged();
