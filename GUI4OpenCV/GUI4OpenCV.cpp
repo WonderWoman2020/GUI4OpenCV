@@ -220,7 +220,8 @@ void GUI4OpenCV::on_actionHistGrayscale_triggered()
 
 void GUI4OpenCV::on_actionAlfaChanging_triggered()
 {
-    ParametersWindow parametersWindow;
+    /*ParametersWindow parametersWindow;
     parametersWindow.setModal(true);
-    parametersWindow.exec();
+    parametersWindow.exec();*/
+    qInfo() << "Firstly, here will: 1. Ask for second image. 2. If image loaded to main widnow class field, there will be open a window with alfa slider only.";
 }
