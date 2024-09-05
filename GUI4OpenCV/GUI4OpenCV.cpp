@@ -218,6 +218,19 @@ void GUI4OpenCV::on_actionHistGrayscale_triggered()
     this->onHistogramChanged();
 }
 
+void GUI4OpenCV::on_actionAboutApp_triggered()
+{
+    QMessageBox::about(this, "O programie", QString("<b>Aplikacja</b>")+QString("<br/>Aplikacja zostala stworzona na potrzeby laboratorium z")+
+        QString(" przetwarzania obrazow, w celu wizualizacji dzialania algorytmow.") + QString(
+        "<br/><br/><b>Autor</b><br/>Nazwisko i imie"));
+}
+
+void GUI4OpenCV::on_actionAboutQt_triggered()
+{
+    QMessageBox::aboutQt(this, "O frameworku Qt");
+}
+
+
 void GUI4OpenCV::on_actionAlfaChanging_triggered()
 {
     /*ParametersWindow parametersWindow;

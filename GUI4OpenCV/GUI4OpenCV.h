@@ -41,6 +41,11 @@ public slots:
     void on_actionHistG_triggered();
     void on_actionHistR_triggered();
     void on_actionHistGrayscale_triggered();
+
+    void on_actionAboutApp_triggered();
+    void on_actionAboutQt_triggered();
+
+
     void on_actionAlfaChanging_triggered();
 
 signals:
