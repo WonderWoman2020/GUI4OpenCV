@@ -230,11 +230,21 @@ void GUI4OpenCV::on_actionAboutQt_triggered()
     QMessageBox::aboutQt(this, "O frameworku Qt");
 }
 
+void GUI4OpenCV::on_actionCursorTest_triggered()
+{
+    QMessageBox msgBox = QMessageBox(this);
+    msgBox.setCursor(Qt::WaitCursor);
+    msgBox.setWindowTitle("Test of cursor");
+    msgBox.setText("Test to see if cursor changes.");
+    msgBox.exec();
+    msgBox.deleteLater();
+    //this->setCursor(Qt::ArrowCursor);
+}
 
 void GUI4OpenCV::on_actionAlfaChanging_triggered()
 {
     /*ParametersWindow parametersWindow;
     parametersWindow.setModal(true);
     parametersWindow.exec();*/
-    qInfo() << "Firstly, here will: 1. Ask for second image. 2. If image loaded to main widnow class field, there will be open a window with alfa slider only.";
+    qInfo() << "Firstly, here will: 1. Ask for second image. 2. If image loaded to main window class field, there will be opened a window with an alfa slider only.";
 }

@@ -7,6 +7,8 @@
 #include <QGraphicsScene>
 #include <QMessageBox>
 
+#include<QCursor>
+
 #include "ui_GUI4OpenCV.h"
 
 #include <opencv2/core.hpp>
@@ -45,6 +47,7 @@ public slots:
     void on_actionAboutApp_triggered();
     void on_actionAboutQt_triggered();
 
+    void on_actionCursorTest_triggered();
 
     void on_actionAlfaChanging_triggered();
 
