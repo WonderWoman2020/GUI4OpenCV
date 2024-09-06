@@ -68,6 +68,8 @@ private:
     cv::Mat srcImage;
     cv::Mat outImage;
 
+    cv::Mat srcSecondImage;
+
     std::vector<cv::Mat> srcHistograms;
     std::vector<cv::Mat> outHistograms;
 

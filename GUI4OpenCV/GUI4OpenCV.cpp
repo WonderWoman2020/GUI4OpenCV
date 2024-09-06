@@ -243,11 +243,46 @@ void GUI4OpenCV::on_actionCursorTest_triggered()
 
 void GUI4OpenCV::on_actionAlfaChanging_triggered()
 {
-    /*ParametersWindow parametersWindow;
-    parametersWindow.setModal(true);
-    parametersWindow.exec();*/
     qInfo() << "Firstly, here will: 1. Ask for second image. 2. If image loaded to main window class field, there will be opened a window with an alfa slider only.";
     
+    // Opens a file explorer and gets a path of the chosen image
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Wybierz obraz"),
+        "/home",
+        tr("Images (*.png *.jpg *.jpeg *.bmp)"));
+
+    qInfo() << fileName;
+
+    // Cancels open action, if user clicked "cancel" and the path is null
+    if (fileName.isNull() || fileName.isEmpty())
+    {
+        QMessageBox::information(this, "Nie wybrano obrazu do otworzenia",
+            "Nie wybrano obrazu wejsciowego do otworzenia. Musisz wybrac jakis obraz wejsciowy, aby go wyswietlic.");
+        return;
+    }
+
+    // Tries to read the chosen file
+    cv::Mat temp = cv::imread(fileName.toStdString());
+    if (temp.empty())
+    {
+        QMessageBox::information(this, "Nie pozyskano danych obrazu",
+            "Nie mozna bylo pozyskac danych obrazu. Upewnij sie, ze podany plik zawiera dane obrazu i ze masz do niego odpowiednie pozwolenia.");
+        temp.release();
+        return;
+    }
+    this->srcSecondImage = temp;
+
+    /*// Adds images to the source and processed image views 
+    try {
+        this->imageViewHandler->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
+    }
+    catch (std::exception& ex)
+    {
+        QMessageBox::critical(this, "Blad interfejsu",
+            "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
+        return;
+    }*/
+
+    // Builds a window for alpha slider widget
     QWidget* widget = new QWidget(this, Qt::Window);
     QGridLayout* layout = new QGridLayout(widget);
     AlphaSlider* slider = new AlphaSlider(widget);
@@ -257,6 +292,7 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     widget->setWindowModality(Qt::NonModal);
     widget->show();
 
+    // Connects a method to execute alpha linear blending on images, when slider value changes
     connect(slider, SIGNAL(sliderValueChanged(int)), this, SLOT(mixImages(int)));
 }
 
@@ -264,15 +300,18 @@ void GUI4OpenCV::mixImages(int alpha)
 {
     qInfo() << "Do stuff";
     try {
-        cv::Mat gray;
-        cv::cvtColor(this->srcImage, gray, cv::COLOR_BGR2GRAY);
-        cv::cvtColor(gray, gray, cv::COLOR_GRAY2BGR);
+        //cv::Mat gray;
+        //cv::cvtColor(this->srcImage, gray, cv::COLOR_BGR2GRAY);
+        //cv::cvtColor(gray, gray, cv::COLOR_GRAY2BGR);
+        cv::Mat srcSecondResized;
+        cv::resize(this->srcSecondImage, srcSecondResized, cv::Size(this->srcImage.cols, this->srcImage.rows));
         cv::Mat result;
         double alphaNormalized = alpha / (double)255;
         double betaNormalized = 1.0 - alphaNormalized;
-        cv::addWeighted(this->srcImage, alphaNormalized, gray, betaNormalized, 0.0, result);
-
-        this->imageViewHandler->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(result));
+        cv::addWeighted(srcSecondResized, alphaNormalized, this->srcImage, betaNormalized, 0.0, result);
+        this->outImage = result;
+        this->imageViewHandler->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
+        emit srcImageChanged();
     }
     catch (std::exception ex)
     {
