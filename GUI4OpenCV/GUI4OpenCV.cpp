@@ -342,6 +342,13 @@ void GUI4OpenCV::freeSecondImageMemory()
 
 void GUI4OpenCV::mixImages(int alpha)
 {
+    if (this->srcImage.empty() || this->srcSecondImage.empty())
+    {
+        QMessageBox::information(this, "Nie pozyskano dwoch obrazow",
+            "Nie mozna przeprowadzic mieszania obrazow, poniewaz nie zaladowano dwoch obrazow. Zaladuj obraz zarowno w oknie glownym, jak i w oknie opcji mieszania obrazow.");
+        return;
+    }
+
     try {
         cv::Mat srcSecondResized;
         cv::resize(this->srcSecondImage, srcSecondResized, cv::Size(this->srcImage.cols, this->srcImage.rows));
