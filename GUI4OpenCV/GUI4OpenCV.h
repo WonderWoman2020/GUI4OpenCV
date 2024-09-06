@@ -53,6 +53,8 @@ public slots:
 
     void on_actionAlfaChanging_triggered();
 
+    void mixImages(int alpha);
+
 signals:
     void srcImageChanged();
     void outImageChanged();

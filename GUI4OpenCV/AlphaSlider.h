@@ -21,6 +21,9 @@ public:
 public slots:
 	void changeSliderLabel(int value);
 
+signals:
+	void sliderValueChanged(int value);
+
 private:
 	Ui::AlphaSliderClass *ui;
 };

@@ -256,4 +256,26 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     widget->setLayout(layout);
     widget->setWindowModality(Qt::NonModal);
     widget->show();
+
+    connect(slider, SIGNAL(sliderValueChanged(int)), this, SLOT(mixImages(int)));
+}
+
+void GUI4OpenCV::mixImages(int alpha)
+{
+    qInfo() << "Do stuff";
+    try {
+        cv::Mat gray;
+        cv::cvtColor(this->srcImage, gray, cv::COLOR_BGR2GRAY);
+        cv::cvtColor(gray, gray, cv::COLOR_GRAY2BGR);
+        cv::Mat result;
+        double alphaNormalized = alpha / (double)255;
+        double betaNormalized = 1.0 - alphaNormalized;
+        cv::addWeighted(this->srcImage, alphaNormalized, gray, betaNormalized, 0.0, result);
+
+        this->imageViewHandler->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(result));
+    }
+    catch (std::exception ex)
+    {
+        qInfo() << "Wyjatek:" << ex.what();
+    }
 }

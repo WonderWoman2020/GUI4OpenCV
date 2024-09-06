@@ -23,4 +23,5 @@ void AlphaSlider::changeSliderLabel(int value)
 	double step = (double) slider->width() / (double) (slider->maximum() - slider->minimum());
 	label->setText(QString::number(value));
 	label->move(slider->x() + (std::ceil(slider->sliderPosition()*step)), label->y());
+	emit sliderValueChanged(value);
 }
