@@ -247,4 +247,13 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     parametersWindow.setModal(true);
     parametersWindow.exec();*/
     qInfo() << "Firstly, here will: 1. Ask for second image. 2. If image loaded to main window class field, there will be opened a window with an alfa slider only.";
+    
+    QWidget* widget = new QWidget(this, Qt::Window);
+    QGridLayout* layout = new QGridLayout(widget);
+    AlphaSlider* slider = new AlphaSlider(widget);
+    widget->resize(slider->width()+50, slider->height()+50);
+    layout->addWidget(slider);
+    widget->setLayout(layout);
+    widget->setWindowModality(Qt::NonModal);
+    widget->show();
 }

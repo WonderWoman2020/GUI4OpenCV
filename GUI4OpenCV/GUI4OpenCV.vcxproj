@@ -101,8 +101,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AlphaSlider.cpp" />
     <ClCompile Include="ParametersWindow.cpp" />
     <QtRcc Include="GUI4OpenCV.qrc" />
+    <QtUic Include="AlphaSlider.ui" />
     <QtUic Include="GUI4OpenCV.ui" />
     <QtMoc Include="GUI4OpenCV.h" />
     <ClCompile Include="GUI4OpenCV.cpp" />
@@ -113,6 +115,7 @@
     <QtUic Include="ParametersWindow.ui" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="AlphaSlider.h" />
     <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
     <QtMoc Include="ParametersWindow.h" />

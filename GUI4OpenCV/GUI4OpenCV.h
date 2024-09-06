@@ -22,6 +22,8 @@
 
 #include "ParametersWindow.h"
 
+#include "AlphaSlider.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE
