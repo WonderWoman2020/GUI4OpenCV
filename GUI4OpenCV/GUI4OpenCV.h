@@ -55,9 +55,12 @@ public slots:
 
     void mixImages(int alpha);
 
+    void freeSecondImageMemory();
+
 signals:
     void srcImageChanged();
     void outImageChanged();
+    void srcSecondImageLoaded();
 
 private:
     Ui::GUI4OpenCVClass *ui;
@@ -69,6 +72,7 @@ private:
     cv::Mat outImage;
 
     cv::Mat srcSecondImage;
+    int secondImageCounter;
 
     std::vector<cv::Mat> srcHistograms;
     std::vector<cv::Mat> outHistograms;

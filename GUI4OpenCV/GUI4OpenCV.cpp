@@ -250,9 +250,9 @@ cv::Mat GUI4OpenCV::readInImage()
 }
 
 void GUI4OpenCV::on_actionAlfaChanging_triggered()
-{
-    qInfo() << "Firstly, here will: 1. Ask for second image. 2. If image loaded to main window class field, there will be opened a window with an alfa slider only.";
-    
+{   
+    QMessageBox::information(this, "Mieszanie obrazow - wymagany drugi obraz",
+        "Na potrzeby tej operacji nalezy wczytac drugi obraz. Wybierz drugi obraz do wczytania w nastepnym oknie.");
     cv::Mat temp = this->readInImage();
     if (temp.empty())
     {
@@ -263,17 +263,34 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     }
 
     this->srcSecondImage = temp;
+    this->secondImageCounter = (this->secondImageCounter + 1) % INT32_MAX;
+    emit this->srcSecondImageLoaded();
 
-    /*// Adds images to the source and processed image views 
+    QWidget* secondImageWindow = new QWidget(this, Qt::Window);
+    QGridLayout* imageWindowlayout = new QGridLayout(secondImageWindow);
+    QGraphicsView* secondImageView = new QGraphicsView(secondImageWindow);
+    imageWindowlayout->addWidget(secondImageView);
+    secondImageWindow->setLayout(imageWindowlayout);
+    secondImageWindow->resize(ui->srcImageView->size());
+    secondImageWindow->setWindowModality(Qt::NonModal);
+    secondImageWindow->show();
+
+    secondImageWindow->setAttribute(Qt::WA_DeleteOnClose);
+    secondImageWindow->setProperty("imageID", this->secondImageCounter);
+
+    //connect(this->ui->actionAlfaChanging, SIGNAL(triggered()), secondImageWindow, SLOT(deleteLater()));
+    //connect(secondImageWindow, SIGNAL(destroyed()), this, SLOT(freeSecondImageMemory()));
+
+    // Adds image to the second image view 
     try {
-        this->imageViewHandler->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
+        this->imageViewHandler->setImageInView(secondImageView, ImageConverter::convertMatToQPixmap(this->srcSecondImage));
     }
     catch (std::exception& ex)
     {
         QMessageBox::critical(this, "Blad interfejsu",
             "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
         return;
-    }*/
+    }
 
     // Builds a window for alpha slider widget
     QWidget* widget = new QWidget(this, Qt::Window);
@@ -285,17 +302,47 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     widget->setWindowModality(Qt::NonModal);
     widget->show();
 
+    widget->setAttribute(Qt::WA_DeleteOnClose);
+    widget->setProperty("imageID", this->secondImageCounter);
+
     // Connects a method to execute alpha linear blending on images, when slider value changes
     connect(slider, SIGNAL(sliderValueChanged(int)), this, SLOT(mixImages(int)));
+
+    // Makes singal - slot connection, which destroys both alpha slider and second source image window,
+    // when new image was loaded
+    connect(this, SIGNAL(srcSecondImageLoaded()), widget, SLOT(deleteLater()));
+    connect(this, SIGNAL(srcSecondImageLoaded()), secondImageWindow, SLOT(deleteLater()));
+    
+    // Makes singal - slot connection, which destroys second window, if one of them (alpha slider window
+    // or second source image window) is closed
+    connect(widget, SIGNAL(destroyed()), secondImageWindow, SLOT(deleteLater()));
+    connect(secondImageWindow, SIGNAL(destroyed()), widget, SLOT(deleteLater()));
+
+    // Makes singal - slot connection, which frees memory of the second source image, when it won't
+    // be used anymore - when one of the windows (alpha slider window or second source image window) is closed
+    connect(widget, SIGNAL(destroyed()), this, SLOT(freeSecondImageMemory()));
+}
+
+void GUI4OpenCV::freeSecondImageMemory()
+{
+    QObject* sender = this->sender();
+    QVariant imageIDProperty = sender->property("imageID");
+    if (imageIDProperty.canConvert(QMetaType(QMetaType::Int)))
+    {
+        int imageID = imageIDProperty.toInt();
+        // Frees memory of the second source image only, if sender is a window related to this image (containted it or used it).
+        // If a new image is already loaded, that isn't related to the sender, it shouldn't be freed.
+        if (this->secondImageCounter == imageID)
+        {
+            this->srcSecondImage.release();
+            qInfo() << "Freed memory of second source image";
+        }
+    }
 }
 
 void GUI4OpenCV::mixImages(int alpha)
 {
-    qInfo() << "Do stuff";
     try {
-        //cv::Mat gray;
-        //cv::cvtColor(this->srcImage, gray, cv::COLOR_BGR2GRAY);
-        //cv::cvtColor(gray, gray, cv::COLOR_GRAY2BGR);
         cv::Mat srcSecondResized;
         cv::resize(this->srcSecondImage, srcSecondResized, cv::Size(this->srcImage.cols, this->srcImage.rows));
         cv::Mat result;
