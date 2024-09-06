@@ -84,30 +84,9 @@ void GUI4OpenCV::on_actionSync_triggered()
 */
 void GUI4OpenCV::on_actionOpen_triggered()
 {
-    // Opens a file explorer and gets a path of the chosen image
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Wybierz obraz"),
-        "/home",
-        tr("Images (*.png *.jpg *.jpeg *.bmp)"));
-
-    qInfo() << fileName;
-
-    // Cancels open action, if user clicked "cancel" and the path is null
-    if (fileName.isNull() || fileName.isEmpty())
-    {
-        QMessageBox::information(this, "Nie wybrano obrazu do otworzenia",
-            "Nie wybrano obrazu wejsciowego do otworzenia. Musisz wybrac jakis obraz wejsciowy, aby go wyswietlic.");
-        return;
-    }
-
-    // Tries to read the chosen file
-    cv::Mat temp = cv::imread(fileName.toStdString());
+    cv::Mat temp = this->readInImage();
     if (temp.empty())
-    {
-        QMessageBox::information(this, "Nie pozyskano danych obrazu",
-            "Nie mozna bylo pozyskac danych obrazu. Upewnij sie, ze podany plik zawiera dane obrazu i ze masz do niego odpowiednie pozwolenia.");
-        temp.release();
         return;
-    }
 
     // Frees memory of previous loaded images if any
     this->srcImage.release();
@@ -241,10 +220,8 @@ void GUI4OpenCV::on_actionCursorTest_triggered()
     //this->setCursor(Qt::ArrowCursor);
 }
 
-void GUI4OpenCV::on_actionAlfaChanging_triggered()
+cv::Mat GUI4OpenCV::readInImage()
 {
-    qInfo() << "Firstly, here will: 1. Ask for second image. 2. If image loaded to main window class field, there will be opened a window with an alfa slider only.";
-    
     // Opens a file explorer and gets a path of the chosen image
     QString fileName = QFileDialog::getOpenFileName(this, tr("Wybierz obraz"),
         "/home",
@@ -257,7 +234,7 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     {
         QMessageBox::information(this, "Nie wybrano obrazu do otworzenia",
             "Nie wybrano obrazu wejsciowego do otworzenia. Musisz wybrac jakis obraz wejsciowy, aby go wyswietlic.");
-        return;
+        return cv::Mat();
     }
 
     // Tries to read the chosen file
@@ -267,8 +244,24 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
         QMessageBox::information(this, "Nie pozyskano danych obrazu",
             "Nie mozna bylo pozyskac danych obrazu. Upewnij sie, ze podany plik zawiera dane obrazu i ze masz do niego odpowiednie pozwolenia.");
         temp.release();
+        return cv::Mat();
+    }
+    return temp;
+}
+
+void GUI4OpenCV::on_actionAlfaChanging_triggered()
+{
+    qInfo() << "Firstly, here will: 1. Ask for second image. 2. If image loaded to main window class field, there will be opened a window with an alfa slider only.";
+    
+    cv::Mat temp = this->readInImage();
+    if (temp.empty())
+    {
+        QMessageBox::information(this, "Nie pozyskano drugiego obrazu",
+            "Nie mozna przeprowadzic mieszania obrazow, poniewaz nie zaladowano drugiego obrazu. Wybierz drugi obraz do operacji lub sprobuj zaladowac inny obraz.");
+        temp.release();
         return;
     }
+
     this->srcSecondImage = temp;
 
     /*// Adds images to the source and processed image views 

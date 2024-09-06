@@ -79,4 +79,5 @@ private:
     void setDebugPrintingPatterns();
     void onImageChanged();
     void onHistogramChanged();
+    cv::Mat readInImage();
 };
