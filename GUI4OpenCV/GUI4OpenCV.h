@@ -24,6 +24,8 @@
 
 #include "AlphaSlider.h"
 
+#include "StructuringMatrix.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE
@@ -52,6 +54,8 @@ public slots:
     void on_actionCursorTest_triggered();
 
     void on_actionAlfaChanging_triggered();
+
+    void on_actionStructuringMatrix_triggered();
 
     void mixImages(int alpha);
 

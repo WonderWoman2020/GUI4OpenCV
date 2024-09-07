@@ -394,3 +394,11 @@ void GUI4OpenCV::mixImages(int alpha)
         qInfo() << "Wyjatek:" << ex.what();
     }
 }
+
+void GUI4OpenCV::on_actionStructuringMatrix_triggered()
+{
+    QWidget* widget = this->buildEmptyWindow(this, QSize(100, 100), Qt::WindowModal);
+    StructuringMatrix* structuringMatrix = new StructuringMatrix(widget);
+    widget->layout()->addWidget(structuringMatrix);
+    widget->show();
+}

@@ -167,6 +167,7 @@
      <string>Algorytmy</string>
     </property>
     <addaction name="actionAlfaChanging"/>
+    <addaction name="actionStructuringMatrix"/>
     <addaction name="separator"/>
     <addaction name="actionCursorTest"/>
    </widget>
@@ -277,6 +278,11 @@
   <action name="actionCursorTest">
    <property name="text">
     <string>Test zmiany kursora</string>
+   </property>
+  </action>
+  <action name="actionStructuringMatrix">
+   <property name="text">
+    <string>Element strukturalny</string>
    </property>
   </action>
  </widget>
