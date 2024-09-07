@@ -84,4 +84,6 @@ private:
     void onImageChanged();
     void onHistogramChanged();
     cv::Mat readInImage();
+    QWidget* buildEmptyWindow(QWidget* parent, QSize size, Qt::WindowModality modality);
+    QWidget* openSecondSourceImage();
 };
