@@ -103,6 +103,7 @@
   <ItemGroup>
     <ClCompile Include="AlphaSlider.cpp" />
     <ClCompile Include="ParametersWindow.cpp" />
+    <ClCompile Include="StructuringMatrix.cpp" />
     <QtRcc Include="GUI4OpenCV.qrc" />
     <QtUic Include="AlphaSlider.ui" />
     <QtUic Include="GUI4OpenCV.ui" />
@@ -113,8 +114,10 @@
     <ClCompile Include="ImageViewHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="ParametersWindow.ui" />
+    <QtUic Include="StructuringMatrix.ui" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="StructuringMatrix.h" />
     <QtMoc Include="AlphaSlider.h" />
     <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
