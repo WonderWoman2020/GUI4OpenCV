@@ -251,9 +251,13 @@ cv::Mat GUI4OpenCV::readInImage()
 
 void GUI4OpenCV::on_actionAlfaChanging_triggered()
 {   
+    // Informs, that second source image needs to be chosen
     QMessageBox::information(this, "Mieszanie obrazow - wymagany drugi obraz",
         "Na potrzeby tej operacji nalezy wczytac drugi obraz. Wybierz drugi obraz do wczytania w nastepnym oknie.");
+
+    // Lets user choose the second source image and loads it
     cv::Mat temp = this->readInImage();
+    // Cancels alpha linear blending operation, if imaga data hasn't been loaded
     if (temp.empty())
     {
         QMessageBox::information(this, "Nie pozyskano drugiego obrazu",
@@ -262,26 +266,30 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
         return;
     }
 
+    // Releases previous image data if any and assigns newly loaded image data (assign operator '=' for cv::Mat operands handles that)
     this->srcSecondImage = temp;
+    // Sets image id, so windows using this image can be assigned to this image only
     this->secondImageCounter = (this->secondImageCounter + 1) % INT32_MAX;
+    // Sends signal that new second source image has been loaded, so things related
+    // to previous image can destroy themselves or act accordingly
     emit this->srcSecondImageLoaded();
 
+    // Builds window for showing second source image
     QWidget* secondImageWindow = new QWidget(this, Qt::Window);
     QGridLayout* imageWindowlayout = new QGridLayout(secondImageWindow);
     QGraphicsView* secondImageView = new QGraphicsView(secondImageWindow);
     imageWindowlayout->addWidget(secondImageView);
     secondImageWindow->setLayout(imageWindowlayout);
     secondImageWindow->resize(ui->srcImageView->size());
-    secondImageWindow->setWindowModality(Qt::NonModal);
+    secondImageWindow->setWindowModality(Qt::NonModal);    // Sets other windows to still be accessible, when this window shows up
     secondImageWindow->show();
 
+    // Makes window destroy itself, when closed
     secondImageWindow->setAttribute(Qt::WA_DeleteOnClose);
+    // Relates window to the image it will be showing
     secondImageWindow->setProperty("imageID", this->secondImageCounter);
 
-    //connect(this->ui->actionAlfaChanging, SIGNAL(triggered()), secondImageWindow, SLOT(deleteLater()));
-    //connect(secondImageWindow, SIGNAL(destroyed()), this, SLOT(freeSecondImageMemory()));
-
-    // Adds image to the second image view 
+    // Adds image to the second source image view 
     try {
         this->imageViewHandler->setImageInView(secondImageView, ImageConverter::convertMatToQPixmap(this->srcSecondImage));
     }
@@ -292,7 +300,7 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
         return;
     }
 
-    // Builds a window for alpha slider widget
+    // Builds a window for the alpha slider widget
     QWidget* widget = new QWidget(this, Qt::Window);
     QGridLayout* layout = new QGridLayout(widget);
     AlphaSlider* slider = new AlphaSlider(widget);
@@ -302,7 +310,9 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     widget->setWindowModality(Qt::NonModal);
     widget->show();
 
+    // Makes window destroy itself, when closed
     widget->setAttribute(Qt::WA_DeleteOnClose);
+    // Relates window to the image it will be using for alpha linear blending
     widget->setProperty("imageID", this->secondImageCounter);
 
     // Connects a method to execute alpha linear blending on images, when slider value changes
