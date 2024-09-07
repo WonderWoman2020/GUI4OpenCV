@@ -73,6 +73,7 @@ private:
 
     cv::Mat srcSecondImage;
     int secondImageCounter;
+    cv::Mat srcSecondImageResized;
 
     std::vector<cv::Mat> srcHistograms;
     std::vector<cv::Mat> outHistograms;

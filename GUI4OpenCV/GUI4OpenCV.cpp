@@ -275,6 +275,7 @@ QWidget* GUI4OpenCV::openSecondSourceImage()
 
     // Releases previous image data if any and assigns newly loaded image data (assign operator '=' for cv::Mat operands handles that)
     this->srcSecondImage = temp;
+    this->srcSecondImageResized.release();
     qInfo() << "Freed memory of second source image and loaded a new one";
     // Sets image id, so windows using this image can be assigned to this image only
     this->secondImageCounter = (this->secondImageCounter + 1) % INT32_MAX;
@@ -355,6 +356,7 @@ void GUI4OpenCV::freeSecondImageMemory()
         if (this->secondImageCounter == imageID)
         {
             this->srcSecondImage.release();
+            this->srcSecondImageResized.release();
             qInfo() << "Freed memory of second source image";
         }
     }
@@ -371,7 +373,14 @@ void GUI4OpenCV::mixImages(int alpha)
 
     try {
         cv::Mat srcSecondResized;
-        cv::resize(this->srcSecondImage, srcSecondResized, cv::Size(this->srcImage.cols, this->srcImage.rows));
+        if (this->srcSecondImageResized.rows == this->srcImage.rows && this->srcSecondImageResized.cols == this->srcImage.cols)
+            srcSecondResized = this->srcSecondImageResized;
+        else
+        {
+            cv::resize(this->srcSecondImage, srcSecondResized, cv::Size(this->srcImage.cols, this->srcImage.rows));
+            this->srcSecondImageResized = srcSecondResized;
+            qInfo() << "Resized second source image to be the same size as the first one";
+        }
         cv::Mat result;
         double alphaNormalized = alpha / (double)255;
         double betaNormalized = 1.0 - alphaNormalized;
