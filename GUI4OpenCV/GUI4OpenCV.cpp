@@ -440,3 +440,52 @@ void GUI4OpenCV::on_actionStructuringMatrix_triggered()
 
     window->show();
 }
+
+void GUI4OpenCV::on_actionFilterMatrix_triggered()
+{
+    // Creates filter matrix
+    QWidget* widget = new QWidget(this);
+    QGridLayout* grid = new QGridLayout(widget);
+    widget->setLayout(grid);
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            QLineEdit* inputField = new QLineEdit(widget);
+            QValidator* integerValidator = new QIntValidator(INT32_MIN, INT32_MAX, widget);
+            inputField->setValidator(integerValidator);
+            inputField->setFixedSize(QSize(30, 30));
+            grid->addWidget(inputField, i, j);
+        }
+    }
+    //widget->show();
+
+    QWidget* window = this->buildEmptyWindow(this, QSize(100, 100), Qt::WindowModal);
+    QGridLayout* windowGrid = (QGridLayout*)window->layout();
+
+    // Adds labels and column and rows input fields
+    QLabel* rowsLabel = new QLabel(window);
+    rowsLabel->setText("Liczba wierszy: ");
+    QLabel* colsLabel = new QLabel(window);
+    colsLabel->setText("Liczba kolumn: ");
+    QSpinBox* rows = new QSpinBox(window);
+    QSpinBox* cols = new QSpinBox(window);
+    windowGrid->addWidget(rowsLabel, 0, 0, 1, 1);
+    windowGrid->addWidget(rows, 0, 1, 1, 1);
+    windowGrid->addWidget(colsLabel, 1, 0, 1, 1);
+    windowGrid->addWidget(cols, 1, 1, 1, 1);
+
+    // Adds structuring element label and matrix
+    QLabel* matrixLabel = new QLabel(window);
+    matrixLabel->setText("Macierz filtrow: ");
+    windowGrid->addWidget(matrixLabel, 2, 0, 1, 1);
+    widget->setParent(window);
+    windowGrid->addWidget(widget, 2, 1, 1, 3);
+
+    // Adds confirm button
+    QPushButton* okButton = new QPushButton(window);
+    okButton->setText("OK");
+    windowGrid->addWidget(okButton, 3, 3, 1, 1);
+
+    window->show();
+}

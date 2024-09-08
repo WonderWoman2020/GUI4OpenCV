@@ -8,6 +8,8 @@
 #include <QMessageBox>
 
 #include<QCursor>
+#include<QLineEdit>
+#include <QValidator>
 
 #include "ui_GUI4OpenCV.h"
 
@@ -56,6 +58,8 @@ public slots:
     void on_actionAlfaChanging_triggered();
 
     void on_actionStructuringMatrix_triggered();
+
+    void on_actionFilterMatrix_triggered();
 
     void mixImages(int alpha);
 
