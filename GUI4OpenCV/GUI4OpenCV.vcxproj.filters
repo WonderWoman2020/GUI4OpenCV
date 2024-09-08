@@ -55,9 +55,6 @@
     <ClCompile Include="AlphaSlider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StructuringMatrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StructuringMatrixButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -80,9 +77,6 @@
     <QtMoc Include="AlphaSlider.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="StructuringMatrix.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="StructuringMatrixButton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -92,9 +86,6 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="AlphaSlider.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="StructuringMatrix.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
