@@ -398,7 +398,14 @@ void GUI4OpenCV::mixImages(int alpha)
 void GUI4OpenCV::on_actionStructuringMatrix_triggered()
 {
     QWidget* widget = this->buildEmptyWindow(this, QSize(100, 100), Qt::WindowModal);
-    StructuringMatrix* structuringMatrix = new StructuringMatrix(widget);
-    widget->layout()->addWidget(structuringMatrix);
+    QGridLayout* grid = (QGridLayout*) widget->layout();
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            StructuringMatrixButton* button = new StructuringMatrixButton(widget);
+            grid->addWidget(button, i, j);
+        }
+    }
     widget->show();
 }

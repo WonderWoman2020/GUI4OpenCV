@@ -25,6 +25,7 @@
 #include "AlphaSlider.h"
 
 #include "StructuringMatrix.h"
+#include "StructuringMatrixButton.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
