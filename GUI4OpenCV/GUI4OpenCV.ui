@@ -168,6 +168,10 @@
     </property>
     <addaction name="actionAlfaChanging"/>
     <addaction name="actionStructuringMatrix"/>
+    <addaction name="actionFilterMatrix"/>
+    <addaction name="actionHoughTransform"/>
+    <addaction name="actionPointTransform"/>
+    <addaction name="actionMedianFilters"/>
     <addaction name="separator"/>
     <addaction name="actionCursorTest"/>
    </widget>
@@ -283,6 +287,26 @@
   <action name="actionStructuringMatrix">
    <property name="text">
     <string>Element strukturalny</string>
+   </property>
+  </action>
+  <action name="actionFilterMatrix">
+   <property name="text">
+    <string>Macierz filtrow</string>
+   </property>
+  </action>
+  <action name="actionHoughTransform">
+   <property name="text">
+    <string>Transformacja Hougha</string>
+   </property>
+  </action>
+  <action name="actionPointTransform">
+   <property name="text">
+    <string>Przeksztalcenia punktowe</string>
+   </property>
+  </action>
+  <action name="actionMedianFilters">
+   <property name="text">
+    <string>Filtry medianowe</string>
    </property>
   </action>
  </widget>
