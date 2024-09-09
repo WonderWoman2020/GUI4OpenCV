@@ -401,9 +401,11 @@ void GUI4OpenCV::on_actionStructuringMatrix_triggered()
     QWidget* widget = new QWidget(this);
     QGridLayout* grid = new QGridLayout(widget);
     widget->setLayout(grid);
-    for (int i = 0; i < 5; i++)
+    int rowsNum = 5;
+    int colsNum = 5;
+    for (int i = 0; i < rowsNum; i++)
     {
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < colsNum; j++)
         {
             StructuringMatrixButton* button = new StructuringMatrixButton(widget);
             grid->addWidget(button, i, j);
@@ -433,10 +435,18 @@ void GUI4OpenCV::on_actionStructuringMatrix_triggered()
     widget->setParent(window);
     windowGrid->addWidget(widget, 2, 1, 1, 3);
 
+    // Adds selecting characteristic element
+    QLabel* characteristicLabel = new QLabel(window);
+    characteristicLabel->setText("Punkt charakterystyczny: ");
+    QSpinBox* characteristic = new QSpinBox(window);
+    characteristic->setRange(0, (rowsNum * colsNum) - 1);
+    windowGrid->addWidget(characteristicLabel, 3, 0, 1, 1);
+    windowGrid->addWidget(characteristic, 3, 1, 1, 1);
+
     // Adds confirm button
     QPushButton* okButton = new QPushButton(window);
     okButton->setText("OK");
-    windowGrid->addWidget(okButton, 3, 3, 1, 1);
+    windowGrid->addWidget(okButton, 4, 3, 1, 1);
 
     window->show();
 }
