@@ -10,6 +10,7 @@
 #include<QCursor>
 #include<QLineEdit>
 #include <QValidator>
+#include <QComboBox>
 
 #include "ui_GUI4OpenCV.h"
 

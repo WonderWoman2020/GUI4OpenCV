@@ -443,10 +443,21 @@ void GUI4OpenCV::on_actionStructuringMatrix_triggered()
     windowGrid->addWidget(characteristicLabel, 3, 0, 1, 1);
     windowGrid->addWidget(characteristic, 3, 1, 1, 1);
 
+    // Adds algorithms dropdown list
+    QLabel* algorithmsLabel = new QLabel(window);
+    algorithmsLabel->setText("Algorytm: ");
+    QComboBox* algorithms = new QComboBox(window);
+    algorithms->addItem("erozja");
+    algorithms->addItem("dylatacja");
+    algorithms->addItem("otwarcie");
+    algorithms->addItem("zamkniecie");
+    windowGrid->addWidget(algorithmsLabel, 4, 0, 1, 1);
+    windowGrid->addWidget(algorithms, 4, 1, 1, 1);
+
     // Adds confirm button
     QPushButton* okButton = new QPushButton(window);
     okButton->setText("OK");
-    windowGrid->addWidget(okButton, 4, 3, 1, 1);
+    windowGrid->addWidget(okButton, 5, 3, 1, 1);
 
     window->show();
 }
@@ -492,10 +503,20 @@ void GUI4OpenCV::on_actionFilterMatrix_triggered()
     widget->setParent(window);
     windowGrid->addWidget(widget, 2, 1, 1, 3);
 
+    // Adds algorithms dropdown list
+    QLabel* algorithmsLabel = new QLabel(window);
+    algorithmsLabel->setText("Algorytm: ");
+    QComboBox* algorithms = new QComboBox(window);
+    algorithms->addItem("filtr dolnoprzepustowy");
+    algorithms->addItem("filtr gornoprzepustowy");
+    algorithms->addItem("...");
+    windowGrid->addWidget(algorithmsLabel, 3, 0, 1, 1);
+    windowGrid->addWidget(algorithms, 3, 1, 1, 1);
+
     // Adds confirm button
     QPushButton* okButton = new QPushButton(window);
     okButton->setText("OK");
-    windowGrid->addWidget(okButton, 3, 3, 1, 1);
+    windowGrid->addWidget(okButton, 4, 3, 1, 1);
 
     window->show();
 }
