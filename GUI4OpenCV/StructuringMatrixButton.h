@@ -10,10 +10,16 @@ public:
 	StructuringMatrixButton(QWidget *parent);
 	~StructuringMatrixButton();
 
+	void setCanBeChosen(bool canBeChosen);
+	bool checked();
+	bool chosen();
+
 public slots:
 	void on_clicked();
 
 private:
 	int clickCounter;
 	QString style;
+
+	bool canBeChosen;
 };

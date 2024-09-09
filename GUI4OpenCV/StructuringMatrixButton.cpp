@@ -4,6 +4,7 @@ StructuringMatrixButton::StructuringMatrixButton(QWidget *parent)
 	: QPushButton(parent)
 {
 	this->clickCounter = 0;
+	this->canBeChosen = true;
 
 	QString defaultStyle = "QPushButton{ background-color: white; border: none; }";
 	//QString checkedStyle = "QPushButton:checked{ background-color: black; border: none; }";
@@ -30,7 +31,10 @@ StructuringMatrixButton::~StructuringMatrixButton()
 
 void StructuringMatrixButton::on_clicked()
 {
-	this->clickCounter = (this->clickCounter + 1) % 4;
+	if(this->canBeChosen)
+		this->clickCounter = (this->clickCounter + 1) % 4;
+	else
+		this->clickCounter = (this->clickCounter + 1) % 2;
 
 	switch (this->clickCounter)
 	{
@@ -58,4 +62,27 @@ void StructuringMatrixButton::on_clicked()
 	qInfo() << "checked:" << this->property("myChecked") << "chosen:" << this->property("chosen");
 	this->setStyleSheet(this->style);
 	
+}
+
+void StructuringMatrixButton::setCanBeChosen(bool canBeChosen)
+{
+	this->canBeChosen = canBeChosen;
+}
+
+bool StructuringMatrixButton::checked()
+{
+	QVariant checkedProperty = this->property("myChecked");
+	if (checkedProperty.canConvert(QMetaType(QMetaType::Bool)))
+		return checkedProperty.toBool();
+
+	return false;
+}
+
+bool StructuringMatrixButton::chosen()
+{
+	QVariant chosenProperty = this->property("chosen");
+	if (chosenProperty.canConvert(QMetaType(QMetaType::Bool)))
+		return chosenProperty.toBool();
+
+	return false;
 }
