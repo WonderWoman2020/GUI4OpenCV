@@ -102,7 +102,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlphaSlider.cpp" />
-    <ClCompile Include="ParametersWindow.cpp" />
     <ClCompile Include="StructuringMatrixButton.cpp" />
     <QtRcc Include="GUI4OpenCV.qrc" />
     <QtUic Include="AlphaSlider.ui" />
@@ -113,14 +112,12 @@
     <ClCompile Include="ImageConverter.cpp" />
     <ClCompile Include="ImageViewHandler.cpp" />
     <ClCompile Include="main.cpp" />
-    <QtUic Include="ParametersWindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="StructuringMatrixButton.h" />
     <QtMoc Include="AlphaSlider.h" />
     <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
-    <QtMoc Include="ParametersWindow.h" />
     <QtMoc Include="ImageViewHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

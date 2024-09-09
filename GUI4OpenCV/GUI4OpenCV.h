@@ -11,6 +11,7 @@
 #include<QLineEdit>
 #include <QValidator>
 #include <QComboBox>
+#include <QSpinBox>
 
 #include "ui_GUI4OpenCV.h"
 
@@ -22,8 +23,6 @@
 #include "ImageConverter.h"
 #include "HistogramHandler.h"
 #include "ImageViewHandler.h"
-
-#include "ParametersWindow.h"
 
 #include "AlphaSlider.h"
 

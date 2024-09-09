@@ -49,9 +49,6 @@
     <ClCompile Include="ImageViewHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ParametersWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AlphaSlider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -71,9 +68,6 @@
     <QtMoc Include="ImageViewHandler.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ParametersWindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="AlphaSlider.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -82,9 +76,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="ParametersWindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="AlphaSlider.ui">
       <Filter>Form Files</Filter>
     </QtUic>
