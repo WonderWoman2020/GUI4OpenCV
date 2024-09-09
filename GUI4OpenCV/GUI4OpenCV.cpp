@@ -496,12 +496,22 @@ void GUI4OpenCV::on_actionFilterMatrix_triggered()
     windowGrid->addWidget(colsLabel, 1, 0, 1, 1);
     windowGrid->addWidget(cols, 1, 1, 1, 1);
 
-    // Adds structuring element label and matrix
+    // Adds filters label and matrix
     QLabel* matrixLabel = new QLabel(window);
     matrixLabel->setText("Macierz filtrow: ");
     windowGrid->addWidget(matrixLabel, 2, 0, 1, 1);
     widget->setParent(window);
     windowGrid->addWidget(widget, 2, 1, 1, 3);
+
+    // Adds division coefficient
+    QLabel* divisorLabel = new QLabel(window);
+    divisorLabel->setText("Dzielnik: ");
+    QLineEdit* divisor = new QLineEdit(window);
+    QValidator* integerValidator = new QIntValidator(INT32_MIN, INT32_MAX, window);
+    divisor->setValidator(integerValidator);
+    divisor->setFixedSize(QSize(30, 30));
+    windowGrid->addWidget(divisorLabel, 3, 0, 1, 1);
+    windowGrid->addWidget(divisor, 3, 1, 1, 1);
 
     // Adds algorithms dropdown list
     QLabel* algorithmsLabel = new QLabel(window);
@@ -510,13 +520,13 @@ void GUI4OpenCV::on_actionFilterMatrix_triggered()
     algorithms->addItem("filtr dolnoprzepustowy");
     algorithms->addItem("filtr gornoprzepustowy");
     algorithms->addItem("...");
-    windowGrid->addWidget(algorithmsLabel, 3, 0, 1, 1);
-    windowGrid->addWidget(algorithms, 3, 1, 1, 1);
+    windowGrid->addWidget(algorithmsLabel, 4, 0, 1, 1);
+    windowGrid->addWidget(algorithms, 4, 1, 1, 1);
 
     // Adds confirm button
     QPushButton* okButton = new QPushButton(window);
     okButton->setText("OK");
-    windowGrid->addWidget(okButton, 4, 3, 1, 1);
+    windowGrid->addWidget(okButton, 5, 3, 1, 1);
 
     window->show();
 }
