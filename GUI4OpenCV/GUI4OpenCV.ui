@@ -166,12 +166,27 @@
     <property name="title">
      <string>Algorytmy</string>
     </property>
+    <widget class="QMenu" name="menuPointTransform">
+     <property name="title">
+      <string>Przeksztalcenia punktowe</string>
+     </property>
+     <addaction name="actionBinarization"/>
+     <addaction name="actionNegative"/>
+    </widget>
+    <widget class="QMenu" name="menuMedianFilters">
+     <property name="title">
+      <string>Filtry medianowe</string>
+     </property>
+     <addaction name="actionMedianFilter"/>
+     <addaction name="actionMaxFilter"/>
+     <addaction name="actionMinFilter"/>
+    </widget>
     <addaction name="actionAlfaChanging"/>
     <addaction name="actionStructuringMatrix"/>
     <addaction name="actionFilterMatrix"/>
     <addaction name="actionHoughTransform"/>
-    <addaction name="actionPointTransform"/>
-    <addaction name="actionMedianFilters"/>
+    <addaction name="menuPointTransform"/>
+    <addaction name="menuMedianFilters"/>
     <addaction name="separator"/>
     <addaction name="actionCursorTest"/>
    </widget>
@@ -299,14 +314,29 @@
     <string>Transformacja Hougha</string>
    </property>
   </action>
-  <action name="actionPointTransform">
+  <action name="actionBinarization">
    <property name="text">
-    <string>Przeksztalcenia punktowe</string>
+    <string>Binaryzacja</string>
    </property>
   </action>
-  <action name="actionMedianFilters">
+  <action name="actionNegative">
    <property name="text">
-    <string>Filtry medianowe</string>
+    <string>Negatyw</string>
+   </property>
+  </action>
+  <action name="actionMedianFilter">
+   <property name="text">
+    <string>Filtr medianowy</string>
+   </property>
+  </action>
+  <action name="actionMaxFilter">
+   <property name="text">
+    <string>Filtr maksimum</string>
+   </property>
+  </action>
+  <action name="actionMinFilter">
+   <property name="text">
+    <string>Filtr minimum</string>
    </property>
   </action>
  </widget>
