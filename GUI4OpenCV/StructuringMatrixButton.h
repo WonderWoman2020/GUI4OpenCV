@@ -9,4 +9,11 @@ class StructuringMatrixButton  : public QPushButton
 public:
 	StructuringMatrixButton(QWidget *parent);
 	~StructuringMatrixButton();
+
+public slots:
+	void on_clicked();
+
+private:
+	int clickCounter;
+	QString style;
 };
