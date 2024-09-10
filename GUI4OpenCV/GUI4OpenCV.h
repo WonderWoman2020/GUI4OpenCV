@@ -28,6 +28,8 @@
 
 #include "StructuringMatrixButton.h"
 
+#include "StructuringMatrix.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE

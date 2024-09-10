@@ -55,6 +55,9 @@
     <ClCompile Include="StructuringMatrixButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StructuringMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageConverter.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="StructuringMatrixButton.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StructuringMatrix.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
