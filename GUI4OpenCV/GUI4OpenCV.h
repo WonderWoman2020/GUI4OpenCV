@@ -67,6 +67,8 @@ public slots:
 
     void freeSecondImageMemory();
 
+    void executeStructuringMatrixAlgorithm();
+
 signals:
     void srcImageChanged();
     void outImageChanged();

@@ -397,25 +397,12 @@ void GUI4OpenCV::mixImages(int alpha)
 
 void GUI4OpenCV::on_actionStructuringMatrix_triggered()
 {
-    /*// Creates structuring element matrix
-    QWidget* widget = new QWidget(this);
-    QGridLayout* grid = new QGridLayout(widget);
-    widget->setLayout(grid);
-    int rowsNum = 5;
-    int colsNum = 5;
-    for (int i = 0; i < rowsNum; i++)
-    {
-        for (int j = 0; j < colsNum; j++)
-        {
-            StructuringMatrixButton* button = new StructuringMatrixButton(widget);
-            grid->addWidget(button, i, j);
-        }
-    }
-    //widget->show();*/
-
     int rowsNum = 5;
     int colsNum = 5;
     StructuringMatrix* widget = new StructuringMatrix(this, rowsNum, colsNum);
+
+    auto data = widget->getMatrixData();
+    qInfo() << data.at(0);
 
     QWidget* window = this->buildEmptyWindow(this, QSize(100, 100), Qt::WindowModal);
     QGridLayout* windowGrid = (QGridLayout*)window->layout();
@@ -463,7 +450,15 @@ void GUI4OpenCV::on_actionStructuringMatrix_triggered()
     okButton->setText("OK");
     windowGrid->addWidget(okButton, 5, 3, 1, 1);
 
+    connect(okButton, SIGNAL(clicked()), this, SLOT(executeStructuringMatrixAlgorithm()));
+    connect(okButton, SIGNAL(clicked()), window, SLOT(close()));
+
     window->show();
+}
+
+void GUI4OpenCV::executeStructuringMatrixAlgorithm()
+{
+    qInfo() << "Execution of chosen algorithm that uses structuring matrix.";
 }
 
 void GUI4OpenCV::on_actionFilterMatrix_triggered()
