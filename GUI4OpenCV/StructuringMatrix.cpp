@@ -11,6 +11,8 @@ StructuringMatrix::StructuringMatrix(QWidget* parent, int rows, int cols)
 
     this->data = this->readStructuringElement();
     this->characteristicElement = this->readCharacteristicElement();
+
+    this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
 StructuringMatrix::~StructuringMatrix()
