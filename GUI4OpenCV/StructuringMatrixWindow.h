@@ -17,7 +17,13 @@ public:
 	StructuringMatrixWindow(QWidget *parent);
 	~StructuringMatrixWindow();
 
+public slots:
+	void updateMatrixDimensions();
+
 private:
+
+	int matrixRow;
+
 	void buildWindow();
 
 	int addMatrixDimensionsInput(int atRow);
