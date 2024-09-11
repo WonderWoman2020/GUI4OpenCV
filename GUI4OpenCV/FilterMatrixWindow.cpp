@@ -147,4 +147,6 @@ void FilterMatrixWindow::updateMatrixDimensions()
     matrix->setObjectName("filterMatrix");
     QGridLayout* grid = (QGridLayout*)this->layout();
     grid->addWidget(matrix, this->matrixRow, 1, 1, 3);
+
+    this->resize(100, 100);
 }

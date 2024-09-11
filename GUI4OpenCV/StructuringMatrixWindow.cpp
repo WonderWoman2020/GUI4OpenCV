@@ -127,4 +127,6 @@ void StructuringMatrixWindow::updateMatrixDimensions()
     matrix->setObjectName("structuringMatrix");
     QGridLayout* grid = (QGridLayout*)this->layout();
     grid->addWidget(matrix, this->matrixRow, 1, 1, 3);
+
+    this->resize(100, 100);
 }
