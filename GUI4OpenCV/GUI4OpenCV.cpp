@@ -397,54 +397,9 @@ void GUI4OpenCV::mixImages(int alpha)
 
 void GUI4OpenCV::on_actionStructuringMatrix_triggered()
 {
-    int rowsNum = 5;
-    int colsNum = 5;
-    StructuringMatrix* widget = new StructuringMatrix(this, rowsNum, colsNum);
+    /*connect(okButton, SIGNAL(clicked()), this, SLOT(executeStructuringMatrixAlgorithm()));*/
 
-    auto data = widget->getMatrixData();
-    qInfo() << data.at(0);
-
-    QWidget* window = this->buildEmptyWindow(this, QSize(100, 100), Qt::WindowModal);
-    QGridLayout* windowGrid = (QGridLayout*)window->layout();
-
-    // Adds labels and column and rows input fields
-    QLabel* rowsLabel = new QLabel(window);
-    rowsLabel->setText("Liczba wierszy: ");
-    QLabel* colsLabel = new QLabel(window);
-    colsLabel->setText("Liczba kolumn: ");
-    QSpinBox* rows = new QSpinBox(window);
-    QSpinBox* cols = new QSpinBox(window);
-    windowGrid->addWidget(rowsLabel, 0, 0, 1, 1);
-    windowGrid->addWidget(rows, 0, 1, 1, 1);
-    windowGrid->addWidget(colsLabel, 1, 0, 1, 1);
-    windowGrid->addWidget(cols, 1, 1, 1, 1);
-
-    // Adds structuring element label and matrix
-    QLabel* matrixLabel = new QLabel(window);
-    matrixLabel->setText("Element strukturalny: ");
-    windowGrid->addWidget(matrixLabel, 2, 0, 1, 1);
-    widget->setParent(window);
-    windowGrid->addWidget(widget, 2, 1, 1, 3);
-
-    // Adds algorithms dropdown list
-    QLabel* algorithmsLabel = new QLabel(window);
-    algorithmsLabel->setText("Algorytm: ");
-    QComboBox* algorithms = new QComboBox(window);
-    algorithms->addItem("erozja");
-    algorithms->addItem("dylatacja");
-    algorithms->addItem("otwarcie");
-    algorithms->addItem("zamkniecie");
-    windowGrid->addWidget(algorithmsLabel, 3, 0, 1, 1);
-    windowGrid->addWidget(algorithms, 3, 1, 1, 1);
-
-    // Adds confirm button
-    QPushButton* okButton = new QPushButton(window);
-    okButton->setText("OK");
-    windowGrid->addWidget(okButton, 4, 3, 1, 1);
-
-    connect(okButton, SIGNAL(clicked()), this, SLOT(executeStructuringMatrixAlgorithm()));
-    connect(okButton, SIGNAL(clicked()), window, SLOT(close()));
-
+    StructuringMatrixWindow* window = new StructuringMatrixWindow(this);
     window->show();
 }
 

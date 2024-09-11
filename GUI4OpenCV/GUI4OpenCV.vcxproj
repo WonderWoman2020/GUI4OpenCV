@@ -104,6 +104,7 @@
     <ClCompile Include="AlphaSlider.cpp" />
     <ClCompile Include="StructuringMatrix.cpp" />
     <ClCompile Include="StructuringMatrixButton.cpp" />
+    <ClCompile Include="StructuringMatrixWindow.cpp" />
     <QtRcc Include="GUI4OpenCV.qrc" />
     <QtUic Include="AlphaSlider.ui" />
     <QtUic Include="GUI4OpenCV.ui" />
@@ -115,6 +116,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="StructuringMatrixWindow.h" />
     <QtMoc Include="StructuringMatrix.h" />
     <QtMoc Include="StructuringMatrixButton.h" />
     <QtMoc Include="AlphaSlider.h" />

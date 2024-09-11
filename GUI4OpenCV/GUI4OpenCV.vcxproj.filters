@@ -58,6 +58,9 @@
     <ClCompile Include="StructuringMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StructuringMatrixWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageConverter.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="StructuringMatrix.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StructuringMatrixWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
