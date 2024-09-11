@@ -28,6 +28,9 @@ void FilterMatrixWindow::buildWindow()
     rowsTaken = this->addMatrix(currentRow);
     currentRow += rowsTaken;
 
+    rowsTaken = this->addDivisor(currentRow);
+    currentRow += rowsTaken;
+
     rowsTaken = this->addAlgorithmsList(currentRow);
     currentRow += rowsTaken;
 
