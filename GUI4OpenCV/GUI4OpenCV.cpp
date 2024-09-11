@@ -410,55 +410,6 @@ void GUI4OpenCV::executeStructuringMatrixAlgorithm()
 
 void GUI4OpenCV::on_actionFilterMatrix_triggered()
 {
-    // Creates filter matrix
-    FilterMatrix* widget = new FilterMatrix(this, 5, 5);
-
-    QWidget* window = this->buildEmptyWindow(this, QSize(100, 100), Qt::WindowModal);
-    QGridLayout* windowGrid = (QGridLayout*)window->layout();
-
-    // Adds labels and column and rows input fields
-    QLabel* rowsLabel = new QLabel(window);
-    rowsLabel->setText("Liczba wierszy: ");
-    QLabel* colsLabel = new QLabel(window);
-    colsLabel->setText("Liczba kolumn: ");
-    QSpinBox* rows = new QSpinBox(window);
-    QSpinBox* cols = new QSpinBox(window);
-    windowGrid->addWidget(rowsLabel, 0, 0, 1, 1);
-    windowGrid->addWidget(rows, 0, 1, 1, 1);
-    windowGrid->addWidget(colsLabel, 1, 0, 1, 1);
-    windowGrid->addWidget(cols, 1, 1, 1, 1);
-
-    // Adds filters label and matrix
-    QLabel* matrixLabel = new QLabel(window);
-    matrixLabel->setText("Macierz filtrow: ");
-    windowGrid->addWidget(matrixLabel, 2, 0, 1, 1);
-    widget->setParent(window);
-    windowGrid->addWidget(widget, 2, 1, 1, 3);
-
-    // Adds division coefficient
-    QLabel* divisorLabel = new QLabel(window);
-    divisorLabel->setText("Dzielnik: ");
-    QLineEdit* divisor = new QLineEdit(window);
-    QValidator* integerValidator = new QIntValidator(INT32_MIN, INT32_MAX, window);
-    divisor->setValidator(integerValidator);
-    divisor->setFixedSize(QSize(30, 30));
-    windowGrid->addWidget(divisorLabel, 3, 0, 1, 1);
-    windowGrid->addWidget(divisor, 3, 1, 1, 1);
-
-    // Adds algorithms dropdown list
-    QLabel* algorithmsLabel = new QLabel(window);
-    algorithmsLabel->setText("Algorytm: ");
-    QComboBox* algorithms = new QComboBox(window);
-    algorithms->addItem("filtr dolnoprzepustowy");
-    algorithms->addItem("filtr gornoprzepustowy");
-    algorithms->addItem("...");
-    windowGrid->addWidget(algorithmsLabel, 4, 0, 1, 1);
-    windowGrid->addWidget(algorithms, 4, 1, 1, 1);
-
-    // Adds confirm button
-    QPushButton* okButton = new QPushButton(window);
-    okButton->setText("OK");
-    windowGrid->addWidget(okButton, 5, 3, 1, 1);
-
+    FilterMatrixWindow* window = new FilterMatrixWindow(this);
     window->show();
 }

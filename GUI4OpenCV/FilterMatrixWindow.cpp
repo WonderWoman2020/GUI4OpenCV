@@ -1,18 +1,19 @@
-#include "StructuringMatrixWindow.h"
+#include "FilterMatrixWindow.h"
 
-StructuringMatrixWindow::StructuringMatrixWindow(QWidget *parent)
+FilterMatrixWindow::FilterMatrixWindow(QWidget *parent)
 	: QDialog(parent)
 {
     this->setParent(parent);
-	this->buildWindow();
+    this->buildWindow();
 }
 
-StructuringMatrixWindow::~StructuringMatrixWindow()
+FilterMatrixWindow::~FilterMatrixWindow()
 {
 
 }
 
-void StructuringMatrixWindow::buildWindow()
+
+void FilterMatrixWindow::buildWindow()
 {
     QGridLayout* windowGrid = new QGridLayout(this);
     this->resize(100, 100);
@@ -31,13 +32,12 @@ void StructuringMatrixWindow::buildWindow()
     currentRow += rowsTaken;
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok, this);
-
     windowGrid->addWidget(buttonBox, currentRow, 2, 1, 1);
 
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(close()));
 }
 
-int StructuringMatrixWindow::addMatrixDimensionsInput(int atRow)
+int FilterMatrixWindow::addMatrixDimensionsInput(int atRow)
 {
     // Adds labels and column and rows input fields
     QLabel* rowsLabel = new QLabel(this);
@@ -50,47 +50,64 @@ int StructuringMatrixWindow::addMatrixDimensionsInput(int atRow)
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
     grid->addWidget(rowsLabel, atRow + rowsTaken, 0, 1, 1);
-    grid->addWidget(rows, atRow+rowsTaken, 1, 1, 1);
+    grid->addWidget(rows, atRow + rowsTaken, 1, 1, 1);
     rowsTaken++;
-    grid->addWidget(colsLabel, atRow+rowsTaken, 0, 1, 1);
-    grid->addWidget(cols, atRow+rowsTaken, 1, 1, 1);
+    grid->addWidget(colsLabel, atRow + rowsTaken, 0, 1, 1);
+    grid->addWidget(cols, atRow + rowsTaken, 1, 1, 1);
     rowsTaken++;
 
     return rowsTaken;
 }
 
-int StructuringMatrixWindow::addMatrix(int atRow)
+int FilterMatrixWindow::addMatrix(int atRow)
 {
     // Adds structuring element label and matrix
     int rowsNum = 5;
     int colsNum = 5;
-    StructuringMatrix* widget = new StructuringMatrix(this, rowsNum, colsNum);
+    FilterMatrix* widget = new FilterMatrix(this, rowsNum, colsNum);
 
     auto data = widget->getMatrixData();
     qInfo() << data.at(0);
 
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
-    QLabel* matrixLabel = new QLabel(grid->parentWidget());
-    matrixLabel->setText("Element strukturalny: ");
+    QLabel* matrixLabel = new QLabel(this);
+    matrixLabel->setText("Macierz filtrow: ");
     grid->addWidget(matrixLabel, atRow, 0, 1, 1);
-    widget->setParent(grid->parentWidget());
+    widget->setParent(this);
     grid->addWidget(widget, atRow, 1, 1, 3);
     rowsTaken++;
 
     return rowsTaken;
 }
 
-int StructuringMatrixWindow::addAlgorithmsList(int atRow)
+int FilterMatrixWindow::addDivisor(int atRow)
+{
+    QLabel* divisorLabel = new QLabel(this);
+    divisorLabel->setText("Dzielnik: ");
+    QLineEdit* divisor = new QLineEdit(this);
+    QValidator* integerValidator = new QIntValidator(INT32_MIN, INT32_MAX, this);
+    divisor->setValidator(integerValidator);
+    divisor->setFixedSize(QSize(30, 30));
+
+    QGridLayout* grid = (QGridLayout*)this->layout();
+    int rowsTaken = 0;
+    grid->addWidget(divisorLabel, atRow, 0, 1, 1);
+    grid->addWidget(divisor, atRow, 1, 1, 1);
+    rowsTaken++;
+
+    return rowsTaken;
+}
+
+int FilterMatrixWindow::addAlgorithmsList(int atRow)
 {
     // Adds algorithms dropdown list
     QLabel* algorithmsLabel = new QLabel(this);
     algorithmsLabel->setText("Algorytm: ");
     QComboBox* algorithms = new QComboBox(this);
-    algorithms->addItem("erozja");
-    algorithms->addItem("dylatacja");
-    algorithms->addItem("otwarcie");
-    algorithms->addItem("zamkniecie");
+    algorithms->addItem("filtr dolnoprzepustowy");
+    algorithms->addItem("filtr gornoprzepustowy");
+    algorithms->addItem("...");
 
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
