@@ -32,6 +32,8 @@
 
 #include "StructuringMatrixWindow.h"
 
+#include "FilterMatrix.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE

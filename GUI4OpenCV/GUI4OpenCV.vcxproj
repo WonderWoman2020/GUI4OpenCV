@@ -102,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlphaSlider.cpp" />
+    <ClCompile Include="FilterMatrix.cpp" />
     <ClCompile Include="StructuringMatrix.cpp" />
     <ClCompile Include="StructuringMatrixButton.cpp" />
     <ClCompile Include="StructuringMatrixWindow.cpp" />
@@ -120,6 +121,7 @@
     <QtMoc Include="StructuringMatrix.h" />
     <QtMoc Include="StructuringMatrixButton.h" />
     <QtMoc Include="AlphaSlider.h" />
+    <QtMoc Include="FilterMatrix.h" />
     <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
     <QtMoc Include="ImageViewHandler.h" />

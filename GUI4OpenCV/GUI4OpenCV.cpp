@@ -411,22 +411,7 @@ void GUI4OpenCV::executeStructuringMatrixAlgorithm()
 void GUI4OpenCV::on_actionFilterMatrix_triggered()
 {
     // Creates filter matrix
-    QWidget* widget = new QWidget(this);
-    QGridLayout* grid = new QGridLayout(widget);
-    widget->setLayout(grid);
-    for (int i = 0; i < 5; i++)
-    {
-        for (int j = 0; j < 5; j++)
-        {
-            QLineEdit* inputField = new QLineEdit(widget);
-            QValidator* integerValidator = new QIntValidator(INT32_MIN, INT32_MAX, widget);
-            inputField->setValidator(integerValidator);
-            inputField->setFixedSize(QSize(30, 30));
-            inputField->setAlignment(Qt::AlignCenter);
-            grid->addWidget(inputField, i, j);
-        }
-    }
-    //widget->show();
+    FilterMatrix* widget = new FilterMatrix(this, 5, 5);
 
     QWidget* window = this->buildEmptyWindow(this, QSize(100, 100), Qt::WindowModal);
     QGridLayout* windowGrid = (QGridLayout*)window->layout();
