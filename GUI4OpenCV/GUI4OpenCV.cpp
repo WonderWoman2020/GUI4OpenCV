@@ -426,14 +426,6 @@ void GUI4OpenCV::on_actionStructuringMatrix_triggered()
     widget->setParent(window);
     windowGrid->addWidget(widget, 2, 1, 1, 3);
 
-    // Adds selecting characteristic element
-    QLabel* characteristicLabel = new QLabel(window);
-    characteristicLabel->setText("Punkt charakterystyczny: ");
-    QSpinBox* characteristic = new QSpinBox(window);
-    characteristic->setRange(0, (rowsNum * colsNum) - 1);
-    windowGrid->addWidget(characteristicLabel, 3, 0, 1, 1);
-    windowGrid->addWidget(characteristic, 3, 1, 1, 1);
-
     // Adds algorithms dropdown list
     QLabel* algorithmsLabel = new QLabel(window);
     algorithmsLabel->setText("Algorytm: ");
@@ -442,13 +434,13 @@ void GUI4OpenCV::on_actionStructuringMatrix_triggered()
     algorithms->addItem("dylatacja");
     algorithms->addItem("otwarcie");
     algorithms->addItem("zamkniecie");
-    windowGrid->addWidget(algorithmsLabel, 4, 0, 1, 1);
-    windowGrid->addWidget(algorithms, 4, 1, 1, 1);
+    windowGrid->addWidget(algorithmsLabel, 3, 0, 1, 1);
+    windowGrid->addWidget(algorithms, 3, 1, 1, 1);
 
     // Adds confirm button
     QPushButton* okButton = new QPushButton(window);
     okButton->setText("OK");
-    windowGrid->addWidget(okButton, 5, 3, 1, 1);
+    windowGrid->addWidget(okButton, 4, 3, 1, 1);
 
     connect(okButton, SIGNAL(clicked()), this, SLOT(executeStructuringMatrixAlgorithm()));
     connect(okButton, SIGNAL(clicked()), window, SLOT(close()));
