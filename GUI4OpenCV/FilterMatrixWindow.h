@@ -18,7 +18,13 @@ public:
 	FilterMatrixWindow(QWidget *parent);
 	~FilterMatrixWindow();
 
+
+public slots:
+	void updateMatrixDimensions();
+
 private:
+	int matrixRow;
+
 	void buildWindow();
 
 	int addMatrixDimensionsInput(int atRow);

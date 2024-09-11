@@ -3,6 +3,8 @@
 FilterMatrixWindow::FilterMatrixWindow(QWidget *parent)
 	: QDialog(parent)
 {
+    this->matrixRow = 0;
+
     this->setParent(parent);
     this->buildWindow();
 }
@@ -49,6 +51,11 @@ int FilterMatrixWindow::addMatrixDimensionsInput(int atRow)
     colsLabel->setText("Liczba kolumn: ");
     QSpinBox* rows = new QSpinBox(this);
     QSpinBox* cols = new QSpinBox(this);
+    rows->setObjectName("rows");
+    cols->setObjectName("cols");
+
+    rows->setValue(5);
+    cols->setValue(5);
 
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
@@ -59,6 +66,9 @@ int FilterMatrixWindow::addMatrixDimensionsInput(int atRow)
     grid->addWidget(cols, atRow + rowsTaken, 1, 1, 1);
     rowsTaken++;
 
+    connect(rows, SIGNAL(valueChanged(int)), this, SLOT(updateMatrixDimensions()));
+    connect(cols, SIGNAL(valueChanged(int)), this, SLOT(updateMatrixDimensions()));
+
     return rowsTaken;
 }
 
@@ -68,6 +78,7 @@ int FilterMatrixWindow::addMatrix(int atRow)
     int rowsNum = 5;
     int colsNum = 5;
     FilterMatrix* widget = new FilterMatrix(this, rowsNum, colsNum);
+    widget->setObjectName("filterMatrix");
 
     auto data = widget->getMatrixData();
     qInfo() << data.at(0);
@@ -80,6 +91,8 @@ int FilterMatrixWindow::addMatrix(int atRow)
     widget->setParent(this);
     grid->addWidget(widget, atRow, 1, 1, 3);
     rowsTaken++;
+
+    this->matrixRow = atRow;
 
     return rowsTaken;
 }
@@ -119,4 +132,19 @@ int FilterMatrixWindow::addAlgorithmsList(int atRow)
     rowsTaken++;
 
     return rowsTaken;
+}
+
+void FilterMatrixWindow::updateMatrixDimensions()
+{
+    FilterMatrix* previousMatrix = this->findChild<FilterMatrix*>("filterMatrix");
+    previousMatrix->setParent(nullptr);
+    previousMatrix->deleteLater();
+
+    QSpinBox* rows = (QSpinBox*)this->findChild<QSpinBox*>("rows");
+    QSpinBox* cols = (QSpinBox*)this->findChild<QSpinBox*>("cols");
+
+    FilterMatrix* matrix = new FilterMatrix(this, rows->value(), cols->value());
+    matrix->setObjectName("filterMatrix");
+    QGridLayout* grid = (QGridLayout*)this->layout();
+    grid->addWidget(matrix, this->matrixRow, 1, 1, 3);
 }
