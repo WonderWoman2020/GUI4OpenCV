@@ -467,6 +467,7 @@ void GUI4OpenCV::on_actionFilterMatrix_triggered()
             QValidator* integerValidator = new QIntValidator(INT32_MIN, INT32_MAX, widget);
             inputField->setValidator(integerValidator);
             inputField->setFixedSize(QSize(30, 30));
+            inputField->setAlignment(Qt::AlignCenter);
             grid->addWidget(inputField, i, j);
         }
     }
