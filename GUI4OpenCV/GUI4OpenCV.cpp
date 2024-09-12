@@ -5,11 +5,17 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::GUI4OpenCVClass())
 {
-    // This is a part of Qt Meta-Object System. This runs MOC (Meta-Object Compiler)
-    // which scans this class code and analyzes it with reflection mechanisms. MOC for example 
-    // automatically creates connections of signals and slots from analyzing method names like "on_pushButton_clicked()".
-    // It also generates a file, something like "moc_filename.cpp", that is in pure C++, with no Qt macros etc.,
-    // so it can be processed further by C++ compiler.
+    // This line calls Qt's MOC (Meta-Object Compiler) to analyze code of this class.
+    // MOC is a preprocessor, which analyzes any Qt related code and macros (which are not
+    // understandable for standard C++ compiler), and generates a new file, that contains only
+    // pure C++ code. The generated file for this class would be named as "moc_GUI4OpenCV.cpp".
+    // MOC also analyzes method names, by using reflection mechanism, and creates some signal-slot
+    // connections automatically for us, if we name method in specific format - for example:
+    // Method "on_actionSync_triggered()"
+    // - actionSync is a sender,
+    // - triggered is its signal,
+    // - this object is a receiver
+    // - the method is a receiver's slot, which reacts to the signal.
     ui->setupUi(this);
 
     this->histogramHandler = new HistogramHandler();
@@ -403,8 +409,6 @@ void GUI4OpenCV::mixImages(int alpha)
 
 void GUI4OpenCV::on_actionStructuringMatrix_triggered()
 {
-    /*connect(okButton, SIGNAL(clicked()), this, SLOT(executeStructuringMatrixAlgorithm()));*/
-
     StructuringMatrixWindow* window = new StructuringMatrixWindow(this);
     connect(window, SIGNAL(sendInputData(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)),
         this, SLOT(executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)));
