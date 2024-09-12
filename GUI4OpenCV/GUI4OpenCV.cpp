@@ -286,6 +286,9 @@ QWidget* GUI4OpenCV::openSecondSourceImage()
     QWidget* secondImageWindow = this->buildEmptyWindow(this, this->ui->srcImageView->size(), Qt::NonModal);
     secondImageWindow->setAttribute(Qt::WA_DeleteOnClose);    // Makes window destroy itself, when closed
     secondImageWindow->setProperty("imageID", this->secondImageCounter);    // Relates window to the image it will be showing
+
+    secondImageWindow->setWindowTitle("Drugi obraz wejsciowy");
+
     // Adds image view widget to the window
     QGraphicsView* secondImageView = new QGraphicsView(secondImageWindow);
     secondImageWindow->layout()->addWidget(secondImageView);
@@ -323,6 +326,9 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     QWidget* widget = this->buildEmptyWindow(this, QSize(slider->width() + 50, slider->height() + 50), Qt::NonModal);
     widget->setAttribute(Qt::WA_DeleteOnClose);    // Makes window destroy itself, when closed
     widget->setProperty("imageID", this->secondImageCounter);    // Relates window to the image it will be using for alpha linear blending
+   
+    widget->setWindowTitle("Mieszanie obrazow");
+    
     // Adds alpha slider widget to the window
     slider->setParent(widget);
     widget->layout()->addWidget(slider);

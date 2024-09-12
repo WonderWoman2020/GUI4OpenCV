@@ -6,6 +6,7 @@ FilterMatrixWindow::FilterMatrixWindow(QWidget *parent)
     this->matrixRow = 0;
 
     this->setParent(parent);
+    this->setWindowTitle("Macierz filtrow");
     this->buildWindow();
 }
 

@@ -6,6 +6,7 @@ StructuringMatrixWindow::StructuringMatrixWindow(QWidget *parent)
     this->matrixRow = 0;
 
     this->setParent(parent);
+    this->setWindowTitle("Element strukturalny");
 	this->buildWindow();
 }
 
