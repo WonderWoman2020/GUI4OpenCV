@@ -17,8 +17,12 @@ public:
 	StructuringMatrixWindow(QWidget *parent);
 	~StructuringMatrixWindow();
 
+signals:
+	void sendInputData(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, std::string algorithm);
+
 public slots:
 	void updateMatrixDimensions();
+	void readInputData();
 
 private:
 

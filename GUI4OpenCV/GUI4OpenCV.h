@@ -73,7 +73,7 @@ public slots:
 
     void freeSecondImageMemory();
 
-    void executeStructuringMatrixAlgorithm();
+    void executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, std::string algorithm);
 
 signals:
     void srcImageChanged();

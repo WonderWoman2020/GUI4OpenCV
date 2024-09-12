@@ -14,6 +14,18 @@ StructuringMatrixWindow::~StructuringMatrixWindow()
 
 }
 
+void StructuringMatrixWindow::readInputData()
+{
+    StructuringMatrix* matrix = this->findChild<StructuringMatrix*>("structuringMatrix");
+    QComboBox* algorithms = this->findChild<QComboBox*>("algorithmsList");
+
+    auto matrixData = matrix->getMatrixData();
+    auto characteristicElement = matrix->getCharacteristicElement();
+    std::string chosenAlgorithm = algorithms->currentText().toStdString();
+
+    emit sendInputData(matrixData, characteristicElement, chosenAlgorithm);
+}
+
 void StructuringMatrixWindow::buildWindow()
 {
     QGridLayout* windowGrid = new QGridLayout(this);
@@ -37,6 +49,7 @@ void StructuringMatrixWindow::buildWindow()
     windowGrid->addWidget(buttonBox, currentRow, 2, 1, 1);
 
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(close()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(readInputData()));
 }
 
 int StructuringMatrixWindow::addMatrixDimensionsInput(int atRow)
@@ -100,6 +113,8 @@ int StructuringMatrixWindow::addAlgorithmsList(int atRow)
     QLabel* algorithmsLabel = new QLabel(this);
     algorithmsLabel->setText("Algorytm: ");
     QComboBox* algorithms = new QComboBox(this);
+    algorithms->setObjectName("algorithmsList");
+
     algorithms->addItem("erozja");
     algorithms->addItem("dylatacja");
     algorithms->addItem("otwarcie");
