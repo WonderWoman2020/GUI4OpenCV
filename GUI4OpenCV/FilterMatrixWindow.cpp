@@ -72,6 +72,9 @@ int FilterMatrixWindow::addMatrixDimensionsInput(int atRow)
     rows->setValue(5);
     cols->setValue(5);
 
+    rows->setFixedWidth(75);
+    cols->setFixedWidth(75);
+
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
     grid->addWidget(rowsLabel, atRow + rowsTaken, 0, 1, 1);
