@@ -75,7 +75,7 @@ public slots:
 
     void executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, StructuringAlgorithm algorithm);
     
-    void executeFilterMatrixAlgorithm(std::vector<std::vector<int>> matrixData, int divisor, std::string algorithm);
+    void executeFilterMatrixAlgorithm(std::vector<std::vector<int>> matrixData, int divisor, FilterAlgorithm algorithm);
 
 signals:
     void srcImageChanged();

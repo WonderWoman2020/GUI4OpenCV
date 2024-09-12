@@ -10,6 +10,13 @@
 
 #include "FilterMatrix.h"
 
+
+enum FilterAlgorithm
+{
+	LOW_PASS_FILTER,
+	HIGH_PASS_FILTER
+};
+
 class FilterMatrixWindow  : public QDialog
 {
 	Q_OBJECT
@@ -19,7 +26,7 @@ public:
 	~FilterMatrixWindow();
 
 signals:
-	void sendInputData(std::vector<std::vector<int>> matrixData, int divisor, std::string algorithm);
+	void sendInputData(std::vector<std::vector<int>> matrixData, int divisor, FilterAlgorithm algorithm);
 
 public slots:
 	void updateMatrixDimensions();
@@ -27,6 +34,11 @@ public slots:
 
 private:
 	int matrixRow;
+
+	std::map<FilterAlgorithm, std::string> algorithmNames = {
+	{ LOW_PASS_FILTER, "filtr dolnoprzepustowy"},
+	{ HIGH_PASS_FILTER, "filtr gornoprzepustowy"}
+	};
 
 	void buildWindow();
 

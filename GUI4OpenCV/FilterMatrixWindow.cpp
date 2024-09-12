@@ -23,7 +23,7 @@ void FilterMatrixWindow::readInputData()
     QComboBox* algorithms = this->findChild<QComboBox*>("algorithmsList");
 
     auto matrixData = matrix->getMatrixData();
-    std::string chosenAlgorithm = algorithms->currentText().toStdString();
+    FilterAlgorithm chosenAlgorithm = (FilterAlgorithm) algorithms->currentIndex();
     int divisor = divisorField->text().toInt();
 
     emit sendInputData(matrixData, divisor, chosenAlgorithm);
@@ -143,9 +143,11 @@ int FilterMatrixWindow::addAlgorithmsList(int atRow)
     QComboBox* algorithms = new QComboBox(this);
     algorithms->setObjectName("algorithmsList");
 
-    algorithms->addItem("filtr dolnoprzepustowy");
-    algorithms->addItem("filtr gornoprzepustowy");
-    algorithms->addItem("...");
+    for (int i = 0; i < this->algorithmNames.size(); i++)
+    {
+        std::string name = this->algorithmNames.at(FilterAlgorithm(i));
+        algorithms->addItem(QString::fromStdString(name));
+    }
 
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
