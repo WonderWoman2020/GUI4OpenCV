@@ -146,14 +146,6 @@ void GUI4OpenCV::on_actionOpen_triggered()
 */
 void GUI4OpenCV::on_actionSave_triggered()
 {
-    // Checks if there is any output image data to save
-    if (this->outImage.empty())
-    {
-        QMessageBox::information(this, "Brak obrazu do zapisania",
-            "Nie ma obrazu wyjsciowego do zapisania. Musisz zaladowac najpierw obraz wejsciowy.");
-        return;
-    }
-
     // Asks user to provide path for storing image and tries to save it
     bool saved = this->saveImage(this->outImage);
     if (!saved)
@@ -162,8 +154,6 @@ void GUI4OpenCV::on_actionSave_triggered()
             "Zapisywanie obrazu sie nie powiodlo. Sprobuj zapisac obraz w innym formacie.");
     }
 }
-
-
 
 void GUI4OpenCV::onImageChanged()
 {
@@ -266,6 +256,14 @@ bool GUI4OpenCV::saveImage(cv::Mat& image)
 {
     bool saved = false;
 
+    // Checks if there is any output image data to save
+    if (image.empty())
+    {
+        QMessageBox::information(this, "Brak obrazu do zapisania",
+            "Nie ma obrazu wyjsciowego do zapisania. Musisz zaladowac najpierw obraz wejsciowy.");
+        return false;
+    }
+
     // Opens a file explorer and gets a path of the location chosen to store out image (with a filename)
     QString fileName = QFileDialog::getSaveFileName(this, tr("Zapisz obraz"),
         "/home/untitled.png",
@@ -296,12 +294,12 @@ bool GUI4OpenCV::saveImage(cv::Mat& image)
 
 QWidget* GUI4OpenCV::buildEmptyWindow(QWidget* parent, QSize size, Qt::WindowModality modality)
 {
-    QWidget* secondImageWindow = new QWidget(parent, Qt::Window);
-    QGridLayout* imageWindowlayout = new QGridLayout(secondImageWindow);
-    secondImageWindow->setLayout(imageWindowlayout);
-    secondImageWindow->resize(size);
-    secondImageWindow->setWindowModality(modality);    // Sets other windows to still be accessible, when this window shows up
-    return secondImageWindow;
+    QWidget* window = new QWidget(parent, Qt::Window);
+    QGridLayout* layout = new QGridLayout(window);
+    window->setLayout(layout);
+    window->resize(size);
+    window->setWindowModality(modality);    // Sets other windows to still be accessible, when this window shows up
+    return window;
 }
 
 QWidget* GUI4OpenCV::openSecondSourceImage()
