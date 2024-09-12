@@ -102,6 +102,8 @@ private:
     cv::Mat outHistogramImage;
 
     void setDebugPrintingPatterns();
+    bool updateImageView(QGraphicsView* imageView, cv::Mat& image);
+
     void onImageChanged();
     void onHistogramChanged();
     cv::Mat readInImage();

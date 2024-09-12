@@ -69,6 +69,24 @@ void GUI4OpenCV::setDebugPrintingPatterns()
     qCritical() << "Critical message";
 }
 
+bool GUI4OpenCV::updateImageView(QGraphicsView* imageView, cv::Mat& image)
+{
+    if (image.empty())
+        return false;
+
+    try {
+        this->imageViewHandler->setImageInView(imageView, ImageConverter::convertMatToQPixmap(image));
+    }
+    catch (std::exception& ex)
+    {
+        QMessageBox::critical(this, "Blad interfejsu",
+            "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
+        return false;
+    }
+
+    return true;
+}
+
 /*
     Handles syncing and desyncing images scrolls action.
 */
@@ -115,17 +133,9 @@ void GUI4OpenCV::on_actionOpen_triggered()
     this->srcImage = temp;
     this->srcImage.copyTo(this->outImage);
 
-    // Updates the source and processed image views 
-    try {
-        this->imageViewHandler->setImageInView(ui->srcImageView, ImageConverter::convertMatToQPixmap(this->srcImage));
-        this->imageViewHandler->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
-    }
-    catch (std::exception& ex)
-    {
-        QMessageBox::critical(this, "Blad interfejsu",
-            "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
-        return;
-    }
+    // Updates both source and processed image views
+    this->updateImageView(ui->srcImageView, this->srcImage);
+    this->updateImageView(ui->outImageView, this->outImage);
 
     // Notifies other components, that new image was loaded, so they can update themselves
     emit this->srcImageChanged();
@@ -169,11 +179,13 @@ void GUI4OpenCV::onHistogramChanged()
     // Draws histograms and sets them in the histogram views
     this->srcHistogramImage = this->histogramHandler->drawChosenHistograms(this->srcHistograms,
         ui->actionHistB->isChecked(), ui->actionHistG->isChecked(), ui->actionHistR->isChecked(), ui->actionHistGrayscale->isChecked());
-    this->imageViewHandler->setImageInView(ui->srcHistView, ImageConverter::convertMatToQPixmap(this->srcHistogramImage));
+
+    this->updateImageView(ui->srcHistView, this->srcHistogramImage);
 
     this->outHistogramImage = this->histogramHandler->drawChosenHistograms(this->outHistograms,
         ui->actionHistB->isChecked(), ui->actionHistG->isChecked(), ui->actionHistR->isChecked(), ui->actionHistGrayscale->isChecked());
-    this->imageViewHandler->setImageInView(ui->outHistView, ImageConverter::convertMatToQPixmap(this->outHistogramImage));
+
+    this->updateImageView(ui->outHistView, this->outHistogramImage);
 }
 
 void GUI4OpenCV::on_actionHistB_triggered()
@@ -322,21 +334,20 @@ QWidget* GUI4OpenCV::openSecondSourceImage()
     // Adds image view widget to the window
     QGraphicsView* secondImageView = new QGraphicsView(secondImageWindow);
     secondImageWindow->layout()->addWidget(secondImageView);
-    secondImageWindow->show();
 
     // Makes singal - slot connection, which destroys second source image window, when new image was loaded
     connect(this, SIGNAL(srcSecondImageLoaded()), secondImageWindow, SLOT(deleteLater()));
 
-    // Adds image to the second source image view 
-    try {
-        this->imageViewHandler->setImageInView(secondImageView, ImageConverter::convertMatToQPixmap(this->srcSecondImage));
-    }
-    catch (std::exception& ex)
+    // Adds image to the second source image view
+    bool updated = this->updateImageView(secondImageView, this->srcSecondImage);
+    if (!updated)
     {
-        QMessageBox::critical(this, "Blad interfejsu",
-            "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
+        this->srcSecondImage.release();
+        secondImageWindow->deleteLater();
         return nullptr;
     }
+
+    secondImageWindow->show();
 
     return secondImageWindow;
 }
@@ -422,7 +433,7 @@ void GUI4OpenCV::mixImages(int alpha)
         double betaNormalized = 1.0 - alphaNormalized;
         cv::addWeighted(srcSecondResized, alphaNormalized, this->srcImage, betaNormalized, 0.0, result);
         this->outImage = result;
-        this->imageViewHandler->setImageInView(ui->outImageView, ImageConverter::convertMatToQPixmap(this->outImage));
+        this->updateImageView(ui->outImageView, this->outImage);
         emit srcImageChanged();
     }
     catch (std::exception ex)
