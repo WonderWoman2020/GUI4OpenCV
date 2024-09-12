@@ -24,7 +24,7 @@ void StructuringMatrixWindow::readInputData()
 
     auto matrixData = matrix->getMatrixData();
     auto characteristicElement = matrix->getCharacteristicElement();
-    std::string chosenAlgorithm = algorithms->currentText().toStdString();
+    StructuringAlgorithm chosenAlgorithm = (StructuringAlgorithm) algorithms->currentIndex();
 
     emit sendInputData(matrixData, characteristicElement, chosenAlgorithm);
 }
@@ -123,7 +123,7 @@ int StructuringMatrixWindow::addAlgorithmsList(int atRow)
 
     for (int i = 0; i < this->algorithmNames.size(); i++)
     {
-        std::string name = this->algorithmNames.at(StructuringElementAlgorithms(i));
+        std::string name = this->algorithmNames.at(StructuringAlgorithm(i));
         algorithms->addItem(QString::fromStdString(name));
     }
 

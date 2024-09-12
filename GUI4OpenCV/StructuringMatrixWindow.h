@@ -9,7 +9,7 @@
 
 #include "StructuringMatrix.h"
 
-enum StructuringElementAlgorithms
+enum StructuringAlgorithm
 {
 	EROSION,
 	DILATION,
@@ -27,7 +27,7 @@ public:
 	~StructuringMatrixWindow();
 
 signals:
-	void sendInputData(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, std::string algorithm);
+	void sendInputData(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, StructuringAlgorithm algorithm);
 
 public slots:
 	void updateMatrixDimensions();
@@ -37,7 +37,7 @@ private:
 
 	int matrixRow;
 
-	std::map<StructuringElementAlgorithms, std::string> algorithmNames = {
+	std::map<StructuringAlgorithm, std::string> algorithmNames = {
 		{ EROSION, "erozja"},
 		{ DILATION, "dylatacja"},
 		{ OPENING, "otwarcie"},

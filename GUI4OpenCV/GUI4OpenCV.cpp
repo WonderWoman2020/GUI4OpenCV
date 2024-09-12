@@ -406,12 +406,12 @@ void GUI4OpenCV::on_actionStructuringMatrix_triggered()
     /*connect(okButton, SIGNAL(clicked()), this, SLOT(executeStructuringMatrixAlgorithm()));*/
 
     StructuringMatrixWindow* window = new StructuringMatrixWindow(this);
-    connect(window, SIGNAL(sendInputData(std::vector<std::vector<bool>>, std::pair<int, int>, std::string)),
-        this, SLOT(executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>>, std::pair<int, int>, std::string)));
+    connect(window, SIGNAL(sendInputData(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)),
+        this, SLOT(executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)));
     window->show();
 }
 
-void GUI4OpenCV::executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, std::string algorithm)
+void GUI4OpenCV::executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, StructuringAlgorithm algorithm)
 {
     qInfo() << "Execution of chosen algorithm that uses structuring matrix.";
     qInfo() << matrixData.at(0);
