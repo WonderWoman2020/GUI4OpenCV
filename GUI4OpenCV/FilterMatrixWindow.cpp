@@ -15,6 +15,19 @@ FilterMatrixWindow::~FilterMatrixWindow()
 }
 
 
+void FilterMatrixWindow::readInputData()
+{
+    FilterMatrix* matrix = this->findChild<FilterMatrix*>("filterMatrix");
+    QLineEdit* divisorField = this->findChild<QLineEdit*>("divisorField");
+    QComboBox* algorithms = this->findChild<QComboBox*>("algorithmsList");
+
+    auto matrixData = matrix->getMatrixData();
+    std::string chosenAlgorithm = algorithms->currentText().toStdString();
+    int divisor = divisorField->text().toInt();
+
+    emit sendInputData(matrixData, divisor, chosenAlgorithm);
+}
+
 void FilterMatrixWindow::buildWindow()
 {
     QGridLayout* windowGrid = new QGridLayout(this);
@@ -40,6 +53,7 @@ void FilterMatrixWindow::buildWindow()
     windowGrid->addWidget(buttonBox, currentRow, 2, 1, 1);
 
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(close()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(readInputData()));
 }
 
 int FilterMatrixWindow::addMatrixDimensionsInput(int atRow)
@@ -105,6 +119,7 @@ int FilterMatrixWindow::addDivisor(int atRow)
     QValidator* integerValidator = new QIntValidator(INT32_MIN, INT32_MAX, this);
     divisor->setValidator(integerValidator);
     divisor->setFixedSize(QSize(30, 30));
+    divisor->setObjectName("divisorField");
 
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
@@ -121,6 +136,8 @@ int FilterMatrixWindow::addAlgorithmsList(int atRow)
     QLabel* algorithmsLabel = new QLabel(this);
     algorithmsLabel->setText("Algorytm: ");
     QComboBox* algorithms = new QComboBox(this);
+    algorithms->setObjectName("algorithmsList");
+
     algorithms->addItem("filtr dolnoprzepustowy");
     algorithms->addItem("filtr gornoprzepustowy");
     algorithms->addItem("...");

@@ -18,9 +18,12 @@ public:
 	FilterMatrixWindow(QWidget *parent);
 	~FilterMatrixWindow();
 
+signals:
+	void sendInputData(std::vector<std::vector<int>> matrixData, int divisor, std::string algorithm);
 
 public slots:
 	void updateMatrixDimensions();
+	void readInputData();
 
 private:
 	int matrixRow;

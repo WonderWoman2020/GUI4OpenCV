@@ -416,5 +416,15 @@ void GUI4OpenCV::executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>
 void GUI4OpenCV::on_actionFilterMatrix_triggered()
 {
     FilterMatrixWindow* window = new FilterMatrixWindow(this);
+    connect(window, SIGNAL(sendInputData(std::vector<std::vector<int>>, int, std::string)),
+        this, SLOT(executeFilterMatrixAlgorithm(std::vector<std::vector<int>>, int, std::string)));
     window->show();
+}
+
+void GUI4OpenCV::executeFilterMatrixAlgorithm(std::vector<std::vector<int>> matrixData, int divisor, std::string algorithm)
+{
+    qInfo() << "Execution of chosen algorithm that uses filter matrix.";
+    qInfo() << matrixData.at(0);
+    qInfo() << divisor;
+    qInfo() << algorithm;
 }
