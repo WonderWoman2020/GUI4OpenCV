@@ -120,6 +120,7 @@ int FilterMatrixWindow::addDivisor(int atRow)
     divisor->setValidator(integerValidator);
     divisor->setFixedSize(QSize(30, 30));
     divisor->setObjectName("divisorField");
+    divisor->setText("1");
 
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
