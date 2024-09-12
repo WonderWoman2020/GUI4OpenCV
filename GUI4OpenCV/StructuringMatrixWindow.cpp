@@ -8,6 +8,8 @@ StructuringMatrixWindow::StructuringMatrixWindow(QWidget *parent)
     this->setParent(parent);
     this->setWindowTitle("Element strukturalny");
 	this->buildWindow();
+
+    //this->algorithmNames.insert({ EROSION, "erozja"});
 }
 
 StructuringMatrixWindow::~StructuringMatrixWindow()
@@ -119,10 +121,11 @@ int StructuringMatrixWindow::addAlgorithmsList(int atRow)
     QComboBox* algorithms = new QComboBox(this);
     algorithms->setObjectName("algorithmsList");
 
-    algorithms->addItem("erozja");
-    algorithms->addItem("dylatacja");
-    algorithms->addItem("otwarcie");
-    algorithms->addItem("zamkniecie");
+    for (int i = 0; i < this->algorithmNames.size(); i++)
+    {
+        std::string name = this->algorithmNames.at(StructuringElementAlgorithms(i));
+        algorithms->addItem(QString::fromStdString(name));
+    }
 
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;

@@ -9,6 +9,15 @@
 
 #include "StructuringMatrix.h"
 
+enum StructuringElementAlgorithms
+{
+	EROSION,
+	DILATION,
+	OPENING,
+	CLOSING
+};
+
+
 class StructuringMatrixWindow  : public QDialog
 {
 	Q_OBJECT
@@ -27,6 +36,13 @@ public slots:
 private:
 
 	int matrixRow;
+
+	std::map<StructuringElementAlgorithms, std::string> algorithmNames = {
+		{ EROSION, "erozja"},
+		{ DILATION, "dylatacja"},
+		{ OPENING, "otwarcie"},
+		{ CLOSING, "zamkniecie"}
+	};
 
 	void buildWindow();
 
