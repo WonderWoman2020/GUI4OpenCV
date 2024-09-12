@@ -176,15 +176,17 @@ void GUI4OpenCV::onImageChanged()
 
 void GUI4OpenCV::onHistogramChanged()
 {
-    // Draws histograms and sets them in the histogram views
-    this->srcHistogramImage = this->histogramHandler->drawChosenHistograms(this->srcHistograms,
-        ui->actionHistB->isChecked(), ui->actionHistG->isChecked(), ui->actionHistR->isChecked(), ui->actionHistGrayscale->isChecked());
+    // Fetches histogram color spaces chosen to show in charts
+    bool histB = ui->actionHistB->isChecked();
+    bool histG = ui->actionHistG->isChecked();
+    bool histR = ui->actionHistR->isChecked();
+    bool histGrayscale = ui->actionHistGrayscale->isChecked();
 
+    // Draws histograms and sets them in the histogram views
+    this->srcHistogramImage = this->histogramHandler->drawChosenHistograms(this->srcHistograms, histB, histG, histR, histGrayscale);
     this->updateImageView(ui->srcHistView, this->srcHistogramImage);
 
-    this->outHistogramImage = this->histogramHandler->drawChosenHistograms(this->outHistograms,
-        ui->actionHistB->isChecked(), ui->actionHistG->isChecked(), ui->actionHistR->isChecked(), ui->actionHistGrayscale->isChecked());
-
+    this->outHistogramImage = this->histogramHandler->drawChosenHistograms(this->outHistograms, histB, histG, histR, histGrayscale);
     this->updateImageView(ui->outHistView, this->outHistogramImage);
 }
 
