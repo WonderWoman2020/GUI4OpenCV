@@ -38,6 +38,8 @@
 
 #include "AlphaSliderWindow.h"
 
+#include "SecondImageWindow.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE
@@ -111,5 +113,5 @@ private:
     cv::Mat readInImage();
     bool saveImage(cv::Mat& image);
     QWidget* buildEmptyWindow(QWidget* parent, QSize size, Qt::WindowModality modality);
-    QWidget* openSecondSourceImage();
+    bool openSecondSourceImage(QGraphicsView* imageView);
 };

@@ -302,54 +302,36 @@ QWidget* GUI4OpenCV::buildEmptyWindow(QWidget* parent, QSize size, Qt::WindowMod
     return window;
 }
 
-QWidget* GUI4OpenCV::openSecondSourceImage()
+bool GUI4OpenCV::openSecondSourceImage(QGraphicsView* imageView)
 {
     // Lets user choose the second source image and loads it
     cv::Mat temp = this->readInImage();
+
     // Cancels alpha linear blending operation, if imaga data hasn't been loaded
     if (temp.empty())
-    {
-        QMessageBox::information(this, "Nie pozyskano drugiego obrazu",
-            "Nie mozna przeprowadzic mieszania obrazow, poniewaz nie zaladowano drugiego obrazu. Wybierz drugi obraz do operacji lub sprobuj zaladowac inny obraz.");
-        temp.release();
-        return nullptr;
-    }
+        return false;
 
-    // Releases previous image data if any and assigns newly loaded image data (assign operator '=' for cv::Mat operands handles that)
+    // Releases previous image data if any and assigns newly loaded image data
     this->srcSecondImage = temp;
     this->srcSecondImageResized.release();
+
     qInfo() << "Freed memory of second source image and loaded a new one";
+
     // Sets image id, so windows using this image can be assigned to this image only
     this->secondImageCounter = (this->secondImageCounter + 1) % INT32_MAX;
+
     // Sends signal that new second source image has been loaded, so things related to previous image can act accordingly (destroy themselves)
     emit this->srcSecondImageLoaded();
 
-    // Builds window for showing second source image
-    QWidget* secondImageWindow = this->buildEmptyWindow(this, this->ui->srcImageView->size(), Qt::NonModal);
-    secondImageWindow->setAttribute(Qt::WA_DeleteOnClose);    // Makes window destroy itself, when closed
-    secondImageWindow->setProperty("imageID", this->secondImageCounter);    // Relates window to the image it will be showing
-
-    secondImageWindow->setWindowTitle("Drugi obraz wejsciowy");
-
-    // Adds image view widget to the window
-    QGraphicsView* secondImageView = new QGraphicsView(secondImageWindow);
-    secondImageWindow->layout()->addWidget(secondImageView);
-
-    // Makes singal - slot connection, which destroys second source image window, when new image was loaded
-    connect(this, SIGNAL(srcSecondImageLoaded()), secondImageWindow, SLOT(deleteLater()));
-
     // Adds image to the second source image view
-    bool updated = this->updateImageView(secondImageView, this->srcSecondImage);
+    bool updated = this->updateImageView(imageView, this->srcSecondImage);
     if (!updated)
     {
         this->srcSecondImage.release();
-        secondImageWindow->deleteLater();
-        return nullptr;
+        return false;
     }
 
-    secondImageWindow->show();
-
-    return secondImageWindow;
+    return true;
 }
 
 void GUI4OpenCV::on_actionAlfaChanging_triggered()
@@ -358,9 +340,20 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     QMessageBox::information(this, "Mieszanie obrazow - wymagany drugi obraz",
         "Na potrzeby tej operacji nalezy wczytac drugi obraz. Wybierz drugi obraz do wczytania w nastepnym oknie.");
 
-    QWidget* secondImageWindow = this->openSecondSourceImage();
-    if (secondImageWindow == nullptr)
+    // Builds window for showing second source image
+    SecondImageWindow* imageWindow = new SecondImageWindow(this, this->secondImageCounter);
+    imageWindow->resize(this->ui->srcImageView->size());
+    // Loads second source image
+    bool opened = this->openSecondSourceImage(imageWindow->getImageView());
+    if (!opened)
+    {
+        imageWindow->deleteLater();
         return;
+    }
+    imageWindow->show();
+
+    // Makes singal - slot connection, which destroys second source image window, when new image was loaded
+    connect(this, SIGNAL(srcSecondImageLoaded()), imageWindow, SLOT(deleteLater()));
 
     // Builds a window for the alpha slider widget
     AlphaSliderWindow* alphaWindow = new AlphaSliderWindow(this, this->secondImageCounter);
@@ -375,8 +368,8 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
     connect(this, SIGNAL(srcSecondImageLoaded()), alphaWindow, SLOT(deleteLater()));
     // Makes singal - slot connection, which destroys second window, if one of them (alpha slider window
     // or second source image window) is closed
-    connect(alphaWindow, SIGNAL(destroyed()), secondImageWindow, SLOT(deleteLater()));
-    connect(secondImageWindow, SIGNAL(destroyed()), alphaWindow, SLOT(deleteLater()));
+    connect(alphaWindow, SIGNAL(destroyed()), imageWindow, SLOT(deleteLater()));
+    connect(imageWindow, SIGNAL(destroyed()), alphaWindow, SLOT(deleteLater()));
     // Makes singal - slot connection, which frees memory of the second source image, when it won't
     // be used anymore - when one of the windows (alpha slider window or second source image window) is closed
     connect(alphaWindow, SIGNAL(destroyed()), this, SLOT(freeSecondImageMemory()));
