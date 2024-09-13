@@ -105,6 +105,7 @@
     <ClCompile Include="AlphaSliderWindow.cpp" />
     <ClCompile Include="FilterMatrix.cpp" />
     <ClCompile Include="FilterMatrixWindow.cpp" />
+    <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="SecondImageWindow.cpp" />
     <ClCompile Include="StructuringMatrix.cpp" />
     <ClCompile Include="StructuringMatrixButton.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ImageManager.h" />
     <QtMoc Include="SecondImageWindow.h" />
     <QtMoc Include="StructuringMatrixWindow.h" />
     <QtMoc Include="StructuringMatrix.h" />

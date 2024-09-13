@@ -20,6 +20,7 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
  
     this->histogramHandler = new HistogramHandler();
     this->imageViewHandler = new ImageViewHandler();
+    this->imageManager = new ImageManager();
 
     // Sets debug format, in which messages are printed out in the console
     this->setDebugPrintingPatterns();
@@ -118,12 +119,31 @@ void GUI4OpenCV::on_actionSync_triggered()
 */
 void GUI4OpenCV::on_actionOpen_triggered()
 {
+    // Opens a file explorer and gets a path of the chosen image
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Wybierz obraz"),
+        "/home",
+        tr("Images (*.png *.jpg *.jpeg *.bmp)"));
+
+    qInfo() << fileName;
+
+    // Cancels open action, if user clicked "cancel" and the path is null
+    if (fileName.isNull() || fileName.isEmpty())
+    {
+        QMessageBox::information(this, "Nie wybrano obrazu do otworzenia",
+            "Nie wybrano obrazu wejsciowego do otworzenia. Musisz wybrac jakis obraz wejsciowy, aby go wyswietlic.");
+        return;
+    }
+
     // Asks user to provide path for new source image and loads it
-    cv::Mat temp = this->readInImage();
+    cv::Mat temp = this->imageManager->readInImage(fileName.toStdString());
 
     // Aborts opening and showing image operation, if new image hasn't been loaded succesfully
     if (temp.empty())
+    {
+        QMessageBox::information(this, "Nie pozyskano danych obrazu",
+            "Nie mozna bylo pozyskac danych obrazu. Upewnij sie, ze podany plik zawiera dane obrazu i ze masz do niego odpowiednie pozwolenia.");
         return;
+    }
 
     // Frees memory of previous loaded source image (and its processed copy in output image)
     this->srcImage.release();
@@ -146,8 +166,32 @@ void GUI4OpenCV::on_actionOpen_triggered()
 */
 void GUI4OpenCV::on_actionSave_triggered()
 {
+    // Checks if there is any output image data to save
+    if (this->outImage.empty())
+    {
+        QMessageBox::information(this, "Brak obrazu do zapisania",
+            "Nie ma obrazu wyjsciowego do zapisania. Musisz zaladowac najpierw obraz wejsciowy.");
+        return;
+    }
+
+    // Opens a file explorer and gets a path of the location chosen to store out image (with a filename)
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Zapisz obraz"),
+        "/home/untitled.png",
+        tr("Images (*.png *.jpg *.jpeg *.bmp)"));
+
+    qInfo() << fileName;
+
+    // Cancels save action, if user clicked "cancel" and the path is null
+    if (fileName.isNull() || fileName.isEmpty())
+    {
+        QMessageBox::information(this, "Nie wybrano sciezki do zapisania",
+            "Nie wybrano sciezki do zapisania obrazu. Musisz podac sciezke wraz z nazwa pliku obrazu, aby go zapisac.");
+        return;
+    }
+
     // Asks user to provide path for storing image and tries to save it
-    bool saved = this->saveImage(this->outImage);
+    bool saved = this->imageManager->saveImage(fileName.toStdString(), this->outImage);
+
     if (!saved)
     {
         QMessageBox::critical(this, "Zapisywanie sie nie powiodlo",
@@ -223,7 +267,9 @@ void GUI4OpenCV::on_actionCursorTest_triggered()
     //this->setCursor(Qt::ArrowCursor);
 }
 
-cv::Mat GUI4OpenCV::readInImage()
+
+
+bool GUI4OpenCV::openSecondSourceImage(QGraphicsView* imageView)
 {
     // Opens a file explorer and gets a path of the chosen image
     QString fileName = QFileDialog::getOpenFileName(this, tr("Wybierz obraz"),
@@ -237,64 +283,10 @@ cv::Mat GUI4OpenCV::readInImage()
     {
         QMessageBox::information(this, "Nie wybrano obrazu do otworzenia",
             "Nie wybrano obrazu wejsciowego do otworzenia. Musisz wybrac jakis obraz wejsciowy, aby go wyswietlic.");
-        return cv::Mat();
-    }
-
-    // Tries to read the chosen file
-    cv::Mat temp = cv::imread(fileName.toStdString());
-    if (temp.empty())
-    {
-        QMessageBox::information(this, "Nie pozyskano danych obrazu",
-            "Nie mozna bylo pozyskac danych obrazu. Upewnij sie, ze podany plik zawiera dane obrazu i ze masz do niego odpowiednie pozwolenia.");
-        temp.release();
-        return cv::Mat();
-    }
-    return temp;
-}
-
-bool GUI4OpenCV::saveImage(cv::Mat& image)
-{
-    bool saved = false;
-
-    // Checks if there is any output image data to save
-    if (image.empty())
-    {
-        QMessageBox::information(this, "Brak obrazu do zapisania",
-            "Nie ma obrazu wyjsciowego do zapisania. Musisz zaladowac najpierw obraz wejsciowy.");
         return false;
     }
-
-    // Opens a file explorer and gets a path of the location chosen to store out image (with a filename)
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Zapisz obraz"),
-        "/home/untitled.png",
-        tr("Images (*.png *.jpg *.jpeg *.bmp)"));
-
-    qInfo() << fileName;
-
-    // Cancels save action, if user clicked "cancel" and the path is null
-    if (fileName.isNull() || fileName.isEmpty())
-    {
-        QMessageBox::information(this, "Nie wybrano sciezki do zapisania",
-            "Nie wybrano sciezki do zapisania obrazu. Musisz podac sciezke wraz z nazwa pliku obrazu, aby go zapisac.");
-        return saved;
-    }
-
-    // Stores output image at the chosen path
-    try {
-        saved = cv::imwrite(fileName.toStdString(), image);
-    }
-    catch (cv::Exception& ex) {
-        QMessageBox::critical(this, "Zapisywanie sie nie powiodlo",
-            "Zapisywanie obrazu sie nie powiodlo. Wyjatek OpenCV: " + QString(ex.what()) + QString("."));
-        return saved;
-    }
-    return saved;
-}
-
-bool GUI4OpenCV::openSecondSourceImage(QGraphicsView* imageView)
-{
     // Lets user choose the second source image and loads it
-    cv::Mat temp = this->readInImage();
+    cv::Mat temp = this->imageManager->readInImage(fileName.toStdString());
 
     // Cancels alpha linear blending operation, if imaga data hasn't been loaded
     if (temp.empty())

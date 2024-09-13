@@ -25,6 +25,8 @@
 #include "AlphaSliderWindow.h"
 #include "SecondImageWindow.h"
 
+#include "ImageManager.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE
@@ -72,6 +74,8 @@ private:
     HistogramHandler* histogramHandler;
     ImageViewHandler* imageViewHandler;
 
+    ImageManager* imageManager;
+
     cv::Mat srcImage;
     cv::Mat outImage;
 
@@ -90,7 +94,7 @@ private:
 
     void onImageChanged();
     void onHistogramChanged();
-    cv::Mat readInImage();
-    bool saveImage(cv::Mat& image);
+    //cv::Mat readInImage();
+    //bool saveImage(cv::Mat& image);
     bool openSecondSourceImage(QGraphicsView* imageView);
 };
