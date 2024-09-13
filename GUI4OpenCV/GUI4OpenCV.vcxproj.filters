@@ -21,6 +21,42 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="Source Files\Views">
+      <UniqueIdentifier>{9d72bf58-63a7-4e2f-9c3a-cbd90554a89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views\Windows">
+      <UniqueIdentifier>{f8f9eae2-f2d9-4e54-9c16-c3f3997d9bd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views\Elements">
+      <UniqueIdentifier>{b4d49bc7-ac77-4baa-bd6a-113a6aff03c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Views">
+      <UniqueIdentifier>{3bab0608-51cc-4fa2-8c38-34ff383f8e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Views\Windows">
+      <UniqueIdentifier>{2e6a45cd-5c55-43e3-8768-ad9b5d6779cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Views\Elements">
+      <UniqueIdentifier>{9e21b314-b5af-4f8c-9228-3ace12c57654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logic">
+      <UniqueIdentifier>{b9e39aa5-fb9e-4701-a887-ff8e73edb637}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Logic">
+      <UniqueIdentifier>{4cb95294-3a37-4399-8865-2db492a5a076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Logic\Utility">
+      <UniqueIdentifier>{9604a5dd-0ae8-41c7-8cff-47bb0df46dfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Logic\ImageProcessing">
+      <UniqueIdentifier>{9c62c87f-28bf-49df-a5f8-6383d1bb780b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logic\Utility">
+      <UniqueIdentifier>{8871ad0f-e9ba-4c4b-9df3-619ed198c9d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logic\ImageProcessing">
+      <UniqueIdentifier>{51b622ba-485b-4a01-be23-2aad20bdf802}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="GUI4OpenCV.qrc">
@@ -29,74 +65,86 @@
     <QtUic Include="GUI4OpenCV.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtMoc Include="GUI4OpenCV.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClCompile Include="GUI4OpenCV.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ImageConverter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HistogramHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageViewHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AlphaSlider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StructuringMatrixButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StructuringMatrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StructuringMatrixWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FilterMatrix.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AlphaSliderWindow.cpp">
+      <Filter>Source Files\Views\Windows</Filter>
     </ClCompile>
     <ClCompile Include="FilterMatrixWindow.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Views\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SecondImageWindow.cpp">
+      <Filter>Source Files\Views\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="StructuringMatrixWindow.cpp">
+      <Filter>Source Files\Views\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="StructuringMatrixButton.cpp">
+      <Filter>Source Files\Views\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="StructuringMatrix.cpp">
+      <Filter>Source Files\Views\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="FilterMatrix.cpp">
+      <Filter>Source Files\Views\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="AlphaSlider.cpp">
+      <Filter>Source Files\Views\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI4OpenCV.cpp">
+      <Filter>Source Files\Views\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageConverter.cpp">
+      <Filter>Source Files\Logic\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageViewHandler.cpp">
+      <Filter>Source Files\Logic\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="HistogramHandler.cpp">
+      <Filter>Source Files\Logic\ImageProcessing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageConverter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Logic\Utility</Filter>
     </ClInclude>
     <ClInclude Include="HistogramHandler.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Logic\ImageProcessing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ImageViewHandler.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="AlphaSlider.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Views\Elements</Filter>
     </QtMoc>
-    <QtMoc Include="StructuringMatrixButton.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="StructuringMatrix.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="StructuringMatrixWindow.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="AlphaSliderWindow.h">
+      <Filter>Header Files\Views\Windows</Filter>
     </QtMoc>
     <QtMoc Include="FilterMatrix.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Views\Elements</Filter>
     </QtMoc>
     <QtMoc Include="FilterMatrixWindow.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Views\Windows</Filter>
+    </QtMoc>
+    <QtMoc Include="StructuringMatrixWindow.h">
+      <Filter>Header Files\Views\Windows</Filter>
+    </QtMoc>
+    <QtMoc Include="SecondImageWindow.h">
+      <Filter>Header Files\Views\Windows</Filter>
+    </QtMoc>
+    <QtMoc Include="StructuringMatrixButton.h">
+      <Filter>Header Files\Views\Elements</Filter>
+    </QtMoc>
+    <QtMoc Include="StructuringMatrix.h">
+      <Filter>Header Files\Views\Elements</Filter>
+    </QtMoc>
+    <QtMoc Include="GUI4OpenCV.h">
+      <Filter>Header Files\Views\Windows</Filter>
+    </QtMoc>
+    <QtMoc Include="ImageViewHandler.h">
+      <Filter>Header Files\Logic\Utility</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

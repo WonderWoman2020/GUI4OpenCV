@@ -101,7 +101,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AlgorithmsImplementations.cpp" />
     <ClCompile Include="AlphaSlider.cpp" />
     <ClCompile Include="AlphaSliderWindow.cpp" />
     <ClCompile Include="FilterMatrix.cpp" />
@@ -129,7 +128,6 @@
     <QtMoc Include="FilterMatrix.h" />
     <QtMoc Include="FilterMatrixWindow.h" />
     <QtMoc Include="AlphaSliderWindow.h" />
-    <ClInclude Include="AlgorithmsImplementations.h" />
     <ClInclude Include="HistogramHandler.h" />
     <ClInclude Include="ImageConverter.h" />
     <QtMoc Include="ImageViewHandler.h" />
