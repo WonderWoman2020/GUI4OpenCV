@@ -8,10 +8,6 @@
 #include <QMessageBox>
 
 #include<QCursor>
-#include<QLineEdit>
-#include <QValidator>
-#include <QComboBox>
-#include <QSpinBox>
 
 #include "ui_GUI4OpenCV.h"
 
@@ -24,20 +20,9 @@
 #include "HistogramHandler.h"
 #include "ImageViewHandler.h"
 
-#include "AlphaSlider.h"
-
-#include "StructuringMatrixButton.h"
-
-#include "StructuringMatrix.h"
-
 #include "StructuringMatrixWindow.h"
-
-#include "FilterMatrix.h"
-
 #include "FilterMatrixWindow.h"
-
 #include "AlphaSliderWindow.h"
-
 #include "SecondImageWindow.h"
 
 QT_BEGIN_NAMESPACE
@@ -66,19 +51,14 @@ public slots:
     void on_actionAboutQt_triggered();
 
     void on_actionCursorTest_triggered();
-
     void on_actionAlfaChanging_triggered();
-
     void on_actionStructuringMatrix_triggered();
-
     void on_actionFilterMatrix_triggered();
-
-    void mixImages(int alpha);
 
     void freeSecondImageMemory();
 
+    void mixImages(int alpha);
     void executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, StructuringAlgorithm algorithm);
-    
     void executeFilterMatrixAlgorithm(std::vector<std::vector<int>> matrixData, int divisor, FilterAlgorithm algorithm);
 
 signals:
