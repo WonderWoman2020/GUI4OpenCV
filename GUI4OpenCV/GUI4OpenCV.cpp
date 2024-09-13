@@ -93,25 +93,8 @@ bool GUI4OpenCV::updateImageView(QGraphicsView* imageView, cv::Mat& image)
 */
 void GUI4OpenCV::on_actionSync_triggered()
 {
-    // Fetches horizontal scroll bars of this window image views
-    QScrollBar* srcHScroll = ui->srcImageView->horizontalScrollBar();
-    QScrollBar* outHScroll = ui->outImageView->horizontalScrollBar();
-    // Same thing for vertical scroll bars
-    QScrollBar* srcVScroll = ui->srcImageView->verticalScrollBar();
-    QScrollBar* outVScroll = ui->outImageView->verticalScrollBar();
-
-    if (ui->actionSync->isChecked())
-    {
-        // Connects horizontal (and vertical) scroll bars to be in sync, when using either one of them
-        this->imageViewHandler->syncImagesScrollBars(srcHScroll, outHScroll);
-        this->imageViewHandler->syncImagesScrollBars(srcVScroll, outVScroll);
-    }
-    else
-    {
-        // Disconnects scroll bar pairs, when syncing option is switched off
-        this->imageViewHandler->desyncImagesScrollBars(srcHScroll, outHScroll);
-        this->imageViewHandler->desyncImagesScrollBars(srcVScroll, outVScroll);
-    }
+    bool sync = ui->actionSync->isChecked();
+    this->imageViewHandler->syncViewsScrollBars(ui->srcImageView, ui->outImageView, sync);
 }
 
 /*
