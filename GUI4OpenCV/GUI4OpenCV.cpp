@@ -363,32 +363,23 @@ void GUI4OpenCV::on_actionAlfaChanging_triggered()
         return;
 
     // Builds a window for the alpha slider widget
-    AlphaSlider* slider = new AlphaSlider();
-    QWidget* widget = this->buildEmptyWindow(this, QSize(slider->width() + 50, slider->height() + 50), Qt::NonModal);
-    widget->setAttribute(Qt::WA_DeleteOnClose);    // Makes window destroy itself, when closed
-    widget->setProperty("imageID", this->secondImageCounter);    // Relates window to the image it will be using for alpha linear blending
-   
-    widget->setWindowTitle("Mieszanie obrazow");
-    
-    // Adds alpha slider widget to the window
-    slider->setParent(widget);
-    widget->layout()->addWidget(slider);
-    widget->show();
+    AlphaSliderWindow* alphaWindow = new AlphaSliderWindow(this, this->secondImageCounter);
+    alphaWindow->show();
 
     // Connects a method to execute alpha linear blending on images, when slider value changes
-    connect(slider, SIGNAL(sliderValueChanged(int)), this, SLOT(mixImages(int)));
+    connect(alphaWindow, SIGNAL(sendInputData(int)), this, SLOT(mixImages(int)));
 
     // Destroying windows signals
 
     // Makes singal - slot connection, which destroys alpha slider window, when new image was loaded
-    connect(this, SIGNAL(srcSecondImageLoaded()), widget, SLOT(deleteLater()));
+    connect(this, SIGNAL(srcSecondImageLoaded()), alphaWindow, SLOT(deleteLater()));
     // Makes singal - slot connection, which destroys second window, if one of them (alpha slider window
     // or second source image window) is closed
-    connect(widget, SIGNAL(destroyed()), secondImageWindow, SLOT(deleteLater()));
-    connect(secondImageWindow, SIGNAL(destroyed()), widget, SLOT(deleteLater()));
+    connect(alphaWindow, SIGNAL(destroyed()), secondImageWindow, SLOT(deleteLater()));
+    connect(secondImageWindow, SIGNAL(destroyed()), alphaWindow, SLOT(deleteLater()));
     // Makes singal - slot connection, which frees memory of the second source image, when it won't
     // be used anymore - when one of the windows (alpha slider window or second source image window) is closed
-    connect(widget, SIGNAL(destroyed()), this, SLOT(freeSecondImageMemory()));
+    connect(alphaWindow, SIGNAL(destroyed()), this, SLOT(freeSecondImageMemory()));
 }
 
 void GUI4OpenCV::freeSecondImageMemory()

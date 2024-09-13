@@ -36,6 +36,8 @@
 
 #include "FilterMatrixWindow.h"
 
+#include "AlphaSliderWindow.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE
