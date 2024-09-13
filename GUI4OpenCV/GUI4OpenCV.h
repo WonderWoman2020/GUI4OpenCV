@@ -112,6 +112,5 @@ private:
     void onHistogramChanged();
     cv::Mat readInImage();
     bool saveImage(cv::Mat& image);
-    QWidget* buildEmptyWindow(QWidget* parent, QSize size, Qt::WindowModality modality);
     bool openSecondSourceImage(QGraphicsView* imageView);
 };

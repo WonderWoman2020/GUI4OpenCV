@@ -291,17 +291,6 @@ bool GUI4OpenCV::saveImage(cv::Mat& image)
     return saved;
 }
 
-
-QWidget* GUI4OpenCV::buildEmptyWindow(QWidget* parent, QSize size, Qt::WindowModality modality)
-{
-    QWidget* window = new QWidget(parent, Qt::Window);
-    QGridLayout* layout = new QGridLayout(window);
-    window->setLayout(layout);
-    window->resize(size);
-    window->setWindowModality(modality);    // Sets other windows to still be accessible, when this window shows up
-    return window;
-}
-
 bool GUI4OpenCV::openSecondSourceImage(QGraphicsView* imageView)
 {
     // Lets user choose the second source image and loads it
