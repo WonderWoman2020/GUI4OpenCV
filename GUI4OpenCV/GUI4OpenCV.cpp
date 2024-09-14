@@ -63,13 +63,10 @@ void GUI4OpenCV::on_actionOpen_triggered()
 {
     cv::Mat temp = this->imageLoader->getImageDialog(this);
 
-    // Frees memory of previous loaded source image (and its processed copy in output image)
-    this->srcImage.release();
-    this->outImage.release();
-
     // Stores in memory both source image and a copy of it in output image
+    // (previously loaded images are released automatically by cv::Mat assign '=' operator)
     this->srcImage = temp;
-    this->srcImage.copyTo(this->outImage);
+    this->outImage = temp.clone();
 
     // Updates both source and processed image views
     this->imageViewHandler->updateImageView(this, ui->srcImageView, this->srcImage);
