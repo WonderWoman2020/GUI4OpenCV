@@ -57,24 +57,6 @@ GUI4OpenCV::~GUI4OpenCV()
     this->outHistograms.clear();
 }
 
-bool GUI4OpenCV::updateImageView(QGraphicsView* imageView, cv::Mat& image)
-{
-    if (image.empty())
-        return false;
-
-    try {
-        this->imageViewHandler->setImageInView(imageView, ImageConverter::convertMatToQPixmap(image));
-    }
-    catch (std::exception& ex)
-    {
-        QMessageBox::critical(this, "Blad interfejsu",
-            "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
-        return false;
-    }
-
-    return true;
-}
-
 /*
     Handles syncing and desyncing images scrolls action.
 */
@@ -100,8 +82,8 @@ void GUI4OpenCV::on_actionOpen_triggered()
     this->srcImage.copyTo(this->outImage);
 
     // Updates both source and processed image views
-    this->updateImageView(ui->srcImageView, this->srcImage);
-    this->updateImageView(ui->outImageView, this->outImage);
+    this->imageViewHandler->updateImageView(this, ui->srcImageView, this->srcImage);
+    this->imageViewHandler->updateImageView(this, ui->outImageView, this->outImage);
 
     // Notifies other components, that new image was loaded, so they can update themselves
     emit this->srcImageChanged();
@@ -134,10 +116,10 @@ void GUI4OpenCV::onHistogramChanged()
 
     // Draws histograms and sets them in the histogram views
     this->srcHistogramImage = this->histogramCalculator->drawChosenHistograms(this->srcHistograms, histB, histG, histR, histGrayscale);
-    this->updateImageView(ui->srcHistView, this->srcHistogramImage);
+    this->imageViewHandler->updateImageView(this, ui->srcHistView, this->srcHistogramImage);
 
     this->outHistogramImage = this->histogramCalculator->drawChosenHistograms(this->outHistograms, histB, histG, histR, histGrayscale);
-    this->updateImageView(ui->outHistView, this->outHistogramImage);
+    this->imageViewHandler->updateImageView(this, ui->outHistView, this->outHistogramImage);
 }
 
 void GUI4OpenCV::on_actionHistB_triggered()
@@ -206,7 +188,7 @@ bool GUI4OpenCV::openSecondSourceImage(QGraphicsView* imageView)
     emit this->srcSecondImageLoaded();
 
     // Adds image to the second source image view
-    bool updated = this->updateImageView(imageView, this->srcSecondImage);
+    bool updated = this->imageViewHandler->updateImageView(this, imageView, this->srcSecondImage);
     if (!updated)
     {
         this->srcSecondImage.release();
@@ -299,7 +281,7 @@ void GUI4OpenCV::mixImages(int alpha)
         double betaNormalized = 1.0 - alphaNormalized;
         cv::addWeighted(srcSecondResized, alphaNormalized, this->srcImage, betaNormalized, 0.0, result);
         this->outImage = result;
-        this->updateImageView(ui->outImageView, this->outImage);
+        this->imageViewHandler->updateImageView(this, ui->outImageView, this->outImage);
         emit srcImageChanged();
     }
     catch (std::exception ex)

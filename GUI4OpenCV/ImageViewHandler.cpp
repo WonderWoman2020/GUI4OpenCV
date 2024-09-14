@@ -24,6 +24,24 @@ void ImageViewHandler::setImageInView(QGraphicsView* graphicsView, QPixmap image
     qInfo() << scene->items().count();
 }
 
+bool ImageViewHandler::updateImageView(QWidget* parent, QGraphicsView* imageView, cv::Mat& image)
+{
+    if (image.empty())
+        return false;
+
+    try {
+        this->setImageInView(imageView, ImageConverter::convertMatToQPixmap(image));
+    }
+    catch (std::exception& ex)
+    {
+        QMessageBox::critical(parent, "Blad interfejsu",
+            "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
+        return false;
+    }
+
+    return true;
+}
+
 /*
     Makes corresponding scroll bars of the source and out image views to move in sync.
 */

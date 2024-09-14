@@ -10,6 +10,9 @@
 #include <QtCore>
 #include <QScrollBar>
 
+#include <QMessageBox>
+#include "ImageConverter.h"
+
 
 class ImageViewHandler : public QObject
 {
@@ -17,6 +20,8 @@ class ImageViewHandler : public QObject
 
 public:
 	void setImageInView(QGraphicsView* graphicsView, QPixmap image);
+
+	bool updateImageView(QWidget* parent, QGraphicsView* imageView, cv::Mat& image);
 
 	void syncScrollBars(QScrollBar* srcHScroll, QScrollBar* outHScroll);
 	void desyncScrollBars(QScrollBar* srcHScroll, QScrollBar* outHScroll);

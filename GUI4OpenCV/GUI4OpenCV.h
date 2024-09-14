@@ -91,11 +91,7 @@ private:
     cv::Mat srcHistogramImage;
     cv::Mat outHistogramImage;
 
-    bool updateImageView(QGraphicsView* imageView, cv::Mat& image);
-
     void onImageChanged();
     void onHistogramChanged();
-    //cv::Mat readInImage();
-    //bool saveImage(cv::Mat& image);
     bool openSecondSourceImage(QGraphicsView* imageView);
 };
