@@ -6,16 +6,6 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     , ui(new Ui::GUI4OpenCVClass())
 {
     // This line calls Qt's MOC (Meta-Object Compiler) to analyze code of this class.
-    // MOC is a preprocessor, which analyzes any Qt related code and macros (which are not
-    // understandable for standard C++ compiler), and generates a new file, that contains only
-    // pure C++ code. The generated file for this class would be named as "moc_GUI4OpenCV.cpp".
-    // MOC also analyzes method names, by using reflection mechanism, and creates some signal-slot
-    // connections automatically for us, if we name method in specific format - for example:
-    // Method "on_actionSync_triggered()"
-    // - actionSync is a sender,
-    // - triggered is its signal,
-    // - this object is a receiver,
-    // - the method is a receiver's slot, which reacts to the signal.
     ui->setupUi(this);
  
     this->histogramCalculator = new HistogramCalculator();
