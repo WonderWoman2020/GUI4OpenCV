@@ -103,7 +103,7 @@
     <ClCompile Include="ImageViewHandler.cpp">
       <Filter>Source Files\Logic\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="HistogramHandler.cpp">
+    <ClCompile Include="HistogramCalculator.cpp">
       <Filter>Source Files\Logic\ImageProcessing</Filter>
     </ClCompile>
     <ClCompile Include="ImageLoader.cpp">
@@ -114,7 +114,7 @@
     <ClInclude Include="ImageConverter.h">
       <Filter>Header Files\Logic\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="HistogramHandler.h">
+    <ClInclude Include="HistogramCalculator.h">
       <Filter>Header Files\Logic\ImageProcessing</Filter>
     </ClInclude>
     <ClInclude Include="ImageLoader.h">

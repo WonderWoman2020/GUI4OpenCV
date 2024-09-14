@@ -6,7 +6,7 @@
 #include <opencv2/imgproc.hpp>
 
 
-class HistogramHandler
+class HistogramCalculator
 {
 public:
     cv::Mat calculateHistogram(cv::Mat& imagePlane);

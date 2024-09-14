@@ -17,7 +17,7 @@
 #include <opencv2/imgproc.hpp>
 
 #include "ImageConverter.h"
-#include "HistogramHandler.h"
+#include "HistogramCalculator.h"
 #include "ImageViewHandler.h"
 
 #include "StructuringMatrixWindow.h"
@@ -71,7 +71,7 @@ signals:
 private:
     Ui::GUI4OpenCVClass *ui;
 
-    HistogramHandler* histogramHandler;
+    HistogramCalculator* histogramCalculator;
     ImageViewHandler* imageViewHandler;
 
     ImageLoader* imageLoader;

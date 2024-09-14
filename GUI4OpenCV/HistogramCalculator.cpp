@@ -1,10 +1,10 @@
-#include "HistogramHandler.h"
+#include "HistogramCalculator.h"
 
 
 /*
     Calculates histogram of one color space provided and draws histogram chart as 'cv::Mat' image.
 */
-cv::Mat HistogramHandler::calculateHistogram(cv::Mat& imagePlane)
+cv::Mat HistogramCalculator::calculateHistogram(cv::Mat& imagePlane)
 {
     // Calculates histogram of one color space of the image
     cv::Mat planeHist;
@@ -26,7 +26,7 @@ cv::Mat HistogramHandler::calculateHistogram(cv::Mat& imagePlane)
     0 - B, 1 - G, 2 - R, or if image was in grayscale, then the vector contains just one histogram, so:
     0 - grayscale histogram.
 */
-std::vector<cv::Mat> HistogramHandler::calculateHistograms(cv::Mat& image)
+std::vector<cv::Mat> HistogramCalculator::calculateHistograms(cv::Mat& image)
 {
     // Splits image to planes with just one color space, B, G or R (or grayscale, if provided image has just one color space)
     std::vector<cv::Mat> bgrPlanes;
@@ -44,7 +44,7 @@ std::vector<cv::Mat> HistogramHandler::calculateHistograms(cv::Mat& image)
     return histograms;
 }
 
-void HistogramHandler::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor)
+void HistogramCalculator::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor)
 {
     int histSize = 256;
     int bin_w = cvRound((double)histW / histSize);
@@ -61,7 +61,7 @@ void HistogramHandler::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int
 /*
     Draws histograms according to which color spaces have been chosen.
 */
-cv::Mat HistogramHandler::drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale)
+cv::Mat HistogramCalculator::drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale)
 {
     // Prepares empty white 'cv::Mat' image, which is a canvas for the histogram chart
     cv::Mat histogramImage = cv::Mat(200, 256, CV_8UC3, cv::Scalar(255, 255, 255));

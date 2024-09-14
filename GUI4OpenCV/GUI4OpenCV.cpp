@@ -18,7 +18,7 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     // - the method is a receiver's slot, which reacts to the signal.
     ui->setupUi(this);
  
-    this->histogramHandler = new HistogramHandler();
+    this->histogramCalculator = new HistogramCalculator();
     this->imageViewHandler = new ImageViewHandler();
     this->imageLoader = new ImageLoader();
 
@@ -37,7 +37,7 @@ GUI4OpenCV::~GUI4OpenCV()
     // Deletes the window's ui root object and all it's child elements
     delete ui;
 
-    delete this->histogramHandler;
+    delete this->histogramCalculator;
     delete this->imageViewHandler;
 
     // Frees memory of loaded images if any
@@ -131,8 +131,8 @@ void GUI4OpenCV::on_actionSave_triggered()
 void GUI4OpenCV::onImageChanged()
 {
     // Calculates all histograms
-    this->srcHistograms = this->histogramHandler->calculateHistograms(this->srcImage);
-    this->outHistograms = this->histogramHandler->calculateHistograms(this->outImage);
+    this->srcHistograms = this->histogramCalculator->calculateHistograms(this->srcImage);
+    this->outHistograms = this->histogramCalculator->calculateHistograms(this->outImage);
 
     this->onHistogramChanged();
 }
@@ -146,10 +146,10 @@ void GUI4OpenCV::onHistogramChanged()
     bool histGrayscale = ui->actionHistGrayscale->isChecked();
 
     // Draws histograms and sets them in the histogram views
-    this->srcHistogramImage = this->histogramHandler->drawChosenHistograms(this->srcHistograms, histB, histG, histR, histGrayscale);
+    this->srcHistogramImage = this->histogramCalculator->drawChosenHistograms(this->srcHistograms, histB, histG, histR, histGrayscale);
     this->updateImageView(ui->srcHistView, this->srcHistogramImage);
 
-    this->outHistogramImage = this->histogramHandler->drawChosenHistograms(this->outHistograms, histB, histG, histR, histGrayscale);
+    this->outHistogramImage = this->histogramCalculator->drawChosenHistograms(this->outHistograms, histB, histG, histR, histGrayscale);
     this->updateImageView(ui->outHistView, this->outHistogramImage);
 }
 

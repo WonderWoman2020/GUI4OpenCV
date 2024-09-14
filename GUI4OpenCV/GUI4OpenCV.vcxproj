@@ -115,7 +115,7 @@
     <QtUic Include="GUI4OpenCV.ui" />
     <QtMoc Include="GUI4OpenCV.h" />
     <ClCompile Include="GUI4OpenCV.cpp" />
-    <ClCompile Include="HistogramHandler.cpp" />
+    <ClCompile Include="HistogramCalculator.cpp" />
     <ClCompile Include="ImageConverter.cpp" />
     <ClCompile Include="ImageViewHandler.cpp" />
     <ClCompile Include="main.cpp" />
@@ -130,7 +130,7 @@
     <QtMoc Include="FilterMatrix.h" />
     <QtMoc Include="FilterMatrixWindow.h" />
     <QtMoc Include="AlphaSliderWindow.h" />
-    <ClInclude Include="HistogramHandler.h" />
+    <ClInclude Include="HistogramCalculator.h" />
     <ClInclude Include="ImageConverter.h" />
     <QtMoc Include="ImageViewHandler.h" />
   </ItemGroup>
