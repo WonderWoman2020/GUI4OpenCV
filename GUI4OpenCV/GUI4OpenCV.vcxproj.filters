@@ -109,6 +109,9 @@
     <ClCompile Include="ImageLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DebugPrintSettings.cpp">
+      <Filter>Source Files\Logic\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageConverter.h">
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="ImageLoader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugPrintSettings.h">
+      <Filter>Header Files\Logic\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -21,9 +21,10 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     this->histogramCalculator = new HistogramCalculator();
     this->imageViewHandler = new ImageViewHandler();
     this->imageLoader = new ImageLoader();
+    this->debugSettings = new DebugPrintSettings();
 
     // Sets debug format, in which messages are printed out in the console
-    this->setDebugPrintingPatterns();
+    this->debugSettings->setDebugPrintingPatterns();
 
     // Sets scrolls (present in image views) to move in sync by default
     this->on_actionSync_triggered();
@@ -40,6 +41,9 @@ GUI4OpenCV::~GUI4OpenCV()
     delete this->histogramCalculator;
     delete this->imageViewHandler;
 
+    delete this->imageLoader;
+    delete this->debugSettings;
+
     // Frees memory of loaded images if any
     this->srcImage.release();
     this->outImage.release();
@@ -51,23 +55,6 @@ GUI4OpenCV::~GUI4OpenCV()
     this->outHistogramImage.release();
     this->srcHistograms.clear();    // std::vector::clear() calls destructor on each element it contains
     this->outHistograms.clear();
-}
-
-/*
-    Sets how debug information will be printed out when using qDebug(), qInfo() and similar functions.
-    This pattern is only set for the scope of this window (and its children) - for another window debugging,
-    one should add a function like this in the desired window as well.
-*/
-void GUI4OpenCV::setDebugPrintingPatterns()
-{
-    // Sets the format of debug messages
-    const QString debugMessagePattern = "Qt at [%{time h:mm:ss.zzz}], %{type}: %{message}";
-    qSetMessagePattern(debugMessagePattern);
-    
-    // Some examples, that can be seen in console
-    qDebug() << "Debug message";
-    qInfo() << "Info message";
-    qCritical() << "Critical message";
 }
 
 bool GUI4OpenCV::updateImageView(QGraphicsView* imageView, cv::Mat& image)

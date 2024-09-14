@@ -103,6 +103,7 @@
   <ItemGroup>
     <ClCompile Include="AlphaSlider.cpp" />
     <ClCompile Include="AlphaSliderWindow.cpp" />
+    <ClCompile Include="DebugPrintSettings.cpp" />
     <ClCompile Include="FilterMatrix.cpp" />
     <ClCompile Include="FilterMatrixWindow.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DebugPrintSettings.h" />
     <ClInclude Include="ImageLoader.h" />
     <QtMoc Include="SecondImageWindow.h" />
     <QtMoc Include="StructuringMatrixWindow.h" />

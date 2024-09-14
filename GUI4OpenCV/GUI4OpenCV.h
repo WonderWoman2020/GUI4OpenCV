@@ -26,6 +26,7 @@
 #include "SecondImageWindow.h"
 
 #include "ImageLoader.h"
+#include "DebugPrintSettings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
@@ -75,6 +76,7 @@ private:
     ImageViewHandler* imageViewHandler;
 
     ImageLoader* imageLoader;
+    DebugPrintSettings* debugSettings;
 
     cv::Mat srcImage;
     cv::Mat outImage;
@@ -89,7 +91,6 @@ private:
     cv::Mat srcHistogramImage;
     cv::Mat outHistogramImage;
 
-    void setDebugPrintingPatterns();
     bool updateImageView(QGraphicsView* imageView, cv::Mat& image);
 
     void onImageChanged();
