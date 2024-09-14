@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AlphaBlending.cpp" />
     <ClCompile Include="AlphaSlider.cpp" />
     <ClCompile Include="AlphaSliderWindow.cpp" />
     <ClCompile Include="DebugPrintSettings.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlphaBlending.h" />
     <ClInclude Include="DebugPrintSettings.h" />
     <ClInclude Include="ImageLoader.h" />
     <QtMoc Include="SecondImageWindow.h" />

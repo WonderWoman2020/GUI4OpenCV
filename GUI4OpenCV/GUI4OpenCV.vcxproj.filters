@@ -112,6 +112,9 @@
     <ClCompile Include="ImageLoader.cpp">
       <Filter>Source Files\Logic\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="AlphaBlending.cpp">
+      <Filter>Source Files\Logic\ImageProcessing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageConverter.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="ImageLoader.h">
       <Filter>Header Files\Logic\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="AlphaBlending.h">
+      <Filter>Header Files\Logic\ImageProcessing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

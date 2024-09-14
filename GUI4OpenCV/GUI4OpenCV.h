@@ -27,6 +27,7 @@
 
 #include "ImageLoader.h"
 #include "DebugPrintSettings.h"
+#include "AlphaBlending.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
@@ -90,6 +91,9 @@ private:
 
     cv::Mat srcHistogramImage;
     cv::Mat outHistogramImage;
+
+    // Algorithms dependencies
+    AlphaBlending* alphaBlending;
 
     void onImageChanged();
     void onHistogramChanged();
