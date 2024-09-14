@@ -185,7 +185,7 @@ bool GUI4OpenCV::openSecondSourceImage(QGraphicsView* imageView)
     return true;
 }
 
-void GUI4OpenCV::on_actionAlfaChanging_triggered()
+void GUI4OpenCV::on_actionAlphaChanging_triggered()
 {   
     // Informs that second source image needs to be chosen
     QMessageBox::information(this, "Mieszanie obrazow - wymagany drugi obraz",
