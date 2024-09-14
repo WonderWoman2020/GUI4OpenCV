@@ -29,6 +29,8 @@
 #include "DebugPrintSettings.h"
 #include "AlphaBlending.h"
 
+#include "AlphaOperationWindows.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };
 QT_END_NAMESPACE
@@ -59,14 +61,13 @@ public slots:
     void on_actionStructuringMatrix_triggered();
     void on_actionFilterMatrix_triggered();
 
-    void freeSecondImageMemory();
-
-    void mixImages(int alpha);
     void executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, StructuringAlgorithm algorithm);
     void executeFilterMatrixAlgorithm(std::vector<std::vector<int>> matrixData, int divisor, FilterAlgorithm algorithm);
 
+    void receiveProcessingResult(cv::Mat& result);
+
 signals:
-    void srcImageChanged();
+    void srcImageChanged(cv::Mat& src1);
     void outImageChanged();
     void srcSecondImageLoaded();
 
@@ -82,10 +83,6 @@ private:
     cv::Mat srcImage;
     cv::Mat outImage;
 
-    cv::Mat srcSecondImage;
-    int secondImageCounter;
-    cv::Mat srcSecondImageResized;
-
     std::vector<cv::Mat> srcHistograms;
     std::vector<cv::Mat> outHistograms;
 
@@ -97,5 +94,4 @@ private:
 
     void onImageChanged();
     void onHistogramChanged();
-    bool openSecondSourceImage(QGraphicsView* imageView);
 };

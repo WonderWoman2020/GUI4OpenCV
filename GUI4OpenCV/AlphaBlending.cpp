@@ -13,6 +13,7 @@ AlphaBlending::~AlphaBlending()
 void AlphaBlending::clear()
 {
     this->src2Resized.release();
+    qInfo() << "Freed memory of temp image in alpha blending operation";
 }
 
 cv::Mat AlphaBlending::process(cv::Mat& src1, cv::Mat& src2, int alpha)
