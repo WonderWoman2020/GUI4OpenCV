@@ -27,7 +27,6 @@
 
 #include "ImageLoader.h"
 #include "DebugPrintSettings.h"
-#include "AlphaBlending.h"
 
 #include "AlphaOperationWindows.h"
 
@@ -76,7 +75,6 @@ private:
 
     HistogramCalculator* histogramCalculator;
     ImageViewHandler* imageViewHandler;
-
     ImageLoader* imageLoader;
     DebugPrintSettings* debugSettings;
 
@@ -88,9 +86,6 @@ private:
 
     cv::Mat srcHistogramImage;
     cv::Mat outHistogramImage;
-
-    // Algorithms dependencies
-    AlphaBlending* alphaBlending;
 
     void onImageChanged();
     void onHistogramChanged();

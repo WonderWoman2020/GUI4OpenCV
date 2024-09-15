@@ -13,9 +13,6 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     this->imageLoader = new ImageLoader();
     this->debugSettings = new DebugPrintSettings();
 
-    // Algorithm dependencies
-    this->alphaBlending = new AlphaBlending();
-
     // Sets debug format, in which messages are printed out in the console
     this->debugSettings->setDebugPrintingPatterns();
 
@@ -33,11 +30,8 @@ GUI4OpenCV::~GUI4OpenCV()
 
     delete this->histogramCalculator;
     delete this->imageViewHandler;
-
     delete this->imageLoader;
     delete this->debugSettings;
-
-    delete this->alphaBlending;
 
     // Frees memory of loaded images if any
     this->srcImage.release();
