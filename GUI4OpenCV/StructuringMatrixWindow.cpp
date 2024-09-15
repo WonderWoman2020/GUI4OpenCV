@@ -8,8 +8,6 @@ StructuringMatrixWindow::StructuringMatrixWindow(QWidget *parent)
     this->setParent(parent);
     this->setWindowTitle("Element strukturalny");
 	this->buildWindow();
-
-    //this->algorithmNames.insert({ EROSION, "erozja"});
 }
 
 StructuringMatrixWindow::~StructuringMatrixWindow()

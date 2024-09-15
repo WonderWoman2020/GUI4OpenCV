@@ -154,7 +154,6 @@ void GUI4OpenCV::on_actionAboutApp_triggered()
     QString appHeader = "<b>Aplikacja</b>";
     QString appDescription = "Aplikacja zostala stworzona na potrzeby laboratorium z przetwarzania obrazow, w celu wizualizacji dzialania algorytmow.";
     QString authorHeader = "<b>Autor</b>";
-    //QString authorName = "Nazwisko i imie";
 
     QString content = appHeader + "<br/>" +
         appDescription + "<br/><br/>" +
@@ -195,16 +194,12 @@ void GUI4OpenCV::on_actionAlphaBlending_triggered()
 void GUI4OpenCV::on_actionStructuringMatrix_triggered()
 {
     StructuringMatrixWindow* window = new StructuringMatrixWindow(this);
-    //connect(window, SIGNAL(sendInputData(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)),
-    //    this, SLOT(executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)));
     window->show();
 }
 
 void GUI4OpenCV::on_actionFilterMatrix_triggered()
 {
     FilterMatrixWindow* window = new FilterMatrixWindow(this);
-    //connect(window, SIGNAL(sendInputData(std::vector<std::vector<int>>, int, FilterAlgorithm)),
-    //    this, SLOT(executeFilterMatrixAlgorithm(std::vector<std::vector<int>>, int, FilterAlgorithm)));
     window->show();
 }
 
