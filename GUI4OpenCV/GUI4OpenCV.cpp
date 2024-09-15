@@ -147,9 +147,18 @@ void GUI4OpenCV::on_actionHistGrayscale_triggered()
 
 void GUI4OpenCV::on_actionAboutApp_triggered()
 {
-    QMessageBox::about(this, "O programie", QString("<b>Aplikacja</b>")+QString("<br/>Aplikacja zostala stworzona na potrzeby laboratorium z")+
-        QString(" przetwarzania obrazow, w celu wizualizacji dzialania algorytmow.") + QString(
-        "<br/><br/><b>Autor</b><br/>Nazwisko i imie"));
+    QString windowTitle = "O programie";
+    QString appHeader = "<b>Aplikacja</b>";
+    QString appDescription = "Aplikacja zostala stworzona na potrzeby laboratorium z przetwarzania obrazow, w celu wizualizacji dzialania algorytmow.";
+    QString authorHeader = "<b>Autor</b>";
+    QString authorName = "Nazwisko i imie";
+
+    QString content = appHeader + "<br/>" +
+        appDescription + "<br/><br/>" +
+        authorHeader + "<br/>" + 
+        authorName;
+
+    QMessageBox::about(this, windowTitle, content);
 }
 
 void GUI4OpenCV::on_actionAboutQt_triggered()
