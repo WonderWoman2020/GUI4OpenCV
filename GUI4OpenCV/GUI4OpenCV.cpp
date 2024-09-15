@@ -168,7 +168,7 @@ void GUI4OpenCV::on_actionCursorTest_triggered()
     //this->setCursor(Qt::ArrowCursor);
 }
 
-void GUI4OpenCV::on_actionAlphaChanging_triggered()
+void GUI4OpenCV::on_actionAlphaBlending_triggered()
 {   
     AlphaBlendingController* alphaWindows = new AlphaBlendingController(this);
     alphaWindows->buildWindows();
@@ -177,7 +177,7 @@ void GUI4OpenCV::on_actionAlphaChanging_triggered()
     connect(this, SIGNAL(srcImageChanged(cv::Mat&)), alphaWindows, SLOT(setFirstSourceImage(cv::Mat&)));
 
     connect(alphaWindows, SIGNAL(sendResult(cv::Mat&)), this, SLOT(receiveProcessingResult(cv::Mat&)));
-    connect(ui->actionAlphaChanging, SIGNAL(triggered()), alphaWindows, SLOT(deleteLater()));
+    connect(ui->actionAlphaBlending, SIGNAL(triggered()), alphaWindows, SLOT(deleteLater()));
 }
 
 void GUI4OpenCV::on_actionStructuringMatrix_triggered()

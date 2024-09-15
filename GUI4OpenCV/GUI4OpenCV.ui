@@ -181,7 +181,7 @@
      <addaction name="actionMaxFilter"/>
      <addaction name="actionMinFilter"/>
     </widget>
-    <addaction name="actionAlphaChanging"/>
+    <addaction name="actionAlphaBlending"/>
     <addaction name="actionStructuringMatrix"/>
     <addaction name="actionFilterMatrix"/>
     <addaction name="actionHoughTransform"/>
@@ -274,7 +274,7 @@
     <string>Histogram skali szarosci</string>
    </property>
   </action>
-  <action name="actionAlphaChanging">
+  <action name="actionAlphaBlending">
    <property name="text">
     <string>Mieszanie obrazow</string>
    </property>

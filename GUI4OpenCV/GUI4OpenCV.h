@@ -55,7 +55,7 @@ public slots:
     void on_actionAboutQt_triggered();
 
     void on_actionCursorTest_triggered();
-    void on_actionAlphaChanging_triggered();
+    void on_actionAlphaBlending_triggered();
     void on_actionStructuringMatrix_triggered();
     void on_actionFilterMatrix_triggered();
 
