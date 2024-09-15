@@ -19,12 +19,13 @@ class ImageViewHandler : public QObject
 	Q_OBJECT
 
 public:
-	void setImageInView(QGraphicsView* graphicsView, QPixmap image);
 
 	bool updateImageView(QWidget* parent, QGraphicsView* imageView, cv::Mat& image);
+	void syncViewsScrollBars(QGraphicsView* firstView, QGraphicsView* secondView, bool sync);
 
-	void syncScrollBars(QScrollBar* srcHScroll, QScrollBar* outHScroll);
-	void desyncScrollBars(QScrollBar* srcHScroll, QScrollBar* outHScroll);
+private:
+	void setImageInView(QGraphicsView* graphicsView, QPixmap image);
+	void syncScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll);
+	void desyncScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll);
 
-	void syncViewsScrollBars(QGraphicsView* view1, QGraphicsView* view2, bool sync);
 };

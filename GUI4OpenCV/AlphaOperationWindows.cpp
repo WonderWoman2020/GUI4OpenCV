@@ -5,8 +5,8 @@ AlphaOperationWindows::AlphaOperationWindows(QWidget *parent)
 {
 	this->setParent(parent);
 
-	this->alphaWindow = new AlphaSliderWindow(this, 0);
-	this->imageWindow = new SecondImageWindow(this, 0);
+	this->alphaWindow = new AlphaSliderWindow(this);
+	this->imageWindow = new SecondImageWindow(this);
 
     this->alphaBlending = new AlphaBlending();
 
@@ -16,7 +16,7 @@ AlphaOperationWindows::AlphaOperationWindows(QWidget *parent)
 
 AlphaOperationWindows::~AlphaOperationWindows()
 {
-	this->src2.release();
+	this->secondSrcImage.release();
     qInfo() << "Freed memory of second source image";
 
     delete this->alphaBlending;
@@ -43,14 +43,14 @@ bool AlphaOperationWindows::readAdditionalImage(QGraphicsView* imageView)
         return false;
 
     // Releases previous image data if any and assigns newly loaded image data
-    this->src2 = temp;
+    this->secondSrcImage = temp;
     qInfo() << "Freed memory of second source image and loaded a new one";
 
     // Adds image to the second source image view
-    bool updated = this->imageViewHandler->updateImageView(this, imageView, this->src2);
+    bool updated = this->imageViewHandler->updateImageView(this, imageView, this->secondSrcImage);
     if (!updated)
     {
-        this->src2.release();
+        this->secondSrcImage.release();
         return false;
     }
 
@@ -83,18 +83,18 @@ void AlphaOperationWindows::buildWindows()
 
 void AlphaOperationWindows::execOperation(int alpha)
 {
-    if (this->src1.empty() || this->src2.empty())
+    if (this->firstSrcImage.empty() || this->secondSrcImage.empty())
     {
         QMessageBox::information(this, "Nie pozyskano dwoch obrazow",
             "Nie mozna przeprowadzic mieszania obrazow, poniewaz nie zaladowano dwoch obrazow. Zaladuj obraz zarowno w oknie glownym, jak i w oknie opcji mieszania obrazow.");
         return;
     }
-    cv::Mat result = this->alphaBlending->process(this->src1, this->src2, alpha);
+    cv::Mat result = this->alphaBlending->process(this->firstSrcImage, this->secondSrcImage, alpha);
     this->sendResult(result);
 }
 
-void AlphaOperationWindows::setSourceImage(cv::Mat& src1)
+void AlphaOperationWindows::setFirstSourceImage(cv::Mat& firstSrcImage)
 {
-    this->src1 = src1;
+    this->firstSrcImage = firstSrcImage;
 }
 

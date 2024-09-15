@@ -31,11 +31,11 @@ signals:
 
 public slots:
 	void execOperation(int alpha);
-	void setSourceImage(cv::Mat& src1);
+	void setFirstSourceImage(cv::Mat& firstSrcImage);
 
 private:
-	cv::Mat src1;
-	cv::Mat src2;
+	cv::Mat firstSrcImage;
+	cv::Mat secondSrcImage;
 
 	AlphaSliderWindow* alphaWindow;
 	SecondImageWindow* imageWindow;

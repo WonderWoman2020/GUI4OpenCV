@@ -19,7 +19,7 @@ void ImageViewHandler::setImageInView(QGraphicsView* graphicsView, QPixmap image
 
     scene->clear();    // removes previous image, so images won't stack one on another
     scene->addPixmap(image);
-    scene->setSceneRect(scene->itemsBoundingRect());    // resizes scene, so it is not larger than the items it contains
+    scene->setSceneRect(scene->itemsBoundingRect());    // resizes scene, so it isn't larger than the items it contains
 
     qInfo() << scene->items().count();
 }
@@ -61,26 +61,26 @@ void ImageViewHandler::desyncScrollBars(QScrollBar* firstScroll, QScrollBar* sec
     disconnect(secondScroll, SIGNAL(valueChanged(int)), firstScroll, SLOT(setValue(int)));
 }
 
-void ImageViewHandler::syncViewsScrollBars(QGraphicsView* view1, QGraphicsView* view2, bool sync)
+void ImageViewHandler::syncViewsScrollBars(QGraphicsView* firstView, QGraphicsView* secondView, bool sync)
 {
     // Fetches horizontal scroll bars of the views
-    QScrollBar* scrollH1 = view1->horizontalScrollBar();
-    QScrollBar* scrollH2 = view2->horizontalScrollBar();
+    QScrollBar* firstScrollH = firstView->horizontalScrollBar();
+    QScrollBar* secondScrollH = secondView->horizontalScrollBar();
     // Same thing for vertical scroll bars
-    QScrollBar* scrollV1 = view1->verticalScrollBar();
-    QScrollBar* scrollV2 = view2->verticalScrollBar();
+    QScrollBar* firstScrollV = firstView->verticalScrollBar();
+    QScrollBar* secondScrollV = secondView->verticalScrollBar();
 
     if (sync)
     {
         // Connects horizontal (and vertical) scroll bars to be in sync, when using either one of them
-        this->syncScrollBars(scrollH1, scrollH2);
-        this->syncScrollBars(scrollV1, scrollV2);
+        this->syncScrollBars(firstScrollH, secondScrollH);
+        this->syncScrollBars(firstScrollV, secondScrollV);
     }
     else
     {
         // Disconnects scroll bar pairs, when syncing option is switched off
-        this->desyncScrollBars(scrollH1, scrollH2);
-        this->desyncScrollBars(scrollV1, scrollV2);
+        this->desyncScrollBars(firstScrollH, secondScrollH);
+        this->desyncScrollBars(firstScrollV, secondScrollV);
     }
 }
 

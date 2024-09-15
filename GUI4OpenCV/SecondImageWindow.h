@@ -9,13 +9,11 @@ class SecondImageWindow  : public QWidget
 	Q_OBJECT
 
 public:
-	SecondImageWindow(QWidget *parent, int imageID);
+	SecondImageWindow(QWidget *parent);
 	~SecondImageWindow();
 
 	QGraphicsView* getImageView();
 
 private:
-	int imageID;
-
 	void buildWindow();
 };

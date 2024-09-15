@@ -12,7 +12,7 @@ AlphaBlending::~AlphaBlending()
 
 void AlphaBlending::clear()
 {
-    this->src2Resized.release();
+    this->secondImageResized.release();
     qInfo() << "Freed memory of temp image in alpha blending operation";
 }
 
@@ -22,16 +22,16 @@ cv::Mat AlphaBlending::process(cv::Mat& src1, cv::Mat& src2, int alpha)
         return cv::Mat();
 
     try {
-        if (!(this->src2Resized.rows == src1.rows && this->src2Resized.cols == src1.cols))
+        if (!(this->secondImageResized.rows == src1.rows && this->secondImageResized.cols == src1.cols))
         {
-            cv::resize(src2, this->src2Resized, cv::Size(src1.cols, src1.rows));
+            cv::resize(src2, this->secondImageResized, cv::Size(src1.cols, src1.rows));
             qInfo() << "Resized second source image to be the same size as the first one";
         }
 
         double alphaNormalized = alpha / (double)255;
         double betaNormalized = 1.0 - alphaNormalized;
         cv::Mat result;
-        cv::addWeighted(this->src2Resized, alphaNormalized, src1, betaNormalized, 0.0, result);
+        cv::addWeighted(this->secondImageResized, alphaNormalized, src1, betaNormalized, 0.0, result);
         return result;
     }
     catch (std::exception ex)

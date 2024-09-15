@@ -10,7 +10,7 @@ class StructuringMatrix : public QWidget
 	Q_OBJECT
 
 public:
-	StructuringMatrix(QWidget* parent = nullptr, int rows = 3, int cols = 3);
+	StructuringMatrix(QWidget* parent = nullptr, int rows = 5, int cols = 5);
 	~StructuringMatrix();
 
 	std::vector<std::vector<bool>> getMatrixData();

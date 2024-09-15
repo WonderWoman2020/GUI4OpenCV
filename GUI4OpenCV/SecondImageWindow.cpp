@@ -1,9 +1,8 @@
 #include "SecondImageWindow.h"
 
-SecondImageWindow::SecondImageWindow(QWidget *parent, int imageID)
+SecondImageWindow::SecondImageWindow(QWidget *parent)
 	: QWidget(parent)
 {
-	this->imageID = imageID;
 	this->setParent(parent);
 	this->buildWindow();
 }
@@ -28,7 +27,6 @@ void SecondImageWindow::buildWindow()
     this->setWindowFlag(Qt::Window);    // Changes widget type to window
     this->setWindowModality(Qt::NonModal);
     this->setAttribute(Qt::WA_DeleteOnClose);    // Makes window destroy itself, when closed
-    this->setProperty("imageID", imageID);    // Relates window to the image it will be showing
     this->setWindowTitle("Drugi obraz wejsciowy");
 }
 

@@ -1,9 +1,8 @@
 #include "AlphaSliderWindow.h"
 
-AlphaSliderWindow::AlphaSliderWindow(QWidget *parent, int imageID)
+AlphaSliderWindow::AlphaSliderWindow(QWidget *parent)
 	: QWidget(parent)
 {
-    this->imageID = imageID;
     this->setParent(parent);
 	this->buildWindow();
 }
@@ -15,7 +14,7 @@ AlphaSliderWindow::~AlphaSliderWindow()
 
 void AlphaSliderWindow::buildWindow()
 {
-    // Adds grid layout to the widget
+    // Adds grid layout to window
     QGridLayout* layout = new QGridLayout(this);
     this->setLayout(layout);
 
@@ -28,7 +27,6 @@ void AlphaSliderWindow::buildWindow()
     this->setWindowFlag(Qt::Window);    // Changes widget type to window
     this->setWindowModality(Qt::NonModal);
     this->setAttribute(Qt::WA_DeleteOnClose);    // Makes window destroy itself, when closed
-    this->setProperty("imageID", this->imageID);    // Relates window to the image it will be using for alpha linear blending
     this->setWindowTitle("Mieszanie obrazow");
 
     connect(slider, SIGNAL(sliderValueChanged(int)), this, SIGNAL(sendInputData(int)));

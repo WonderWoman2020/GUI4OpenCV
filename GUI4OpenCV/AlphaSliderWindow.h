@@ -9,15 +9,12 @@ class AlphaSliderWindow  : public QWidget
 	Q_OBJECT
 
 public:
-	AlphaSliderWindow(QWidget *parent, int imageID);
+	AlphaSliderWindow(QWidget *parent);
 	~AlphaSliderWindow();
 
 signals:
 	void sendInputData(int sliderInput);
 
 private:
-
-	int imageID;
-
 	void buildWindow();
 };

@@ -20,7 +20,8 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     this->on_actionSync_triggered();
 
     // Makes signal-slot connection, so image views and histograms will update themselves, when new image is loaded
-    connect(this, &GUI4OpenCV::srcImageChanged, this, &GUI4OpenCV::onImageChanged);
+    connect(this, &GUI4OpenCV::srcImageChanged, this, &GUI4OpenCV::onSrcImageChanged);
+    connect(this, &GUI4OpenCV::outImageChanged, this, &GUI4OpenCV::onOutImageChanged);
 }
 
 GUI4OpenCV::~GUI4OpenCV()
@@ -72,6 +73,7 @@ void GUI4OpenCV::on_actionOpen_triggered()
 
     // Notifies other components, that new image was loaded, so they can update themselves
     emit this->srcImageChanged(this->srcImage);
+    emit this->outImageChanged(this->outImage);
 }
 
 /*
@@ -82,16 +84,23 @@ void GUI4OpenCV::on_actionSave_triggered()
     bool saved = this->imageLoader->saveImageDialog(this, this->outImage);
 }
 
-void GUI4OpenCV::onImageChanged()
+void GUI4OpenCV::onSrcImageChanged()
 {
-    // Calculates all histograms
+    // Calculates changed image histograms
     this->srcHistograms = this->histogramCalculator->calculateHistograms(this->srcImage);
-    this->outHistograms = this->histogramCalculator->calculateHistograms(this->outImage);
-
-    this->onHistogramChanged();
+    
+    this->onHistogramChanged(true);
 }
 
-void GUI4OpenCV::onHistogramChanged()
+void GUI4OpenCV::onOutImageChanged()
+{
+    // Calculates changed image histograms
+    this->outHistograms = this->histogramCalculator->calculateHistograms(this->outImage);
+
+    this->onHistogramChanged(false);
+}
+
+void GUI4OpenCV::onHistogramChanged(bool srcHistogramChanged)
 {
     // Fetches histogram color spaces chosen to show in charts
     bool histB = ui->actionHistB->isChecked();
@@ -99,32 +108,41 @@ void GUI4OpenCV::onHistogramChanged()
     bool histR = ui->actionHistR->isChecked();
     bool histGrayscale = ui->actionHistGrayscale->isChecked();
 
-    // Draws histograms and sets them in the histogram views
-    this->srcHistogramImage = this->histogramCalculator->drawChosenHistograms(this->srcHistograms, histB, histG, histR, histGrayscale);
-    this->imageViewHandler->updateImageView(this, ui->srcHistView, this->srcHistogramImage);
-
-    this->outHistogramImage = this->histogramCalculator->drawChosenHistograms(this->outHistograms, histB, histG, histR, histGrayscale);
-    this->imageViewHandler->updateImageView(this, ui->outHistView, this->outHistogramImage);
+    // Draws changed histogram and sets it in the histogram view
+    if (srcHistogramChanged)
+    {
+        this->srcHistogramImage = this->histogramCalculator->drawChosenHistograms(this->srcHistograms, histB, histG, histR, histGrayscale);
+        this->imageViewHandler->updateImageView(this, ui->srcHistView, this->srcHistogramImage);
+    }
+    else
+    {
+        this->outHistogramImage = this->histogramCalculator->drawChosenHistograms(this->outHistograms, histB, histG, histR, histGrayscale);
+        this->imageViewHandler->updateImageView(this, ui->outHistView, this->outHistogramImage);
+    }
 }
 
 void GUI4OpenCV::on_actionHistB_triggered()
 {
-    this->onHistogramChanged();
+    this->onHistogramChanged(true);
+    this->onHistogramChanged(false);
 }
 
 void GUI4OpenCV::on_actionHistG_triggered()
 {
-    this->onHistogramChanged();
+    this->onHistogramChanged(true);
+    this->onHistogramChanged(false);
 }
 
 void GUI4OpenCV::on_actionHistR_triggered()
 {
-    this->onHistogramChanged();
+    this->onHistogramChanged(true);
+    this->onHistogramChanged(false);
 }
 
 void GUI4OpenCV::on_actionHistGrayscale_triggered()
 {
-    this->onHistogramChanged();
+    this->onHistogramChanged(true);
+    this->onHistogramChanged(false);
 }
 
 void GUI4OpenCV::on_actionAboutApp_triggered()
@@ -155,8 +173,8 @@ void GUI4OpenCV::on_actionAlphaChanging_triggered()
     AlphaOperationWindows* alphaWindows = new AlphaOperationWindows(this);
     alphaWindows->buildWindows();
     alphaWindows->showWindows();
-    alphaWindows->setSourceImage(this->srcImage);
-    connect(this, SIGNAL(srcImageChanged(cv::Mat&)), alphaWindows, SLOT(setSourceImage(cv::Mat&)));
+    alphaWindows->setFirstSourceImage(this->srcImage);
+    connect(this, SIGNAL(srcImageChanged(cv::Mat&)), alphaWindows, SLOT(setFirstSourceImage(cv::Mat&)));
 
     connect(alphaWindows, SIGNAL(sendResult(cv::Mat&)), this, SLOT(receiveProcessingResult(cv::Mat&)));
     connect(ui->actionAlphaChanging, SIGNAL(triggered()), alphaWindows, SLOT(deleteLater()));
@@ -165,33 +183,17 @@ void GUI4OpenCV::on_actionAlphaChanging_triggered()
 void GUI4OpenCV::on_actionStructuringMatrix_triggered()
 {
     StructuringMatrixWindow* window = new StructuringMatrixWindow(this);
-    connect(window, SIGNAL(sendInputData(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)),
-        this, SLOT(executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)));
+    //connect(window, SIGNAL(sendInputData(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)),
+    //    this, SLOT(executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>>, std::pair<int, int>, StructuringAlgorithm)));
     window->show();
-}
-
-void GUI4OpenCV::executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, StructuringAlgorithm algorithm)
-{
-    qInfo() << "Execution of chosen algorithm that uses structuring matrix.";
-    qInfo() << matrixData.at(0);
-    qInfo() << characteristicElement;
-    qInfo() << algorithm;
 }
 
 void GUI4OpenCV::on_actionFilterMatrix_triggered()
 {
     FilterMatrixWindow* window = new FilterMatrixWindow(this);
-    connect(window, SIGNAL(sendInputData(std::vector<std::vector<int>>, int, FilterAlgorithm)),
-        this, SLOT(executeFilterMatrixAlgorithm(std::vector<std::vector<int>>, int, FilterAlgorithm)));
+    //connect(window, SIGNAL(sendInputData(std::vector<std::vector<int>>, int, FilterAlgorithm)),
+    //    this, SLOT(executeFilterMatrixAlgorithm(std::vector<std::vector<int>>, int, FilterAlgorithm)));
     window->show();
-}
-
-void GUI4OpenCV::executeFilterMatrixAlgorithm(std::vector<std::vector<int>> matrixData, int divisor, FilterAlgorithm algorithm)
-{
-    qInfo() << "Execution of chosen algorithm that uses filter matrix.";
-    qInfo() << matrixData.at(0);
-    qInfo() << divisor;
-    qInfo() << algorithm;
 }
 
 void GUI4OpenCV::receiveProcessingResult(cv::Mat& result)
@@ -201,5 +203,5 @@ void GUI4OpenCV::receiveProcessingResult(cv::Mat& result)
 
     this->outImage = result;
     this->imageViewHandler->updateImageView(this, ui->outImageView, this->outImage);
-    emit srcImageChanged(this->srcImage);
+    emit outImageChanged(this->outImage);
 }

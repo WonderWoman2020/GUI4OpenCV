@@ -44,17 +44,17 @@ std::vector<cv::Mat> HistogramCalculator::calculateHistograms(cv::Mat& image)
     return histograms;
 }
 
-void HistogramCalculator::drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor)
+void HistogramCalculator::drawHistogram(cv::Mat& histogram, cv::Mat& histogramImage, int width, int height, cv::Scalar color)
 {
     int histSize = 256;
-    int bin_w = cvRound((double)histW / histSize);
+    int bin_w = cvRound((double)width / histSize);
 
     // Draws histogram chart as an 'cv::Mat' image
     for (int i = 1; i < histSize; i++)
     {
-        cv::line(histImage, cv::Point(bin_w * (i - 1), histH - cvRound(histogram.at<float>(i - 1))),
-            cv::Point(bin_w * (i), histH - cvRound(histogram.at<float>(i))),
-            histColor, 2, 8, 0);
+        cv::line(histogramImage, cv::Point(bin_w * (i - 1), height - cvRound(histogram.at<float>(i - 1))),
+            cv::Point(bin_w * (i), height - cvRound(histogram.at<float>(i))),
+            color, 2, 8, 0);
     }
 }
 

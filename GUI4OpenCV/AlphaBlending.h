@@ -14,10 +14,10 @@ public:
 	~AlphaBlending();
 
 	void clear();
-	cv::Mat process(cv::Mat& src1, cv::Mat& src2, int alpha);
+	cv::Mat process(cv::Mat& firstImage, cv::Mat& secondImage, int alpha);
 
 private:
 
-	cv::Mat src2Resized;
+	cv::Mat secondImageResized;
 };
 

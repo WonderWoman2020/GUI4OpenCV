@@ -21,5 +21,4 @@ public:
 
 	cv::Mat getImageDialog(QWidget* parent);
 	bool saveImageDialog(QWidget* parent, cv::Mat& image);
-	
 };

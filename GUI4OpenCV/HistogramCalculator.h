@@ -9,9 +9,7 @@
 class HistogramCalculator
 {
 public:
-    cv::Mat calculateHistogram(cv::Mat& imagePlane);
     std::vector<cv::Mat> calculateHistograms(cv::Mat& image);
-    void drawHistogram(cv::Mat& histogram, cv::Mat& histImage, int histW, int histH, cv::Scalar histColor);
     cv::Mat drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale);
 
 private:
@@ -23,4 +21,7 @@ private:
         cv::Scalar(0, 0, 255),    // R
         cv::Scalar(127, 127, 127)    // gray
     };
+
+    cv::Mat calculateHistogram(cv::Mat& imagePlane);
+    void drawHistogram(cv::Mat& histogram, cv::Mat& histogramImage, int width, int height, cv::Scalar color);
 };

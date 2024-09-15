@@ -7,7 +7,7 @@
 #include <QGraphicsScene>
 #include <QMessageBox>
 
-#include<QCursor>
+#include <QCursor>
 
 #include "ui_GUI4OpenCV.h"
 
@@ -17,6 +17,8 @@
 #include <opencv2/imgproc.hpp>
 
 #include "ImageConverter.h"
+#include "ImageLoader.h"
+#include "DebugPrintSettings.h"
 #include "HistogramCalculator.h"
 #include "ImageViewHandler.h"
 
@@ -24,9 +26,6 @@
 #include "FilterMatrixWindow.h"
 #include "AlphaSliderWindow.h"
 #include "SecondImageWindow.h"
-
-#include "ImageLoader.h"
-#include "DebugPrintSettings.h"
 
 #include "AlphaOperationWindows.h"
 
@@ -60,14 +59,11 @@ public slots:
     void on_actionStructuringMatrix_triggered();
     void on_actionFilterMatrix_triggered();
 
-    void executeStructuringMatrixAlgorithm(std::vector<std::vector<bool>> matrixData, std::pair<int, int> characteristicElement, StructuringAlgorithm algorithm);
-    void executeFilterMatrixAlgorithm(std::vector<std::vector<int>> matrixData, int divisor, FilterAlgorithm algorithm);
-
     void receiveProcessingResult(cv::Mat& result);
 
 signals:
     void srcImageChanged(cv::Mat& src1);
-    void outImageChanged();
+    void outImageChanged(cv::Mat& out);
     void srcSecondImageLoaded();
 
 private:
@@ -87,6 +83,7 @@ private:
     cv::Mat srcHistogramImage;
     cv::Mat outHistogramImage;
 
-    void onImageChanged();
-    void onHistogramChanged();
+    void onSrcImageChanged();
+    void onOutImageChanged();
+    void onHistogramChanged(bool srcHistogramChanged);
 };

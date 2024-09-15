@@ -106,7 +106,7 @@ std::pair<int, int> StructuringMatrix::readCharacteristicElement()
                     " For at least one structuring matrix button (a matrix field) row or column index was out of bounds, according to the declared matrix size.");
 
             // Returns first characteristic element that has been found
-            if (button->chosen())
+            if (button->characteristic())
             {
                 characteristicElement.first = row;
                 characteristicElement.second = col;
@@ -133,7 +133,7 @@ void StructuringMatrix::disableChoosingCharacteristicElement()
         if (row == this->characteristicElement.first && col == this->characteristicElement.second)
             continue;
 
-        button->setCanBeChosen(false);
+        button->setCanBeCharacteristic(false);
     }
 }
 
@@ -147,7 +147,7 @@ void StructuringMatrix::enableChoosingCharacteristicElement()
         if (row == this->characteristicElement.first && col == this->characteristicElement.second)
             continue;
 
-        button->setCanBeChosen(true);
+        button->setCanBeCharacteristic(true);
     }
 }
 
