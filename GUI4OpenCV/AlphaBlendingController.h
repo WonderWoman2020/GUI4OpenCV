@@ -15,13 +15,13 @@
 #include "ImageViewHandler.h"
 #include "AlphaBlending.h"
 
-class AlphaOperationWindows  : public QWidget
+class AlphaBlendingController  : public QWidget
 {
 	Q_OBJECT
 
 public:
-	AlphaOperationWindows(QWidget *parent);
-	~AlphaOperationWindows();
+	AlphaBlendingController(QWidget *parent);
+	~AlphaBlendingController();
 
 	void buildWindows();
 	void showWindows();

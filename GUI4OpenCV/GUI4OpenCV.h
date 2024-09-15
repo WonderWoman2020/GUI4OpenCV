@@ -27,7 +27,7 @@
 #include "AlphaSliderWindow.h"
 #include "SecondImageWindow.h"
 
-#include "AlphaOperationWindows.h"
+#include "AlphaBlendingController.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GUI4OpenCVClass; };

@@ -1,6 +1,6 @@
-#include "AlphaOperationWindows.h"
+#include "AlphaBlendingController.h"
 
-AlphaOperationWindows::AlphaOperationWindows(QWidget *parent)
+AlphaBlendingController::AlphaBlendingController(QWidget *parent)
 	: QWidget(parent)
 {
 	this->setParent(parent);
@@ -14,7 +14,7 @@ AlphaOperationWindows::AlphaOperationWindows(QWidget *parent)
     this->imageViewHandler = new ImageViewHandler();
 }
 
-AlphaOperationWindows::~AlphaOperationWindows()
+AlphaBlendingController::~AlphaBlendingController()
 {
 	this->secondSrcImage.release();
     qInfo() << "Freed memory of second source image";
@@ -24,13 +24,13 @@ AlphaOperationWindows::~AlphaOperationWindows()
     delete this->imageViewHandler;
 }
 
-void AlphaOperationWindows::showWindows()
+void AlphaBlendingController::showWindows()
 {
     this->alphaWindow->show();
     this->imageWindow->show();
 }
 
-bool AlphaOperationWindows::readAdditionalImage(QGraphicsView* imageView)
+bool AlphaBlendingController::readAdditionalImage(QGraphicsView* imageView)
 {
     // Informs that second source image needs to be chosen
     QMessageBox::information(this, "Mieszanie obrazow - wymagany drugi obraz",
@@ -57,7 +57,7 @@ bool AlphaOperationWindows::readAdditionalImage(QGraphicsView* imageView)
     return true;
 }
 
-void AlphaOperationWindows::buildWindows()
+void AlphaBlendingController::buildWindows()
 {
     // Builds window for showing second source image
     imageWindow->resize(QSize(400, 400));
@@ -81,7 +81,7 @@ void AlphaOperationWindows::buildWindows()
     connect(this, SIGNAL(destroyed()), imageWindow, SLOT(deleteLater()));
 }
 
-void AlphaOperationWindows::execOperation(int alpha)
+void AlphaBlendingController::execOperation(int alpha)
 {
     if (this->firstSrcImage.empty() || this->secondSrcImage.empty())
     {
@@ -95,7 +95,7 @@ void AlphaOperationWindows::execOperation(int alpha)
     this->sendResult(result);
 }
 
-void AlphaOperationWindows::setFirstSourceImage(cv::Mat& firstSrcImage)
+void AlphaBlendingController::setFirstSourceImage(cv::Mat& firstSrcImage)
 {
     this->firstSrcImage = firstSrcImage;
 }

@@ -115,6 +115,9 @@
     <ClCompile Include="AlphaBlending.cpp">
       <Filter>Source Files\Logic\ImageProcessing</Filter>
     </ClCompile>
+    <ClCompile Include="AlphaBlendingController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageConverter.h">
@@ -163,6 +166,9 @@
     </QtMoc>
     <QtMoc Include="ImageViewHandler.h">
       <Filter>Header Files\Logic\Utility</Filter>
+    </QtMoc>
+    <QtMoc Include="AlphaBlendingController.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

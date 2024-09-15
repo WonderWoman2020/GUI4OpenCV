@@ -102,7 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlphaBlending.cpp" />
-    <ClCompile Include="AlphaOperationWindows.cpp" />
+    <ClCompile Include="AlphaBlendingController.cpp" />
     <ClCompile Include="AlphaSlider.cpp" />
     <ClCompile Include="AlphaSliderWindow.cpp" />
     <ClCompile Include="DebugPrintSettings.cpp" />
@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlphaBlending.h" />
-    <QtMoc Include="AlphaOperationWindows.h" />
+    <QtMoc Include="AlphaBlendingController.h" />
     <ClInclude Include="DebugPrintSettings.h" />
     <ClInclude Include="ImageLoader.h" />
     <QtMoc Include="SecondImageWindow.h" />

@@ -170,7 +170,7 @@ void GUI4OpenCV::on_actionCursorTest_triggered()
 
 void GUI4OpenCV::on_actionAlphaChanging_triggered()
 {   
-    AlphaOperationWindows* alphaWindows = new AlphaOperationWindows(this);
+    AlphaBlendingController* alphaWindows = new AlphaBlendingController(this);
     alphaWindows->buildWindows();
     alphaWindows->showWindows();
     alphaWindows->setFirstSourceImage(this->srcImage);
