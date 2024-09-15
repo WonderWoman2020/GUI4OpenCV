@@ -62,7 +62,7 @@ public slots:
     void receiveProcessingResult(cv::Mat& result);
 
 signals:
-    void srcImageChanged(cv::Mat& src1);
+    void srcImageChanged(cv::Mat& src);
     void outImageChanged(cv::Mat& out);
     void srcSecondImageLoaded();
 
