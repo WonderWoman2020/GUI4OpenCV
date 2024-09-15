@@ -64,7 +64,6 @@ public slots:
 signals:
     void srcImageChanged(cv::Mat& src);
     void outImageChanged(cv::Mat& out);
-    void srcSecondImageLoaded();
 
 private:
     Ui::GUI4OpenCVClass *ui;
