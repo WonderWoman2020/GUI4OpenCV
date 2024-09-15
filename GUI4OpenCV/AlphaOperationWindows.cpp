@@ -89,7 +89,9 @@ void AlphaOperationWindows::execOperation(int alpha)
             "Nie mozna przeprowadzic mieszania obrazow, poniewaz nie zaladowano dwoch obrazow. Zaladuj obraz zarowno w oknie glownym, jak i w oknie opcji mieszania obrazow.");
         return;
     }
+    this->alphaWindow->setCursor(Qt::WaitCursor);
     cv::Mat result = this->alphaBlending->process(this->firstSrcImage, this->secondSrcImage, alpha);
+    this->alphaWindow->setCursor(Qt::ArrowCursor);
     this->sendResult(result);
 }
 
