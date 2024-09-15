@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Laboratorium z przetwarzania obrazow    Nazwisko i imie</string>
+   <string>GUI4OpenCV</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout" rowstretch="0,1,0,0">

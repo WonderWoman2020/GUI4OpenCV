@@ -19,6 +19,9 @@ GUI4OpenCV::GUI4OpenCV(QWidget *parent)
     // Sets scrolls (present in image views) to move in sync by default
     this->on_actionSync_triggered();
 
+    // Sets window title
+    this->setWindowTitle("Laboratorium z przetwarzania obrazow    " + this->authorName);
+
     // Makes signal-slot connection, so image views and histograms will update themselves, when new image is loaded
     connect(this, &GUI4OpenCV::srcImageChanged, this, &GUI4OpenCV::onSrcImageChanged);
     connect(this, &GUI4OpenCV::outImageChanged, this, &GUI4OpenCV::onOutImageChanged);
@@ -151,12 +154,12 @@ void GUI4OpenCV::on_actionAboutApp_triggered()
     QString appHeader = "<b>Aplikacja</b>";
     QString appDescription = "Aplikacja zostala stworzona na potrzeby laboratorium z przetwarzania obrazow, w celu wizualizacji dzialania algorytmow.";
     QString authorHeader = "<b>Autor</b>";
-    QString authorName = "Nazwisko i imie";
+    //QString authorName = "Nazwisko i imie";
 
     QString content = appHeader + "<br/>" +
         appDescription + "<br/><br/>" +
         authorHeader + "<br/>" + 
-        authorName;
+        this->authorName;
 
     QMessageBox::about(this, windowTitle, content);
 }

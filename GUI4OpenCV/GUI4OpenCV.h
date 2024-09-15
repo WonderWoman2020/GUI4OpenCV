@@ -82,6 +82,8 @@ private:
     cv::Mat srcHistogramImage;
     cv::Mat outHistogramImage;
 
+    QString authorName = "Imie i nazwisko";
+
     void onSrcImageChanged();
     void onOutImageChanged();
     void onHistogramChanged(bool srcHistogramChanged);
