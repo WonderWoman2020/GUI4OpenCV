@@ -153,7 +153,7 @@ private:
     void onOutImageChanged();
 
     /**
-     * Draws histogram of source or output image and update its view. Draws only the color spaces chosen by user.
+     * Draws histogram of source or output image and updates its view. Draws charts only of the color spaces chosen by user.
      * @param srcHistogramChanged - Which image histogram to update. True - update source image histogram, False - update the output one.
      */
     void onHistogramChanged(bool srcHistogramChanged);
