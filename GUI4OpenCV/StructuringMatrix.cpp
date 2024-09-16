@@ -162,6 +162,15 @@ void StructuringMatrix::updateMatrixData()
     else
         this->disableChoosingCharacteristicElement();
 
-    qInfo() << this->data.at(0);
-    qInfo() << this->characteristicElement;
+    qInfo() << "Current structuring matrix data:";
+    for (int i = 0; i < this->data.size(); i++)
+    {
+        auto rowData = this->data.at(i);
+        QString rowString = "";
+        for(int j = 0; j < rowData.size(); j++)
+            rowString += QString::number((short) rowData.at(j)) + ",";
+
+        qInfo() << rowString;
+    }
+    qInfo() << "Current characteristic element:" << this->characteristicElement;
 }

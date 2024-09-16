@@ -14,14 +14,11 @@ void ImageViewHandler::setImageInView(QGraphicsView* graphicsView, QPixmap image
     {
         scene = new QGraphicsScene(graphicsView);
         graphicsView->setScene(scene);
-        qInfo() << "New scene was created. It's parent is " + scene->parent()->objectName();
     }
 
     scene->clear();    // removes previous image, so images won't stack one on another
     scene->addPixmap(image);
     scene->setSceneRect(scene->itemsBoundingRect());    // resizes scene, so it isn't larger than the items it contains
-
-    qInfo() << scene->items().count();
 }
 
 bool ImageViewHandler::updateImageView(QWidget* parent, QGraphicsView* imageView, cv::Mat& image)
@@ -36,6 +33,8 @@ bool ImageViewHandler::updateImageView(QWidget* parent, QGraphicsView* imageView
     {
         QMessageBox::critical(parent, "Blad interfejsu",
             "Nie udalo sie zaladowac obrazu do interfejsu. Obraz zostal zaldadowany do pamieci, ale nastapil nieoczekiwany blad w dzialaniu interfejsu.");
+
+        qCritical() << "Exception in updating image view operation:" << ex.what();
         return false;
     }
 

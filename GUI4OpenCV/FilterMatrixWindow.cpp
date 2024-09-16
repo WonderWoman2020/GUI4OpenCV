@@ -98,9 +98,6 @@ int FilterMatrixWindow::addMatrix(int atRow)
     FilterMatrix* widget = new FilterMatrix(this, rowsNum, colsNum);
     widget->setObjectName("filterMatrix");
 
-    auto data = widget->getMatrixData();
-    qInfo() << data.at(0);
-
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
     QLabel* matrixLabel = new QLabel(this);
@@ -173,4 +170,6 @@ void FilterMatrixWindow::updateMatrixDimensions()
     grid->addWidget(matrix, this->matrixRow, 1, 1, 3);
 
     this->resize(100, 100);
+
+    qInfo() << "Added new resized filter matrix and removed previous one";
 }

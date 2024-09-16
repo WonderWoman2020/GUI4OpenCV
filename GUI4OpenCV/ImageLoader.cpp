@@ -32,7 +32,7 @@ bool ImageLoader::saveImage(std::string path, cv::Mat& image)
         saved = cv::imwrite(path, image);
     }
     catch (cv::Exception& ex) {
-        qInfo() << ex.what();
+        qDebug() << "Exception in saving image operation:" << ex.what();
         return false;
     }
     return saved;
@@ -45,7 +45,7 @@ cv::Mat ImageLoader::getImageDialog(QWidget* parent)
         "/home",
         QString("Images (*.png *.jpg *.jpeg *.bmp)"));
 
-    qInfo() << fileName;
+    qInfo() << "Path to file chosen by user:" << fileName;
 
     // Cancels open action, if user clicked "cancel" and the path is null
     if (fileName.isNull() || fileName.isEmpty())
@@ -84,7 +84,7 @@ bool ImageLoader::saveImageDialog(QWidget* parent, cv::Mat& image)
         "/home/untitled.png",
         QString("Images (*.png *.jpg *.jpeg *.bmp)"));
 
-    qInfo() << fileName;
+    qInfo() << "Path for file saving chosen by user:" << fileName;
 
     // Cancels save action, if user clicked "cancel" and the path is null
     if (fileName.isNull() || fileName.isEmpty())

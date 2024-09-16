@@ -94,9 +94,6 @@ int StructuringMatrixWindow::addMatrix(int atRow)
     StructuringMatrix* widget = new StructuringMatrix(this, rowsNum, colsNum);
     widget->setObjectName("structuringMatrix");
 
-    auto data = widget->getMatrixData();
-    qInfo() << data.at(0);
-
     QGridLayout* grid = (QGridLayout*)this->layout();
     int rowsTaken = 0;
     QLabel* matrixLabel = new QLabel(grid->parentWidget());
@@ -149,4 +146,6 @@ void StructuringMatrixWindow::updateMatrixDimensions()
     grid->addWidget(matrix, this->matrixRow, 1, 1, 3);
 
     this->resize(100, 100);
+
+    qInfo() << "Added new resized structuring element matrix and removed previous one";
 }

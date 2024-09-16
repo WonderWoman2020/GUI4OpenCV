@@ -19,7 +19,7 @@ AlphaBlendingController::AlphaBlendingController(QWidget *parent)
 AlphaBlendingController::~AlphaBlendingController()
 {
 	this->secondSrcImage.release();
-    qInfo() << "Freed memory of second source image";
+    qInfo() << "Freed memory of second source image in alpha blending operation";
 
     delete this->alphaBlending;
     delete this->imageLoader;
@@ -47,7 +47,7 @@ bool AlphaBlendingController::readAdditionalImage()
 
     // Releases previous image data if any and assigns newly loaded image data
     this->secondSrcImage = temp;
-    qInfo() << "Freed memory of second source image and loaded a new one";
+    qInfo() << "Loaded new second source image (and freed previous image data if any)";
 
     // Adds image to the second source image view
     bool updated = this->imageViewHandler->updateImageView(this, imageView, this->secondSrcImage);

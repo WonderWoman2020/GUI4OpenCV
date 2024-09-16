@@ -59,7 +59,7 @@ void StructuringMatrixButton::onClicked()
 		break;
 	}
 	
-	qInfo() << "checked:" << this->property("myChecked") << "characteristic:" << this->property("characteristic");
+	qInfo() << "Matrix button last interacted with:" << "checked -" << this->property("myChecked") << "characteristic -" << this->property("characteristic");
 	this->setStyleSheet(this->style);
 	
 }

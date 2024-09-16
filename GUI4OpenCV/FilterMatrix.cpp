@@ -65,7 +65,7 @@ void FilterMatrix::updateMatrixData()
                 " For at least one filter matrix input field, row or column index was out of bounds, according to the declared matrix size.");
 
         this->data[row][col] = inputField->text().toInt();
-        qInfo() << "Data at (" + QString::number(row) + QString(",") + QString::number(col) + "):" << this->data[row][col];
+        qInfo() << "Updated filter matrix data at (" + QString::number(row) + QString(",") + QString::number(col) + "):" << this->data[row][col];
     }
     else
         throw std::invalid_argument("Filter matrix couldn't have been read properly."
