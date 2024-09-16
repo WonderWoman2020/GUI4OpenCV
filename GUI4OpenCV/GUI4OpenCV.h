@@ -44,7 +44,7 @@ public:
 public slots:
 
     /**
-     * Handles syncing and desyncing images scrolls action.
+     * Handles syncing and desyncing source and output image views corresponding scrolls bars.
      */
     void on_actionSync_triggered();
 
@@ -59,27 +59,27 @@ public slots:
     void on_actionSave_triggered();
 
     /**
-     * Slot that activates update of histograms.
+     * Slot that activates update of histograms (same as other histogram option triggers).
      */
     void on_actionHistB_triggered();
 
     /**
-     * Slot that activates update of histograms.
+     * Slot that activates update of histograms (same as other histogram option triggers).
      */
     void on_actionHistG_triggered();
 
     /**
-     * Slot that activates update of histograms.
+     * Slot that activates update of histograms (same as other histogram option triggers).
      */
     void on_actionHistR_triggered();
 
     /**
-     * Slot that activates update of histograms.
+     * Slot that activates update of histograms (same as other histogram option triggers).
      */
     void on_actionHistGrayscale_triggered();
 
     /**
-     * Opens 'about app' inforamtion window.
+     * Opens 'about app' information window.
      */
     void on_actionAboutApp_triggered();
 
@@ -100,21 +100,20 @@ public slots:
 
     /**
      * Shows structuring matrix input window.
-     * --- Needs to be implemented to run image processing operation.
+     * --- Needs to be implemented to run an image processing operation.
      * See example how it can be done in 'GUI4OpenCV::on_actionAlphaBlending_triggered()' ---
      */
     void on_actionStructuringMatrix_triggered();
 
     /**
      * Shows filter matrix input window.
-     * --- Needs to be implemented to run image processing operation.
+     * --- Needs to be implemented to run an image processing operation.
      * See example how it can be done in 'GUI4OpenCV::on_actionAlphaBlending_triggered()' ---
      */
     void on_actionFilterMatrix_triggered();
 
     /**
-     * Slot that receives the processed image and updates output image view.
-     * It receives result image from every image processing operation handler, that has been connected to this slot.
+     * Slot that receives the processed image and updates output image view. Controller of the processing operation needs to be connected to this slot.
      * See example of connecting AlphaBlendingController object's sendResult() method in 'GUI4OpenCV::on_actionAlphaBlending_triggered()'.
      * @param result - Resulting image sent by one of image processing algorithm, that have been connected to this slot.
      */
