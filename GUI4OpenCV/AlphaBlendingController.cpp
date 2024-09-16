@@ -12,6 +12,8 @@ AlphaBlendingController::AlphaBlendingController(QWidget *parent)
 
     this->imageLoader = new ImageLoader();
     this->imageViewHandler = new ImageViewHandler();
+
+    this->buildWindows();
 }
 
 AlphaBlendingController::~AlphaBlendingController()
@@ -30,8 +32,9 @@ void AlphaBlendingController::showWindows()
     this->imageWindow->show();
 }
 
-bool AlphaBlendingController::readAdditionalImage(QGraphicsView* imageView)
+bool AlphaBlendingController::readAdditionalImage()
 {
+    QGraphicsView* imageView = imageWindow->getImageView();
     // Informs that second source image needs to be chosen
     QMessageBox::information(this, "Mieszanie obrazow - wymagany drugi obraz",
         "Na potrzeby tej operacji nalezy wczytac drugi obraz. Wybierz drugi obraz do wczytania w nastepnym oknie.");
@@ -61,17 +64,9 @@ void AlphaBlendingController::buildWindows()
 {
     // Builds window for showing second source image
     imageWindow->resize(QSize(400, 400));
-    // Loads second source image
-    bool opened = this->readAdditionalImage(imageWindow->getImageView());
-    if (!opened)
-    {
-        imageWindow->deleteLater();
-        return;
-    }
 
     // Connects a method to execute alpha linear blending on images, when slider value changes
     connect(alphaWindow, SIGNAL(sendInputData(int)), this, SLOT(execOperation(int)));
-    this->alphaBlending->clear();
 
     // Destroying windows signals    
     connect(alphaWindow, SIGNAL(destroyed()), this, SLOT(deleteLater()));

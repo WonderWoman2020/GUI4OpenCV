@@ -23,8 +23,8 @@ public:
 	AlphaBlendingController(QWidget *parent);
 	~AlphaBlendingController();
 
-	void buildWindows();
 	void showWindows();
+	bool readAdditionalImage();
 
 signals:
 	void sendResult(cv::Mat& result);
@@ -45,5 +45,5 @@ private:
 	ImageLoader* imageLoader;
 	ImageViewHandler* imageViewHandler;
 
-	bool readAdditionalImage(QGraphicsView* imageView);
+	void buildWindows();
 };

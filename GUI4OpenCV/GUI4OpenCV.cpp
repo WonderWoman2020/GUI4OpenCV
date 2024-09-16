@@ -182,7 +182,13 @@ void GUI4OpenCV::on_actionCursorTest_triggered()
 void GUI4OpenCV::on_actionAlphaBlending_triggered()
 {   
     AlphaBlendingController* alphaWindows = new AlphaBlendingController(this);
-    alphaWindows->buildWindows();
+    bool opened = alphaWindows->readAdditionalImage();
+    if (!opened)
+    {
+        alphaWindows->deleteLater();
+        return;
+    }
+
     alphaWindows->showWindows();
     alphaWindows->setFirstSourceImage(this->srcImage);
     connect(this, SIGNAL(srcImageChanged(cv::Mat&)), alphaWindows, SLOT(setFirstSourceImage(cv::Mat&)));
