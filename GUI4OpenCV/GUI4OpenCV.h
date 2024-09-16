@@ -42,23 +42,82 @@ public:
     ~GUI4OpenCV();
 
 public slots:
+
+    /**
+     * Handles syncing and desyncing images scrolls action.
+     */
     void on_actionSync_triggered();
+
+    /**
+     * Handles opening source image action.
+     */
     void on_actionOpen_triggered();
+
+    /**
+     * Handles saving processed image action.
+     */
     void on_actionSave_triggered();
 
+    /**
+     * Slot that activates update of histograms.
+     */
     void on_actionHistB_triggered();
+
+    /**
+     * Slot that activates update of histograms.
+     */
     void on_actionHistG_triggered();
+
+    /**
+     * Slot that activates update of histograms.
+     */
     void on_actionHistR_triggered();
+
+    /**
+     * Slot that activates update of histograms.
+     */
     void on_actionHistGrayscale_triggered();
 
+    /**
+     * Opens 'about app' inforamtion window.
+     */
     void on_actionAboutApp_triggered();
+
+    /**
+     * Opens 'about Qt framework' information window.
+     */
     void on_actionAboutQt_triggered();
 
+    /**
+     * Example on how to change cursor icon to loading.
+     */
     void on_actionCursorTest_triggered();
+
+    /**
+     * Slot that builds necessary components for executing alpha blending operation and runs them.
+     */
     void on_actionAlphaBlending_triggered();
+
+    /**
+     * Shows structuring matrix input window.
+     * --- Needs to be implemented to run image processing operation.
+     * See example how it can be done in 'GUI4OpenCV::on_actionAlphaBlending_triggered()' ---
+     */
     void on_actionStructuringMatrix_triggered();
+
+    /**
+     * Shows filter matrix input window.
+     * --- Needs to be implemented to run image processing operation.
+     * See example how it can be done in 'GUI4OpenCV::on_actionAlphaBlending_triggered()' ---
+     */
     void on_actionFilterMatrix_triggered();
 
+    /**
+     * Slot that receives the processed image and updates output image view.
+     * It receives result image from every image processing operation handler, that has been connected to this slot.
+     * See example of connecting AlphaBlendingController object's sendResult() method in 'GUI4OpenCV::on_actionAlphaBlending_triggered()'.
+     * @param result - Resulting image sent by one of image processing algorithm, that have been connected to this slot.
+     */
     void receiveProcessingResult(cv::Mat& result);
 
 signals:
@@ -84,7 +143,19 @@ private:
 
     QString authorName = "Imie i nazwisko";
 
+    /**
+     * Updates other components that are related to current source image.
+     */
     void onSrcImageChanged();
+
+    /**
+     * Updates other components that are related to current output image.
+     */
     void onOutImageChanged();
+
+    /**
+     * Draws histogram of source or output image and update its view. Draws only the color spaces chosen by user.
+     * @param srcHistogramChanged - Which image histogram to update. True - update source image histogram, False - update the output one.
+     */
     void onHistogramChanged(bool srcHistogramChanged);
 };

@@ -47,18 +47,12 @@ GUI4OpenCV::~GUI4OpenCV()
     this->outHistograms.clear();
 }
 
-/*
-    Handles syncing and desyncing images scrolls action.
-*/
 void GUI4OpenCV::on_actionSync_triggered()
 {
     bool sync = ui->actionSync->isChecked();
     this->imageViewHandler->syncViewsScrollBars(ui->srcImageView, ui->outImageView, sync);
 }
 
-/*
-    Handles opening source image action.
-*/
 void GUI4OpenCV::on_actionOpen_triggered()
 {
     // Shows 'open image' file explorer dialog and loads chosen image
@@ -81,17 +75,11 @@ void GUI4OpenCV::on_actionOpen_triggered()
     emit this->outImageChanged(this->outImage);
 }
 
-/*
-    Handles saving processed image action.
-*/
 void GUI4OpenCV::on_actionSave_triggered()
 {
     bool saved = this->imageLoader->saveImageDialog(this, this->outImage);
 }
 
-/*
-    Updates other components that are related to current source image.
-*/
 void GUI4OpenCV::onSrcImageChanged()
 {
     // Calculates changed image histograms. These are calculated just once, when the image has changed.
@@ -101,9 +89,6 @@ void GUI4OpenCV::onSrcImageChanged()
     this->onHistogramChanged(true);
 }
 
-/*
-    Updates other components that are related to current output image.
-*/
 void GUI4OpenCV::onOutImageChanged()
 {
     // Calculates changed image histograms. These are calculated just once, when the image has changed.
@@ -113,10 +98,6 @@ void GUI4OpenCV::onOutImageChanged()
     this->onHistogramChanged(false);
 }
 
-/*
-    Draws histogram of source or output image and update its view. Draws only the color spaces chosen by user.
-    @param srcHistogramChanged - Which image histogram to update. True - update source image histogram, False - update the output one.
-*/
 void GUI4OpenCV::onHistogramChanged(bool srcHistogramChanged)
 {
     // Fetches histogram color spaces chosen to show in charts
@@ -138,45 +119,30 @@ void GUI4OpenCV::onHistogramChanged(bool srcHistogramChanged)
     }
 }
 
-/*
-    Slot that activates update of histograms.
-*/
 void GUI4OpenCV::on_actionHistB_triggered()
 {
     this->onHistogramChanged(true);
     this->onHistogramChanged(false);
 }
 
-/*
-    Slot that activates update of histograms.
-*/
 void GUI4OpenCV::on_actionHistG_triggered()
 {
     this->onHistogramChanged(true);
     this->onHistogramChanged(false);
 }
 
-/*
-    Slot that activates update of histograms.
-*/
 void GUI4OpenCV::on_actionHistR_triggered()
 {
     this->onHistogramChanged(true);
     this->onHistogramChanged(false);
 }
 
-/*
-    Slot that activates update of histograms.
-*/
 void GUI4OpenCV::on_actionHistGrayscale_triggered()
 {
     this->onHistogramChanged(true);
     this->onHistogramChanged(false);
 }
 
-/*
-    Opens 'about app' inforamtion window.
-*/
 void GUI4OpenCV::on_actionAboutApp_triggered()
 {
     QString windowTitle = "O programie";
@@ -192,17 +158,11 @@ void GUI4OpenCV::on_actionAboutApp_triggered()
     QMessageBox::about(this, windowTitle, content);
 }
 
-/*
-    Opens 'about Qt framework' information window.
-*/
 void GUI4OpenCV::on_actionAboutQt_triggered()
 {
     QMessageBox::aboutQt(this, "O frameworku Qt");
 }
 
-/*
-    Example on how to change cursor icon to loading.
-*/
 void GUI4OpenCV::on_actionCursorTest_triggered()
 {
     QMessageBox msgBox = QMessageBox(this);
@@ -214,9 +174,6 @@ void GUI4OpenCV::on_actionCursorTest_triggered()
     //this->setCursor(Qt::ArrowCursor);    // How to change cursor icon back to normal
 }
 
-/*
-    Slot that builds necessary components for executing alpha blending operation and runs them.
-*/
 void GUI4OpenCV::on_actionAlphaBlending_triggered()
 {   
     // Builds new alpha blending controller each time the alpha blending menu option is chosen by user
@@ -243,34 +200,18 @@ void GUI4OpenCV::on_actionAlphaBlending_triggered()
     connect(ui->actionAlphaBlending, SIGNAL(triggered()), alphaWindows, SLOT(deleteLater()));
 }
 
-/*
-    Shows structuring matrix input window.
-    --- Needs to be implemented to run image processing operation.
-    See example how it can be done in 'GUI4OpenCV::on_actionAlphaBlending_triggered()' ---
-*/
 void GUI4OpenCV::on_actionStructuringMatrix_triggered()
 {
     StructuringMatrixWindow* window = new StructuringMatrixWindow(this);
     window->show();
 }
 
-/*
-    Shows filter matrix input window.
-    --- Needs to be implemented to run image processing operation.
-    See example how it can be done in 'GUI4OpenCV::on_actionAlphaBlending_triggered()' ---
-*/
 void GUI4OpenCV::on_actionFilterMatrix_triggered()
 {
     FilterMatrixWindow* window = new FilterMatrixWindow(this);
     window->show();
 }
 
-/*
-    Slot that receives the processed image and updates output image view.
-    It receives result image from every image processing operation handler, that has been connected to this slot.
-    See example of connecting AlphaBlendingController object's sendResult() method in 'GUI4OpenCV::on_actionAlphaBlending_triggered()'.
-    @param result - Resulting image sent by one of image processing algorithm, that have been connected to this slot.
-*/
 void GUI4OpenCV::receiveProcessingResult(cv::Mat& result)
 {
     if (result.empty())
