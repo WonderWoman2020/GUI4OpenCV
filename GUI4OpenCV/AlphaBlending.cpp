@@ -16,23 +16,27 @@ void AlphaBlending::clear()
     qInfo() << "Freed memory of temporary resized copy of second source image in alpha blending operation";
 }
 
-cv::Mat AlphaBlending::process(cv::Mat& src1, cv::Mat& src2, int alpha)
+cv::Mat AlphaBlending::process(cv::Mat& firstImage, cv::Mat& secondImage, int alpha)
 {
-    if (src1.empty() || src2.empty())
+    // Cancels mixing images, if not both of them were provided
+    if (firstImage.empty() || secondImage.empty())
         return cv::Mat();
 
     try {
-        if (!(this->secondImageResized.rows == src1.rows && this->secondImageResized.cols == src1.cols))
+        // Resizes a copy of second source image and stores it as temporary variable.
+        // Thanks to storing the temporary copy, it is being done only once per the same image.
+        if (!(this->secondImageResized.rows == firstImage.rows && this->secondImageResized.cols == firstImage.cols))
         {
-            cv::resize(src2, this->secondImageResized, cv::Size(src1.cols, src1.rows));
+            cv::resize(secondImage, this->secondImageResized, cv::Size(firstImage.cols, firstImage.rows));
             qInfo() << "Resized copy of second source image to be the same size as the first one, for alpha blending operation.";
             qInfo() << "Stored the resized image as a temporary copy.";
         }
 
+        // Executes alpha blending operation
         double alphaNormalized = alpha / (double)255;
         double betaNormalized = 1.0 - alphaNormalized;
         cv::Mat result;
-        cv::addWeighted(this->secondImageResized, alphaNormalized, src1, betaNormalized, 0.0, result);
+        cv::addWeighted(this->secondImageResized, alphaNormalized, firstImage, betaNormalized, 0.0, result);
         return result;
     }
     catch (std::exception ex)
