@@ -30,9 +30,6 @@ std::pair<int, int> StructuringMatrix::getCharacteristicElement()
     return this->characteristicElement;
 }
 
-/*
-    Creates structuring element matrix.
-*/
 void StructuringMatrix::buildMatrix(int rows, int cols)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -47,6 +44,7 @@ void StructuringMatrix::buildMatrix(int rows, int cols)
             button->setObjectName("structuringButton");
             grid->addWidget(button, i, j);
 
+            // Makes signal-slot connection, that updates input data whenever any field was changed
             connect(button, SIGNAL(clicked()), this, SLOT(updateMatrixData()));
         }
     }
@@ -162,6 +160,7 @@ void StructuringMatrix::updateMatrixData()
     else
         this->disableChoosingCharacteristicElement();
 
+    // Just printing current state of input data to the debug window
     qInfo() << "Current structuring matrix data:";
     for (int i = 0; i < this->data.size(); i++)
     {
