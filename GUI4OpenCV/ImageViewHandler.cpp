@@ -1,14 +1,12 @@
 #include "ImageViewHandler.h"
 
 
-/*
-    Sets image in the QGraphicsView's scene.
-*/
 void ImageViewHandler::setImageInView(QGraphicsView* graphicsView, QPixmap image)
 {
     if (graphicsView == nullptr)
         throw std::invalid_argument("Parameter 'QGraphicsView* graphicsView' was nullptr.");
 
+    // Takes existing scene of the view or creates a new one, if there wasn't any
     QGraphicsScene* scene = graphicsView->scene();
     if (scene == nullptr)
     {
@@ -17,7 +15,7 @@ void ImageViewHandler::setImageInView(QGraphicsView* graphicsView, QPixmap image
     }
 
     scene->clear();    // removes previous image, so images won't stack one on another
-    scene->addPixmap(image);
+    scene->addPixmap(image);    // adds the image to the view (precisely, to its scene)
     scene->setSceneRect(scene->itemsBoundingRect());    // resizes scene, so it isn't larger than the items it contains
 }
 
@@ -41,19 +39,12 @@ bool ImageViewHandler::updateImageView(QWidget* parent, QGraphicsView* imageView
     return true;
 }
 
-/*
-    Makes corresponding scroll bars of the source and out image views to move in sync.
-*/
 void ImageViewHandler::syncScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll)
 {
     connect(firstScroll, SIGNAL(valueChanged(int)), secondScroll, SLOT(setValue(int)));
     connect(secondScroll, SIGNAL(valueChanged(int)), firstScroll, SLOT(setValue(int)));
 }
 
-
-/*
-    Disables moving corresponding scroll bars of the source and out image views in sync.
-*/
 void ImageViewHandler::desyncScrollBars(QScrollBar* firstScroll, QScrollBar* secondScroll)
 {
     disconnect(firstScroll, SIGNAL(valueChanged(int)), secondScroll, SLOT(setValue(int)));
