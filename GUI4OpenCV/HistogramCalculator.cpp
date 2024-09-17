@@ -1,9 +1,6 @@
 #include "HistogramCalculator.h"
 
 
-/*
-    Calculates histogram of one color space provided and draws histogram chart as 'cv::Mat' image.
-*/
 cv::Mat HistogramCalculator::calculateHistogram(cv::Mat& imagePlane)
 {
     // Calculates histogram of one color space of the image
@@ -20,12 +17,6 @@ cv::Mat HistogramCalculator::calculateHistogram(cv::Mat& imagePlane)
     return planeHist;
 }
 
-/*
-    Creates histogram charts as 'cv::Mat' images, of each BGR color spaces of the provided image, or of grayscale image.
-    Histograms stored as 'cv::Mat' images are returned in 'std::vector', and their order is as follows:
-    0 - B, 1 - G, 2 - R, or if image was in grayscale, then the vector contains just one histogram, so:
-    0 - grayscale histogram.
-*/
 std::vector<cv::Mat> HistogramCalculator::calculateHistograms(cv::Mat& image)
 {
     // Splits image to planes with just one color space, B, G or R (or grayscale, if provided image has just one color space)
@@ -58,9 +49,6 @@ void HistogramCalculator::drawHistogram(cv::Mat& histogram, cv::Mat& histogramIm
     }
 }
 
-/*
-    Draws histograms according to which color spaces have been chosen.
-*/
 cv::Mat HistogramCalculator::drawChosenHistograms(std::vector<cv::Mat>& histograms, bool b, bool g, bool r, bool grayscale)
 {
     // Prepares empty white 'cv::Mat' image, which is a canvas for the histogram chart
