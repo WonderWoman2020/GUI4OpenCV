@@ -9,10 +9,12 @@ FilterMatrix::FilterMatrix(QWidget *parent, int rows, int cols)
 	this->setParent(parent);
 	this->buildMatrix(rows, cols);
 
+    // Initializes the data matrix to be the given size and filled with zeros
     this->data.assign(this->rows, std::vector<int>(this->cols));
     for (int i = 0; i < this->data.size(); i++)
         std::fill(this->data.at(i).begin(), this->data.at(i).end(), 0);
 
+    // Sets matrix widget to be always the same size
 	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
@@ -34,17 +36,24 @@ void FilterMatrix::buildMatrix(int rows, int cols)
     {
         for (int j = 0; j < cols; j++)
         {
+            // Creates inut text field
             QLineEdit* inputField = new QLineEdit(this);
+            // Creates validator, so the field will accept only integers
             QValidator* integerValidator = new QIntValidator(INT32_MIN, INT32_MAX, this);
             inputField->setValidator(integerValidator);
             inputField->setFixedSize(QSize(30, 30));
+            // Centers content of the field (the input integer)
             inputField->setAlignment(Qt::AlignCenter);
 
+            // Stores information in which row and column this field is placed in the matrix
             inputField->setProperty("row", i);
             inputField->setProperty("col", j);
+            // Sets field's name, so these objects can be then collected by this name and read
             inputField->setObjectName("filterField");
+            // Adds field to the matrix widget
             grid->addWidget(inputField, i, j);
 
+            // Makes signal-slot connection that updates matrix data, whenever any field has been changed
             connect(inputField, SIGNAL(editingFinished()), this, SLOT(updateMatrixData()));
         }
     }
