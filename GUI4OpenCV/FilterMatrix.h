@@ -6,6 +6,8 @@
 #include <QLineEdit>
 #include <QValidator>
 
+#include <stdexcept>
+
 class FilterMatrix  : public QWidget
 {
 	Q_OBJECT

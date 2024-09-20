@@ -3,6 +3,8 @@
 #include <QWidget>
 #include <QGridLayout>
 
+#include <stdexcept>
+
 #include "StructuringMatrixButton.h"
 
 class StructuringMatrix : public QWidget
