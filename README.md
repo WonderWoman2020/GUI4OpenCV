@@ -21,7 +21,16 @@ The app contains a few examplary functions from OpenCV, but overall it is a temp
 
 ## How to run
 
+//To just see how the app works, you can run the latest release of the app that can be accessed [here](./../../releases).
 
+To develop the template, first you need to install:
+- Qt framework (in version 6.x as used in the app)
+- OpenCV (in version 4.x)
+- Visual Studio (2019 or 2022), with min. C++17
+
+After that, you need to download the repository code, open the `.sln` project and change some paths for Qt and OpenCV:
+
+// How to change the paths
 
 ## How to extend
 
